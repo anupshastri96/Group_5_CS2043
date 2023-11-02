@@ -63,7 +63,7 @@ public class LibraryManagementSystem {
 		}
 	}
 	
-	private void removeLibrary(Member memberIn) {
+	private void removeMember(Member memberIn) {
 		if (loginType == 1) {
 			for (int i = 0; i < members.size(); i++) {
 				if (members.get(i).getID() == memberIn.getID()) {
