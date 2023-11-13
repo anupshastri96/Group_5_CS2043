@@ -1,6 +1,9 @@
 package LibraryManagementSystem;
 
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException; 
+import java.util.Scanner;
 
 public class Library {
 
@@ -9,15 +12,32 @@ public class Library {
     private static int nextId = 1000;
     private final int libId;
     private ArrayList<Book> bookList;
+    private Scanner bookScan;
 
     public Library(String name, String address) {
-        name = this.name;
-        address = this.address;
-        libId = nextId;
-        nextId++;
-        bookList = new ArrayList<>();
+        try {
+            name = this.name;
+            address = this.address;
+
+            File checkFile = new File("BookStorage.txt");
+            bookScan = new Scanner(checkFile);
+
+            libId = nextId;
+            nextId++;
+
+            bookList = new ArrayList<>();
+        } catch(FileNotFoundException fnf) {
+            System.out.println("File inputed does not exist.");
+            System.exit(1);
+        }
     }
 
+    public Library(String name, String address, int id) {
+        name = this.name;
+        address = this.address;
+        libId = id;
+        bookList = new ArrayList<>();
+    }
 
     /*
      * NAME METHODS
@@ -71,5 +91,14 @@ public class Library {
     	
     	return s;
     }
+
+    private void bookReadFile() {
+        String line = bookScan.nextLine();
+        Scanner lineScan = new Scanner(line);
+        lineScan.useDelimiter(" ");
+        String currentlyRead = "";
+        while (lineScan.hasNext()) {
+            currentlyRead = lineScan.next();
+        }
 
 }

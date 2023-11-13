@@ -4,9 +4,20 @@ public class member {
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private int id;
+	private static int nextID = 1;
+    private final int id;
 	
-	public member(int birthyear, String frstNm, String lstNm, String gender,int id ) 
+	public member(int birthyear, String frstNm, String lstNm, String gender) 
+	{
+		this.birthdate = birthyear;
+		this.firstName = frstNm;
+		this.lastName = lstNm;
+		this.gender = gender;
+		id = nextID;
+        nextID++;
+		
+	}
+	public member(int birthyear, String frstNm, String lstNm, String gender, int id) 
 	{
 		this.birthdate = birthyear;
 		this.firstName = frstNm;

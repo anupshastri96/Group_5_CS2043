@@ -1,5 +1,6 @@
 package LibraryManagementSystem;
 
+
 public class Book {
 
     private String name;
@@ -11,7 +12,7 @@ public class Book {
     private int ageRating;
     private boolean isBorrowed;
 
-    public Book(String nameIn, String authorIn, String genreIn, String statusIn, int ageRatingIn) {
+    public Book(String nameIn, String authorIn, int deweyIn, String statusIn, int ageRatingIn) {
         name = nameIn;
         author = authorIn;
         genre = genreIn;
