@@ -113,12 +113,9 @@ public class LibraryManagementSystem {
 
 	private void libraryWriteFile() {
 		try {
-			System.out.println("Hi");
 			FileWriter writer = new FileWriter("libraryStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			for (int i = 0; i < libraries.size(); i++) {
-				System.out.print(libraries.get(i).getName());
-				System.out.println(libraries.get(i).getAddress());
 				printer.println(libraries.get(i).getName() + "," + libraries.get(i).getAddress() + "," + libraries.get(i).getID());
 			}
 			printer.close();
@@ -218,15 +215,16 @@ public class LibraryManagementSystem {
 						if (count == 1) {
 							currentBirthdate = Integer.parseInt(line.substring(0,i));
 						} else if (count == 2) {
-							currentFirstname = line.substring(buffer,i);
+							currentFirstname = line.substring(buffer + 1,i);
 						} else if (count == 3) {
-							currentLastname = line.substring(buffer,i);
+							currentLastname = line.substring(buffer + 1,i);
 						} else if (count == 4) {
-							currentGender = line.substring(buffer,i);
+							currentGender = line.substring(buffer + 1,i);
 						} 
         	            buffer = i;
+						count++;
         	        } else if (i == line.length()-1) {
-        	            currentID = Integer.parseInt(line.substring(buffer,line.length()));
+        	            currentID = Integer.parseInt(line.substring(buffer + 1,line.length()));
         	        }
         	    }
 				Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentID);
@@ -248,11 +246,9 @@ public class LibraryManagementSystem {
 
 	private void memberWriteFile() {
 		try {
-			System.out.println("Hi");
 			FileWriter writer = new FileWriter("memberStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			for (int i = 0; i < members.size(); i++) {
-				System.out.print(members.get(i).getFirstname());
 				printer.println(members.get(i).getBirthdate() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getID());
 			}
 			printer.close();
