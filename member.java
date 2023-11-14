@@ -1,5 +1,4 @@
-package lib;
-public class member {
+public class Member {
 	private int birthdate;
 	private String firstName;
 	private String lastName;
@@ -7,7 +6,7 @@ public class member {
 	private static int nextID = 1;
     private final int id;
 	
-	public member(int birthyear, String frstNm, String lstNm, String gender) 
+	public Member(int birthyear, String frstNm, String lstNm, String gender) 
 	{
 		this.birthdate = birthyear;
 		this.firstName = frstNm;
@@ -17,7 +16,7 @@ public class member {
         nextID++;
 		
 	}
-	public member(int birthyear, String frstNm, String lstNm, String gender, int id) 
+	public Member(int birthyear, String frstNm, String lstNm, String gender, int id) 
 	{
 		this.birthdate = birthyear;
 		this.firstName = frstNm;
@@ -26,13 +25,24 @@ public class member {
 		this.id = id;
 		
 	}
+		public String getFirstname() 
+	{
+		return firstName;
+	}
+		public String getLastname() 
+	{
+		return lastName;
+	}
 	public int getAge() 
 	{
 		int year = 2023;
 		int age = birthdate - year;
 		return age;
 	}
-	
+	public int getBirthdate() 
+	{
+		return birthdate;
+	}
 	public String getGender() 
 	{
 		if(!gender.isEmpty()) 
@@ -44,7 +54,6 @@ public class member {
 			return null;
 		}
 	}
-	
 	public int getID() 
 	{
 		if(id >= 1) 

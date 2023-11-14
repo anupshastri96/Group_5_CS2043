@@ -1,13 +1,16 @@
 import java.util.ArrayList;
 import java.io.FileReader;
-import java.io.FileNotFoundException; 
-import java.to.PrintWriter;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.BufferedReader;
 import java.util.Scanner;
 
 public class LibraryManagementSystem {
 // This could end up just being added to the main class instead.
 	
-	private ArrayList<Libary> libraries;
+	private ArrayList<Library> libraries;
 	private ArrayList<Member> members;
 	private ArrayList<Admin> admins;
 	private int loginType;
@@ -16,33 +19,24 @@ public class LibraryManagementSystem {
 	
 	// Only the current library should be a parameter because everything else should be read in through a file.
 	public LibraryManagementSystem(Library currentLibrary) {
-		try {
-			libraries = new ArrayList<Library>();
-			members = new ArrayList<Member>();
-			admins = new ArrayList<Admin>();
-			
-			BufferedReader reader = new BufferedReader(new FileReader("libraryStorage.txt"));
-			this.libraryReadFile();
-
-			reader = new BufferedReader(new FileReader("memberStorage.txt"));
-			this.memberReadFile();
-
-			reader = new BufferedReader(new FileReader("adminStorage.txt"));
-			this.adminReadFile();
-
-		} catch(FileNotFoundException fnf) {
-            System.out.println("One of the storage files are missing.");
-            System.exit(1);
-        }
 		
+		libraries = new ArrayList<Library>();
+		members = new ArrayList<Member>();
+		admins = new ArrayList<Admin>();
 		
+		loginType = 1;
+
+		this.libraryReadFile();
+		this.memberReadFile();
+		this.adminReadFile();
+
 		// Something should be implemented to check if the current library is in the system.
 		this.currentLibrary = currentLibrary;
 		
 	}
 	// Library Methods
 
-	private void addLibrary(Library libraryIn) {
+	public void addLibrary(Library libraryIn) {
 		if (loginType == 1) {
 			boolean isTrue = false;
 			for (int i = 0; i < libraries.size(); i++) {
@@ -70,71 +64,101 @@ public class LibraryManagementSystem {
 	}
 	
 	private void libraryReadFile() {
-		String line = reader.readLine();
-		int buffer = -1;
-		boolean first = true;
-		String currentName = "";
-		String currentAddress = "";
-		int currentID = "";
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("libraryStorage.txt"));
+			String line = reader.readLine();
+			int buffer = -1;
+			boolean first = true;
+			String currentName = "";
+			String currentAddress = "";
+			int currentID = -1;
 
-		while (line != null) {
-            for (int i = 0; i < line.length(); i++) {
-                if (line.charAt(i) == ',') {
-					if (first) {
-						currentName = line.substring(0,i);
-						first = false;
-					} else {
-						currentAddress = line.substring(buffer,i);
-					} 
-                    buffer = i;
-                } else if (i == line.length()-1) {
-                    currentID = (int)line.substring(buffer,line.length());
-                }
-            }
-			Library addLibrary = new Library(currentName, currentAddress, currentID);
-			libraries.add(addLibrary);
-			buffer = -1;
-			first = true;
-            line = reader.readLine();
-        }
+			while (line != null) {
+           	 	for (int i = 0; i < line.length(); i++) {
+             	  	if (line.charAt(i) == ',') {
+						if (first) {
+							currentName = line.substring(0,i);
+							first = false;
+						} else {
+							currentAddress = line.substring(buffer + 1,i);
+						} 
+                    	buffer = i;
+                	} else if (i == line.length()-1) {
+                    	currentID = Integer.parseInt(line.substring(buffer + 1,line.length()));
+                	}
+            	}
+				Library addLibrary = new Library(currentName, currentAddress, currentID);
+				libraries.add(addLibrary);
+				buffer = -1;
+				first = true;
+            	line = reader.readLine();
+        	}
+
+		} catch(FileNotFoundException fnf) {
+            System.out.println("Library storage file is not there!");
+            System.exit(1);
+        } catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
 	}
 
 	private void libraryWriteFile() {
-		FileWriter writer = new FileWriter("libraryStorage.txt");
-        PrintWriter printer = new PrintWriter(writer);
-		for (int i = 0; i < libraries.size(); i++) {
-			printer.println(libraries.get(i).getName() + "," + libraries.get(i).getAddress() + "," + libraries.get(i).getID());
+		try {
+			System.out.println("Hi");
+			FileWriter writer = new FileWriter("libraryStorage.txt");
+        	PrintWriter printer = new PrintWriter(writer);
+			for (int i = 0; i < libraries.size(); i++) {
+				System.out.print(libraries.get(i).getName());
+				System.out.println(libraries.get(i).getAddress());
+				printer.println(libraries.get(i).getName() + "," + libraries.get(i).getAddress() + "," + libraries.get(i).getID());
+			}
+			printer.close();
+
+		} catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
 		}
 	}
 
 	// Admin methods
 
 	private void adminReadFile() {
-		String line = reader.readLine();
-		int buffer = -1;
-        String currentUsername = "";
-		String currentPassword = "";
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("adminStorage.txt"));
+			String line = reader.readLine();
+			int buffer = -1;
+        	String currentUsername = "";
+			String currentPassword = "";
 
-		while (line != null) {
-            for (int i = 0; i < line.length(); i++) {
-                if (line.charAt(i) == ',') {
-					currentUsername = line.substring(0,i);
-					first = false;
-                    buffer = i;
-                } else if (i == line.length()-1) {
-                    currentPassword = (int)line.substring(buffer,line.length());
-                }
-            }
-			Library addLibrary = new Library(currentName, currentAddress, currentID);
-			libraries.add(addLibrary);
-			buffer = -1;
-            line = reader.readLine();
-        }
+			while (line != null) {
+        	    for (int i = 0; i < line.length(); i++) {
+        	        if (line.charAt(i) == ',') {
+						currentUsername = line.substring(0,i);
+        	            buffer = i;
+        	        } else if (i == line.length()-1) {
+        	            currentPassword = line.substring(buffer,line.length());
+        	        }
+        	    }
+				Admin addAdmin = new Admin(currentUsername, currentPassword);
+				admins.add(addAdmin);
+				buffer = -1;
+        	    line = reader.readLine();
+        	}
+
+		} catch(FileNotFoundException fnf) {
+            System.out.println("Admin storage file is not there!");
+            System.exit(1);
+        } catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
 	}
 
 	// Checks if entered username and password are in the system.
 	private boolean checkAdmin(String enteredUser, String enteredPass) {
 		// Do this later
+		return false;
 	}
 
 	// Member methods
@@ -167,45 +191,66 @@ public class LibraryManagementSystem {
 	}
 
 	private void memberReadFile() {
-		String line = reader.readLine();
-		int buffer = -1;
-		int count = 1;
-		int currentBirthdate = -1;
-		String currentFirstname = "";
-		String currentLastname = "";
-		String currentGender = "";
-		int currentID = -1;
+		
+		try {
 
-		while (line != null) {
-            for (int i = 0; i < line.length(); i++) {
-                if (line.charAt(i) == ',') {
-					if (count == 1) {
-						currentBirthdate = (int)line.substring(0,i);
-					} else if (count == 2) {
-						currentFirstname = line.substring(buffer,i);
-					} else if (count == 3) {
-						currentLastname = line.substring(buffer,i);
-					} else if (count == 4) {
-						currentGender = line.substring(buffer,i);
-					} 
-                    buffer = i;
-                } else if (i == line.length()-1) {
-                    currentID = (int)line.substring(buffer,line.length());
-                }
-            }
-			Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentID);
-			members.add(addMember);
-			buffer = -1;
-			count = 1;
-            line = reader.readLine();
-        }
+			BufferedReader reader = new BufferedReader(new FileReader("memberStorage.txt"));
+			String line = reader.readLine();
+			int buffer = -1;
+			int count = 1;
+			int currentBirthdate = -1;
+			String currentFirstname = "";
+			String currentLastname = "";
+			String currentGender = "";
+			int currentID = -1;
+
+			while (line != null) {
+        	    for (int i = 0; i < line.length(); i++) {
+        	        if (line.charAt(i) == ',') {
+						if (count == 1) {
+							currentBirthdate = Integer.parseInt(line.substring(0,i));
+						} else if (count == 2) {
+							currentFirstname = line.substring(buffer,i);
+						} else if (count == 3) {
+							currentLastname = line.substring(buffer,i);
+						} else if (count == 4) {
+							currentGender = line.substring(buffer,i);
+						} 
+        	            buffer = i;
+        	        } else if (i == line.length()-1) {
+        	            currentID = Integer.parseInt(line.substring(buffer,line.length()));
+        	        }
+        	    }
+				Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentID);
+				members.add(addMember);
+				buffer = -1;
+				count = 1;
+        	    line = reader.readLine();
+        	}
+
+		} catch(FileNotFoundException fnf) {
+            System.out.println("Admin storage file is not there!");
+            System.exit(1);
+        } catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
+		
 	}
 
 	private void memberWriteFile() {
-		FileWriter writer = new FileWriter("memberStorage.txt");
-        PrintWriter printer = new PrintWriter(writer);
-		for (int i = 0; i < members.size(); i++) {
-			printer.println(members.get(i).getBirthdate() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getID());
+		try {
+
+			FileWriter writer = new FileWriter("memberStorage.txt");
+        	PrintWriter printer = new PrintWriter(writer);
+			for (int i = 0; i < members.size(); i++) {
+				printer.println(members.get(i).getBirthdate() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getID());
+			}
+			printer.close();
+
+		} catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
 		}
 	}
 }
