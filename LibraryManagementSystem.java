@@ -25,7 +25,7 @@ public class LibraryManagementSystem {
 		admins = new ArrayList<Admin>();
 		
 		loginType = 1;
-
+		
 		this.libraryReadFile();
 		this.memberReadFile();
 		this.adminReadFile();
@@ -46,8 +46,12 @@ public class LibraryManagementSystem {
 				}
 			}
 			if (!isTrue) {
-				libraries.add(libraryIn);
-				this.libraryWriteFile();
+				if (libraryIn.getName() == null ||  libraryIn.getAddress() == null) {
+
+				} else {
+					libraries.add(libraryIn);
+					this.libraryWriteFile();
+				}
 			}
 		}
 	}
@@ -87,11 +91,15 @@ public class LibraryManagementSystem {
                     	currentID = Integer.parseInt(line.substring(buffer + 1,line.length()));
                 	}
             	}
-				Library addLibrary = new Library(currentName, currentAddress, currentID);
-				libraries.add(addLibrary);
-				buffer = -1;
-				first = true;
-            	line = reader.readLine();
+				if (currentName == null || currentAddress == null || currentID == -1) {
+
+				} else {
+					Library addLibrary = new Library(currentName, currentAddress, currentID);
+					libraries.add(addLibrary);
+					buffer = -1;
+					first = true;
+            		line = reader.readLine();
+				}
         	}
 
 		} catch(FileNotFoundException fnf) {
@@ -163,7 +171,7 @@ public class LibraryManagementSystem {
 
 	// Member methods
 
-	private void addMember(Member memberIn) {
+	public void addMember(Member memberIn) {
 		if (loginType == 1) {
 			boolean isTrue = false;
 			for (int i = 0; i < members.size(); i++) {
@@ -240,10 +248,11 @@ public class LibraryManagementSystem {
 
 	private void memberWriteFile() {
 		try {
-
+			System.out.println("Hi");
 			FileWriter writer = new FileWriter("memberStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			for (int i = 0; i < members.size(); i++) {
+				System.out.print(members.get(i).getFirstname());
 				printer.println(members.get(i).getBirthdate() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getID());
 			}
 			printer.close();
