@@ -115,18 +115,7 @@ public class Book {
      * LIBRARY METHODS 
      */
     public int[] getLibraryIDs() {
-        // All of this should get replaced with cleaner code because it's really gross.
         int[] toReturn = new int[0];
-        int[] holder = toReturn;
-        for (int i = 0; i < belongsToLibraries.size(); i++) {
-            toReturn = new int[holder.length + 1];
-            for (int j = 0; j < holder.length; j++) {
-                toReturn[j] = holder[j];
-            }
-            toReturn[holder.length] = belongsToLibraries.get(belongsToLibraries.size()).getID();
-            holder = toReturn;
-
-        }
         return toReturn;
     }
 
@@ -138,18 +127,7 @@ public class Book {
      * MEMBER METHODS 
      */
     public int[] getMemberIDs() {
-        // All of this should get replaced with cleaner code because it's really gross.
         int[] toReturn = new int[0];
-        int[] holder = toReturn;
-        for (int i = 0; i < hasBorrowed.size(); i++) {
-            toReturn = new int[holder.length + 1];
-            for (int j = 0; j < holder.length; j++) {
-                toReturn[j] = holder[j];
-            }
-            toReturn[holder.length] = hasBorrowed.get(hasBorrowed.size()).getID();
-            holder = toReturn;
-
-        }
         return toReturn;
     }
 

@@ -112,106 +112,12 @@ public class Library {
     	
     	return s;
     }
-    
+ 
     private void bookReadFile() {
-        try {
-
-			BufferedReader reader = new BufferedReader(new FileReader("bookStorage.txt"));
-			String line = reader.readLine();
-			int buffer = -1;
-            int count = 1;
-
-            int currentID = -1;
-			String currentName = "";
-            String currentAuthor = "";
-            int currentDewey = -1;
-            int currentAmount = -1;
-            boolean currentAdult = false;
-            ArrayList<Integer> libraryIDs = new ArrayList<Integer>();
-            ArrayList<Integer> memberIDs = new ArrayList<Integer>();
-
-
-			while (line != null) {
-           	 	for (int i = 0; i < line.length(); i++) {
-                    // Decoding would be done here
-             	  	if (line.charAt(i) == ' ') {
-                        if (count == 1) {
-                            currentID = Integer.parseInt(line.substring(0,i));
-                            count++;
-                        } else if (count == 2) {
-                            currentDewey = Integer.parseInt(line.substring(buffer + 1,i));
-                            count++;
-                        } else if (count == 3) {
-                            currentName = (line.substring(buffer + 1,i));
-                            count++;
-                        } else if (count == 4) {
-                            currentAuthor = (line.substring(buffer + 1,i));
-                            count++;
-                        } else if (count == 5) {
-                            currentAmount = Integer.parseInt(line.substring(buffer + 1,i));
-                            count++;
-                        } else if (count == 6) {
-                            if (line.substring(buffer + 1,i) == "T") {
-                                currentAdult = true;
-                            } else {
-                                currentAdult = false;
-                            }
-                            count++;
-                        } else if (count == 7) {
-                            if (line.charAt(i + 1) == 'M') {
-                                count++;
-                            }
-                            libraryIDs.add(Integer.parseInt(line.substring(buffer + 2,i)));
-                        } else if (count == 8) {
-                            memberIDs.add(Integer.parseInt(line.substring(buffer + 2,i)));
-                        }
-                        buffer = i;
-                	} 
-            	}
-
-				Book addBook = new Book(currentName, currentAuthor, currentDewey, currentAdult, currentAmount, currentID, libraryIDs, memberIDs);
-				books.add(addBook);
-				buffer = -1;
-                count = 1;
-            	line = reader.readLine();
-
-        	}
-
-		} catch(FileNotFoundException fnf) {
-            System.out.println("Book storage file is not there!");
-            System.exit(1);
-        } catch (IOException io) {
-			System.out.print("Hi");
-			System.exit(1);
-		}
+       
     }
 
     private void bookWriteFile() {
-        try {
-			FileWriter writer = new FileWriter("bookStorage.txt");
-        	PrintWriter printer = new PrintWriter(writer);
-			for (int i = 0; i < books.size(); i++) {
-                // Encoder should be somewhere here.
-                // These arrays would just turn int string arrays.
-                int[] libraryIDs = books.get(i).getLibraryIDs();
-                int[] memberIDs = books.get(i).getMemberIDs();
-
-				printer.print(books.get(i).getId() + " " + books.get(i).getDewey() + " " + books.get(i).getName() + " " + books.get(i).getAuthor() + " " + books.get(i).getAmount() + " " + books.get(i).getAdult());
-                for (int j = 0; j < libraryIDs.length; j++) {
-                    // L would also be encoded.
-                    printer.print(" L" + libraryIDs[j]);
-                }
-                for (int j = 0; j < memberIDs.length; j++) {
-                    // M would also be encoded.
-                    printer.print(" M" + memberIDs[j]);
-                }
-                printer.println();
-			}
-			printer.close();
-
-		} catch (IOException io) {
-			System.out.print("Hi");
-			System.exit(1);
-		}
+        
     }
 }
