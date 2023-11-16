@@ -26,7 +26,7 @@ public class Book {
         dewey = deweyIn;
         adult = adultIn;
 
-        bookId = ((dewey * 10000000) + nextId);
+        bookId = ((dewey * 1000000) + nextId);
         nextId++;
 
         amount = 1;
@@ -56,18 +56,17 @@ public class Book {
 
     }
 
-	
-	/*
+    /*
 	 * TOSTRING
 	 */
 	public String toString() {
-		String s =	"Title: " + getName() + "\n" +
-				"Author: " + getAuthor() + "\n" +
-				"Dewey: " + getDewey() + "\n" +
-				"Book ID: " + getId() + "\n" +
-				"Amount: " + getAmount() + "\n" +
-				"Amount Borrowed: " + amountBorrowed + "\n" +
-				"LibraryIDs: ";
+		String s =	"Title: " + this.name + "\n" +
+			"Author: " + this.author + "\n" +
+			"Dewey: " + this.dewey + "\n" +
+			"Book ID: " + this.bookId + "\n" +
+			"Amount: " + this.amount + "\n" +
+			"Amount Borrowed: " + amountBorrowed + "\n" +
+			"LibraryIDs: ";
 		
 		if (getLibraryIDs().length == 0) s += "No LibraryIDs\n";
 		else {
@@ -87,7 +86,8 @@ public class Book {
 		
 		return s;
 	}
-	
+
+
     /* 
      * NAME METHODS 
      */
@@ -129,6 +129,10 @@ public class Book {
      */
     public int getAmount() {
         return amount;
+    }
+
+    public void incAmount() {
+        amount++;
     }
 
     /* 
