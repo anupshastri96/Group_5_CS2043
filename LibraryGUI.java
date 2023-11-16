@@ -30,6 +30,7 @@ public class LibraryGUI extends JFrame {
         root.add(titleLabel);
         root.add(librarianButton);
         root.add(adminButton);
+        root.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         setTitle("Harriet Irving Library");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
