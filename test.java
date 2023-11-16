@@ -15,9 +15,7 @@ public class test {
         
         Member m1 = new Member(2000, "First", "Last", "Male");
         Member m2 = new Member(2001, "First", "Last", "Female");
-        
         LibraryManagementSystem l1 = new LibraryManagementSystem(lib1);
-
         l1.addLibrary(lib1);
         l1.addLibrary(lib2);
         l1.addLibrary(lib3);
@@ -26,8 +24,8 @@ public class test {
         l1.addLibrary(lib6);
         l1.addLibrary(lib7);
         l1.addLibrary(lib8);
+        l1.addLibrary(lib10);
         l1.addLibrary(lib9);
-        l1.addLibrary(lib10); 
 
         l1.addMember(m1);
         l1.addMember(m2);

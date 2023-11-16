@@ -1,40 +1,47 @@
 import java.util.ArrayList;
-import java.io.File;
-import java.io.FileNotFoundException; 
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.BufferedReader;
 import java.util.Scanner;
 
 public class Library {
 
     private String name;
     private String address;
-    private static int nextId = 1000;
+    private static int nextId = 1;
     private int libId;
-    private ArrayList<Book> bookList;
+    private ArrayList<Book> books;
     private Scanner bookScan;
 
-    public Library(String name, String address) {
-        try {
-            this.name = name ;
-            this.address = address;
-
-            File checkFile = new File("BookStorage.txt");
-            bookScan = new Scanner(checkFile);
-
-            libId = nextId;
-            nextId++;
-
-            bookList = new ArrayList<>();
-        } catch(FileNotFoundException fnf) {
-            System.out.println("File inputed does not exist.");
-            System.exit(1);
-        }
+    public Library(int ID) {
+        // Startup Library class to fix issues with overlap IDs (Currently does not work)
+        nextId = ID;
     }
 
-    public Library(String name, String address, int id) {
+    public Library(String name, String address) {
+
         this.name = name ;
         this.address = address;
-        libId = id;
-        bookList = new ArrayList<>();
+
+        libId = nextId;
+        nextId++;
+
+        books = new ArrayList<>();
+    
+    }
+
+    public Library(String name, String address, int libId) {
+        this.name = name ;
+        this.address = address;
+        this.libId = libId;
+
+        books = new ArrayList<>();
+        this.bookReadFile();
+
+
     }
 
     /*
@@ -89,14 +96,77 @@ public class Library {
     	
     	return s;
     }
-
+    
     private void bookReadFile() {
-        String line = bookScan.nextLine();
-        Scanner lineScan = new Scanner(line);
-        lineScan.useDelimiter(" ");
-        String currentlyRead = "";
-        while (lineScan.hasNext()) {
-            currentlyRead = lineScan.next();
-        }
+        try {
+
+			BufferedReader reader = new BufferedReader(new FileReader("bookStorage.txt"));
+			String line = reader.readLine();
+			int buffer = -1;
+            int count = 1;
+
+            int currentID = -1;
+			String currentName = "";
+            String currentAuthor = "";
+            int currentDewey = -1;
+            int currentAmount = -1;
+            boolean currentAdult = null;
+            ArrayList<int> libraryIDs = new ArrayList<int>();
+            ArrayList<int> memberIDs = new ArrayList<int>();
+
+
+			while (line != null) {
+           	 	for (int i = 0; i < line.length(); i++) {
+                    // Decoding would be done here
+             	  	if (line.charAt(i) == ' ') {
+                        if (count == 1) {
+                            currentID = Integer.parseInt(line.substring(0,i));
+                            count++;
+                        } else if (count == 2) {
+                            currentDewey = Integer.parseInt(line.substring(buffer + 1,i));
+                            count++;
+                        } else if (count == 3) {
+                            currentName = (line.substring(buffer + 1,i));
+                            count++;
+                        } else if (count == 4) {
+                            currentAuthor = (line.substring(buffer + 1,i));
+                            count++;
+                        } else if (count == 5) {
+                            currentAmount = Integer.parseInt(line.substring(buffer + 1,i));
+                            count++;
+                        } else if (count == 6) {
+                            if (line.substring(buffer + 1,i) == "T") {
+                                currentAdult = true;
+                            } else {
+                                currentAdult = false;
+                            }
+                            count++;
+                        } else if (count == 7) {
+                            if (line.charAt(i + 1) == 'M') {
+                                count++;
+                            }
+                            libraryIDs.add(Integer.parseInt(line.substring(buffer + 2,i)));
+                        } else if (count == 8) {
+                            memberIDs.add(Integer.parseInt(line.substring(buffer + 2,i)));
+                        }
+                        buffer = i;
+                	} 
+            	}
+
+				Book addBook = new Book(currentName, currentAuthor, currentDewey, currentAdult, currentAmount, currentID, libraryIDs, memberIDs);
+				books.add(addBook);
+				buffer = -1;
+                count = 1;
+            	line = reader.readLine();
+
+        	}
+
+		} catch(FileNotFoundException fnf) {
+            System.out.println("Book storage file is not there!");
+            System.exit(1);
+        } catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
     }
 }

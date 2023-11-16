@@ -25,13 +25,12 @@ public class LibraryManagementSystem {
 		admins = new ArrayList<Admin>();
 		
 		loginType = 1;
-		
+
 		this.libraryReadFile();
 		this.memberReadFile();
 		this.adminReadFile();
 
-		// Something should be implemented to check if the current library is in the system.
-		this.currentLibrary = currentLibrary;
+		this.checkStartupLibrary(currentLibrary);
 		
 	}
 	// Library Methods
@@ -76,7 +75,6 @@ public class LibraryManagementSystem {
 			String currentName = "";
 			String currentAddress = "";
 			int currentID = -1;
-
 			while (line != null) {
            	 	for (int i = 0; i < line.length(); i++) {
              	  	if (line.charAt(i) == ',') {
@@ -126,6 +124,20 @@ public class LibraryManagementSystem {
 		}
 	}
 
+	private void checkStartupLibrary(Library libraryIn) {
+		int libraryID = libraryIn.getID();
+		boolean inSystem = false;
+		for (int i = 0; i < libraries.size(); i++) {
+			if (libraryID == libraries.get(i).getID()) {
+				inSystem = true;
+			} 
+		}
+		if (!inSystem) {
+			this.addLibrary(libraryIn);
+		}
+		this.currentLibrary = libraryIn;
+	}
+
 	// Admin methods
 
 	private void adminReadFile() {
@@ -142,7 +154,7 @@ public class LibraryManagementSystem {
 						currentUsername = line.substring(0,i);
         	            buffer = i;
         	        } else if (i == line.length()-1) {
-        	            currentPassword = line.substring(buffer,line.length());
+        	            currentPassword = line.substring(buffer + 1,line.length());
         	        }
         	    }
 				Admin addAdmin = new Admin(currentUsername, currentPassword);
