@@ -3,8 +3,12 @@ public class Member {
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private static int nextID = 1;
-    private final int id;
+	private static int nextID = 0;
+    private int memID;
+
+	public Member(int ID) {
+		nextID = ID;	
+	}
 	
 	public Member(int birthyear, String frstNm, String lstNm, String gender) 
 	{
@@ -12,7 +16,7 @@ public class Member {
 		this.firstName = frstNm;
 		this.lastName = lstNm;
 		this.gender = gender;
-		id = nextID;
+		memID = nextID;
         nextID++;
 		
 	}
@@ -22,7 +26,7 @@ public class Member {
 		this.firstName = frstNm;
 		this.lastName = lstNm;
 		this.gender = gender;
-		this.id = id;
+		memID = id;
 		
 	}
 		public String getFirstname() 
@@ -56,16 +60,7 @@ public class Member {
 	}
 	public int getID() 
 	{
-		if(id >= 1) 
-		{
-			return id;
-		}
-		else 
-		{
-		
-			return 0;
-		}
-		
+		return memID;
 	}
 
 }

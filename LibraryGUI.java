@@ -57,7 +57,7 @@ public class LibraryGUI extends JFrame {
         setResizable(false);
         add(root);
     }
-    
+    // Write all code for GUI above this for now
     static Library checkConfig() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("config.txt"));
@@ -69,7 +69,6 @@ public class LibraryGUI extends JFrame {
 			String currentAddress = "";
 			int currentID = -1;
             Library cLibrary = new Library(currentName, currentAddress, currentID);
-            System.out.print(line);
 			while (line != null) {
 				if (count == 1) {
 					for (int i = 0; i < line.length(); i++) {
@@ -91,11 +90,37 @@ public class LibraryGUI extends JFrame {
 						cLibrary = new Library(currentName, currentAddress, currentID);
 						LibraryManagementSystem l1 = new LibraryManagementSystem(cLibrary);
 						buffer = -1;
-						first = true;
-						count++;
-            			line = reader.readLine();
 					}
-        		}
+        		} else {
+
+					int libraryHolder = -1;
+					int bookHolder = -1;
+					int memberHolder = -1;
+					int borrowedBookHolder = -1;
+
+					for (int i = 0; i < line.length(); i++) {
+             	  		if (line.charAt(i) == ',') {
+							if (count == 2) {
+								libraryHolder = Integer.parseInt(line.substring(0,i));
+							} else if (count == 3) {
+								bookHolder = Integer.parseInt(line.substring(buffer + 1,i));
+							} else if (count == 4) {
+								memberHolder = Integer.parseInt(line.substring(buffer + 1,i));
+							}
+                    		buffer = i;
+							count++;
+                		} else if (i == line.length()-1) {
+							borrowedBookHolder = Integer.parseInt(line.substring(buffer + 1,i + 1));
+                		}
+            		}
+					Library configLibrary = new Library (libraryHolder);
+					Book configBook = new Book (bookHolder);
+					Member configMember = new Member (memberHolder);
+					BorrowedBook configBorrowedBook = new BorrowedBook (borrowedBookHolder);
+				}
+				count++;
+				line = reader.readLine();
+				
 			}
             return cLibrary;
 		} catch(FileNotFoundException fnf) {
