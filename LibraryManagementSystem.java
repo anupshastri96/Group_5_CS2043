@@ -14,7 +14,6 @@ public class LibraryManagementSystem {
 	private ArrayList<Member> members;
 	private ArrayList<Admin> admins;
 	private int loginType;
-	private Library currentLibrary;
 	private Scanner fileScan;
 	
 	// Only the current library should be a parameter because everything else should be read in through a file.
@@ -33,6 +32,57 @@ public class LibraryManagementSystem {
 		this.checkStartupLibrary(currentLibrary);
 		
 	}
+
+	// Config Methods
+
+	/* public Library checkConfig() {
+		
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("config.txt"));
+			String line = reader.readLine();
+			int buffer = -1;
+			int count = 1;
+			boolean first = true;
+			String currentName = "";
+			String currentAddress = "";
+			int currentID = -1;
+			while (line != null) {
+				if (count == 1) {
+					for (int i = 0; i < line.length(); i++) {
+             	  		if (line.charAt(i) == ',') {
+							if (first) {
+								currentID = Integer.parseInt(line.substring(0,i));
+								first = false;
+							} else {
+								currentName = line.substring(buffer + 1,i);
+							} 
+                    		buffer = i;
+                		} else if (i == line.length()-1) {
+							currentAddress = line.substring(buffer + 1,line.length());
+                		}
+            		}
+					if (currentName == null || currentAddress == null || currentID == -1) {
+
+					} else {
+						Library currentLibrary = new Library(currentName, currentAddress, currentID);
+						this.checkStartupLibrary(currentLibrary);
+						buffer = -1;
+						first = true;
+						count++;
+            			line = reader.readLine();
+					}
+        		}
+			}
+			return currentLibrary;
+		} catch(FileNotFoundException fnf) {
+       		System.out.println("Config file is not there!");
+        	System.exit(1);
+    	} catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		} 
+	} */
+
 	// Library Methods
 
 	public void addLibrary(Library libraryIn) {
@@ -135,7 +185,6 @@ public class LibraryManagementSystem {
 		if (!inSystem) {
 			this.addLibrary(libraryIn);
 		}
-		this.currentLibrary = libraryIn;
 	}
 
 	// Admin methods
@@ -261,7 +310,7 @@ public class LibraryManagementSystem {
 			FileWriter writer = new FileWriter("memberStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			for (int i = 0; i < members.size(); i++) {
-				printer.println(members.get(i).getID() + "," + members.get(i).getBirthdate() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender());
+				printer.println(members.get(i).getID() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getBirthdate());
 			}
 			printer.close();
 

@@ -1,14 +1,18 @@
-package lib;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class BorrowedBook {
 	private int id;
+	private static int nextID = 0;
 	private int associatedMemberID;
 	private Date expectedReturnDate;
 	private Date borrowDate;
 	private Date returnDate;
+
+	public BorrowedBook(int ID) {
+		nextID = ID;
+	}
 	
 	public BorrowedBook(int id, int membID,Date exretdate,Date borrowdt) 
 	{

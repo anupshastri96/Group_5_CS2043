@@ -82,8 +82,10 @@ public class Library {
     public void addBook(Book bookIn) {
     	boolean isTrue = false;
 		for (int i = 0; i < books.size(); i++) {
-			if (books.get(i).getId() == bookIn.getId()) {
+			if (books.get(i).getId() == bookIn.getId() || (books.get(i).getName() == bookIn.getName() && books.get(i).getAuthor() == bookIn.getAuthor())) {
+                books.get(i).incAmount();
 				i = books.size();
+
 				isTrue = true;
 			}
 		}
@@ -112,7 +114,7 @@ public class Library {
     	
     	return s;
     }
-    
+ 
     private void bookReadFile() {
         try {
 
@@ -215,3 +217,4 @@ public class Library {
 		}
     }
 }
+
