@@ -51,24 +51,9 @@ public class Book {
         belongsToLibraries = new ArrayList<Library>();
         hasBorrowed = new ArrayList<Member>();
 
+
         // Method to turn the IDs into actual libraries or members would be here.
 
-    }
-
-    /*
-     * toString overwrite
-     */
-    public String toString() {
-        String s;
-        s = "Name: " + getName() + "\n" +
-            "Author: " + getAuthor() + "\n" +
-            "Genre: " + getGenre() + "\n" +
-            "Status: " + getStatus() + "\n" +
-            "Age Rating: " + getAgeRating() + "\n" +
-            "Book ID: " + getId() + "\n" +
-            "Currently borrowed: " + getBorrowed() + "\n";
-        
-        return s;
     }
 
 
@@ -119,7 +104,7 @@ public class Book {
      * ADULT METHODS 
      */
     public String getAdult() {
-        if (Adult == true) {
+        if (adult == true) {
             return "T";
         } else {
             return "F";
@@ -134,15 +119,19 @@ public class Book {
         int[] toReturn = new int[0];
         int[] holder = toReturn;
         for (int i = 0; i < belongsToLibraries.size(); i++) {
-            toReturn = new int[holder.length + 1;]
-            for (int i = 0; i < holder.length; i++) {
-                toReturn[i] = holder[i];
+            toReturn = new int[holder.length + 1];
+            for (int j = 0; j < holder.length; j++) {
+                toReturn[j] = holder[j];
             }
             toReturn[holder.length] = belongsToLibraries.get(belongsToLibraries.size()).getID();
             holder = toReturn;
 
         }
         return toReturn;
+    }
+
+    private void findLibraries() {
+        // Leave this for later
     }
 
     /* 
@@ -153,15 +142,19 @@ public class Book {
         int[] toReturn = new int[0];
         int[] holder = toReturn;
         for (int i = 0; i < hasBorrowed.size(); i++) {
-            toReturn = new int[holder.length + 1;]
-            for (int i = 0; i < holder.length; i++) {
-                toReturn[i] = holder[i];
+            toReturn = new int[holder.length + 1];
+            for (int j = 0; j < holder.length; j++) {
+                toReturn[j] = holder[j];
             }
             toReturn[holder.length] = hasBorrowed.get(hasBorrowed.size()).getID();
             holder = toReturn;
 
         }
         return toReturn;
+    }
+
+    private void findMembers() {
+        // Leave this for later
     }
 
 }   

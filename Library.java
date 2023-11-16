@@ -77,21 +77,37 @@ public class Library {
 
 
     /*
-     * BOOKS[] METHODS
+     * BOOKS METHODS
      */
-    public void addBook(Book b) {
-    	bookList.add(b);
+    public void addBook(Book bookIn) {
+    	boolean isTrue = false;
+		for (int i = 0; i < books.size(); i++) {
+			if (books.get(i).getId() == bookIn.getId()) {
+				i = books.size();
+				isTrue = true;
+			}
+		}
+		if (!isTrue) {
+			if (bookIn.getName() == null ||  bookIn.getAuthor() == null) {
+
+			} else {
+				books.add(bookIn);
+				this.bookWriteFile();
+			}
+		}
+
     }
     
     public void removeBook(Book b) {
-    	bookList.remove(b);
+        boolean isReal = false;
+    	books.remove(b);
     }
     
     public String toString() {
     	String s = "======================\n";
     	
-    	for(int i=0; i<bookList.size(); i++) {
-    		s += bookList.get(i).toString() + "======================\n";
+    	for(int i=0; i<books.size(); i++) {
+    		s += books.get(i).toString() + "======================\n";
     	}
     	
     	return s;
@@ -110,9 +126,9 @@ public class Library {
             String currentAuthor = "";
             int currentDewey = -1;
             int currentAmount = -1;
-            boolean currentAdult = null;
-            ArrayList<int> libraryIDs = new ArrayList<int>();
-            ArrayList<int> memberIDs = new ArrayList<int>();
+            boolean currentAdult = false;
+            ArrayList<Integer> libraryIDs = new ArrayList<Integer>();
+            ArrayList<Integer> memberIDs = new ArrayList<Integer>();
 
 
 			while (line != null) {
@@ -170,7 +186,7 @@ public class Library {
 		}
     }
 
-    private void writeBookFile() {
+    private void bookWriteFile() {
         try {
 			FileWriter writer = new FileWriter("bookStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
@@ -181,13 +197,13 @@ public class Library {
                 int[] memberIDs = books.get(i).getMemberIDs();
 
 				printer.print(books.get(i).getId() + " " + books.get(i).getDewey() + " " + books.get(i).getName() + " " + books.get(i).getAuthor() + " " + books.get(i).getAmount() + " " + books.get(i).getAdult());
-                for (int i = 0; i < libraryIDs.length; i++) {
+                for (int j = 0; j < libraryIDs.length; j++) {
                     // L would also be encoded.
-                    printer.print(" L" + libraryIDs[i])
+                    printer.print(" L" + libraryIDs[j]);
                 }
-                for (int i = 0; i < memberIDs.length; i++) {
+                for (int j = 0; j < memberIDs.length; j++) {
                     // M would also be encoded.
-                    printer.print(" M" + memberIDs[i])
+                    printer.print(" M" + memberIDs[j]);
                 }
                 printer.println();
 			}
