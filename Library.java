@@ -169,4 +169,33 @@ public class Library {
 			System.exit(1);
 		}
     }
+
+    private void writeBookFile() {
+        try {
+			FileWriter writer = new FileWriter("bookStorage.txt");
+        	PrintWriter printer = new PrintWriter(writer);
+			for (int i = 0; i < books.size(); i++) {
+                // Encoder should be somewhere here.
+                // These arrays would just turn int string arrays.
+                int[] libraryIDs = books.get(i).getLibraryIDs();
+                int[] memberIDs = books.get(i).getMemberIDs();
+
+				printer.print(books.get(i).getId() + " " + books.get(i).getDewey() + " " + books.get(i).getName() + " " + books.get(i).getAuthor() + " " + books.get(i).getAmount() + " " + books.get(i).getAdult());
+                for (int i = 0; i < libraryIDs.length; i++) {
+                    // L would also be encoded.
+                    printer.print(" L" + libraryIDs[i])
+                }
+                for (int i = 0; i < memberIDs.length; i++) {
+                    // M would also be encoded.
+                    printer.print(" M" + memberIDs[i])
+                }
+                printer.println();
+			}
+			printer.close();
+
+		} catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
+    }
 }

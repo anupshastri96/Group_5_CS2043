@@ -51,6 +51,8 @@ public class Book {
         belongsToLibraries = new ArrayList<Library>();
         hasBorrowed = new ArrayList<Member>();
 
+        // Method to turn the IDs into actual libraries or members would be here.
+
     }
 
     /*
@@ -93,43 +95,73 @@ public class Book {
     }
 
     /* 
-     * GENRE METHODS 
-     */
-    public String getGenre() {
-        return genre;
-    }
-
-    /* 
-     * STATUS METHODS 
-     */
-    public String getStatus() {
-        return status;
-    }
-
-    public void changeStatus(String s) {
-        status = s;
-    }
-
-    /* 
      * ID METHODS 
      */
     public int getId() {
         return bookId;
     }
-    
+
     /* 
-     * ISBORROWED METHODS 
+     * DEWEY METHODS 
      */
-    public boolean getBorrowed() {
-        return isBorrowed;
-    }
-    
-    public void borrowBook() {
-    	isBorrowed = true;
-    }
-    
-    public void returnBook() {
-    	isBorrowed = false;
+    public int getDewey() {
+        return dewey;
     }
 
-}
+    /* 
+     * AMOUNT METHODS 
+     */
+    public int getAmount() {
+        return amount;
+    }
+
+    /* 
+     * ADULT METHODS 
+     */
+    public String getAdult() {
+        if (Adult == true) {
+            return "T";
+        } else {
+            return "F";
+        }
+    }
+
+    /* 
+     * LIBRARY METHODS 
+     */
+    public int[] getLibraryIDs() {
+        // All of this should get replaced with cleaner code because it's really gross.
+        int[] toReturn = new int[0];
+        int[] holder = toReturn;
+        for (int i = 0; i < belongsToLibraries.size(); i++) {
+            toReturn = new int[holder.length + 1;]
+            for (int i = 0; i < holder.length; i++) {
+                toReturn[i] = holder[i];
+            }
+            toReturn[holder.length] = belongsToLibraries.get(belongsToLibraries.size()).getID();
+            holder = toReturn;
+
+        }
+        return toReturn;
+    }
+
+    /* 
+     * MEMBER METHODS 
+     */
+    public int[] getMemberIDs() {
+        // All of this should get replaced with cleaner code because it's really gross.
+        int[] toReturn = new int[0];
+        int[] holder = toReturn;
+        for (int i = 0; i < hasBorrowed.size(); i++) {
+            toReturn = new int[holder.length + 1;]
+            for (int i = 0; i < holder.length; i++) {
+                toReturn[i] = holder[i];
+            }
+            toReturn[holder.length] = hasBorrowed.get(hasBorrowed.size()).getID();
+            holder = toReturn;
+
+        }
+        return toReturn;
+    }
+
+}   

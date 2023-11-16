@@ -79,14 +79,14 @@ public class LibraryManagementSystem {
            	 	for (int i = 0; i < line.length(); i++) {
              	  	if (line.charAt(i) == ',') {
 						if (first) {
-							currentName = line.substring(0,i);
+							currentID = Integer.parseInt(line.substring(0,i));
 							first = false;
 						} else {
-							currentAddress = line.substring(buffer + 1,i);
+							currentName = line.substring(buffer + 1,i);
 						} 
                     	buffer = i;
                 	} else if (i == line.length()-1) {
-                    	currentID = Integer.parseInt(line.substring(buffer + 1,line.length()));
+						currentAddress = line.substring(buffer + 1,line.length());
                 	}
             	}
 				if (currentName == null || currentAddress == null || currentID == -1) {
@@ -114,7 +114,7 @@ public class LibraryManagementSystem {
 			FileWriter writer = new FileWriter("libraryStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			for (int i = 0; i < libraries.size(); i++) {
-				printer.println(libraries.get(i).getName() + "," + libraries.get(i).getAddress() + "," + libraries.get(i).getID());
+				printer.println(libraries.get(i).getID() + "," + libraries.get(i).getName() + "," + libraries.get(i).getAddress());
 			}
 			printer.close();
 
@@ -225,7 +225,7 @@ public class LibraryManagementSystem {
         	    for (int i = 0; i < line.length(); i++) {
         	        if (line.charAt(i) == ',') {
 						if (count == 1) {
-							currentBirthdate = Integer.parseInt(line.substring(0,i));
+							currentID = Integer.parseInt(line.substring(0,i));
 						} else if (count == 2) {
 							currentFirstname = line.substring(buffer + 1,i);
 						} else if (count == 3) {
@@ -236,7 +236,7 @@ public class LibraryManagementSystem {
         	            buffer = i;
 						count++;
         	        } else if (i == line.length()-1) {
-        	            currentID = Integer.parseInt(line.substring(buffer + 1,line.length()));
+						currentBirthdate = Integer.parseInt(line.substring(buffer + 1,line.length()));
         	        }
         	    }
 				Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentID);
@@ -261,7 +261,7 @@ public class LibraryManagementSystem {
 			FileWriter writer = new FileWriter("memberStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			for (int i = 0; i < members.size(); i++) {
-				printer.println(members.get(i).getBirthdate() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getID());
+				printer.println(members.get(i).getID() + "," + members.get(i).getBirthdate() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender());
 			}
 			printer.close();
 
