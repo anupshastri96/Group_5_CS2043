@@ -16,12 +16,34 @@ public class LibraryTestDriver{
 		
 		l1.addBook(b1);
 		l1.addBook(b2);
-		
 		System.out.println("Added b1 and b2 to l1");
 		
 		System.out.println(l1.toString());
+		System.out.println("Printed l1 list (1)");
 		
-		System.out.println("Printed l1 list");
+		l1.addBook(b2);
+		System.out.println("Added b2 to l1 again");
+		
+		System.out.println(l1.toString());
+		System.out.println("Printed l1 list (2)");
+		
+		Book b3 = b1;
+		System.out.println("Created Book b3 as a copy of b1");
+		
+		l1.addBook(b3);
+		System.out.println("Added b3 to l1");
+		
+		System.out.println(l1.toString());
+		System.out.println("Printed l1 list (3)");
+		
+		Book b4 = new Book("The Hunger Games", "Suzanne Collins",  800, false);
+		System.out.println("Created Book b4 with same values as b1");
+		
+		l1.addBook(b4);
+		System.out.println("Added b4 to l1");
+		
+		System.out.println(l1.toString());
+		System.out.println("Printed l1 list (4)");
 	}
 	
 }
