@@ -62,12 +62,12 @@ public class Book {
 	 */
 	public String toString() {
 		String s =	"Title: " + getName() + "\n" +
-					"Author: " + getAuthor() + "\n" +
-					"Dewey: " + getDewey() + "\n" +
-					"Book ID: " + getId() + "\n" +
-					"Amount: " + getAmount() + "\n" +
-					"Amount Borrowed: " + amountBorrowed + "\n" +
-					"LibraryIDs: ";
+				"Author: " + getAuthor() + "\n" +
+				"Dewey: " + getDewey() + "\n" +
+				"Book ID: " + getId() + "\n" +
+				"Amount: " + getAmount() + "\n" +
+				"Amount Borrowed: " + amountBorrowed + "\n" +
+				"LibraryIDs: ";
 		
 		if (getLibraryIDs().length == 0) s += "No LibraryIDs\n";
 		else {
@@ -78,7 +78,7 @@ public class Book {
 		
 		s += "MemberIDs: ";
 		
-		if (getMemberIDs().length == 0) s += "No MemberIDs";
+		if (getMemberIDs().length == 0) s += "No MemberIDs\n";
 		else {
 			for(int j=0; j<getMemberIDs().length; j++) {
 				s += getMemberIDs()[j] + "\n";

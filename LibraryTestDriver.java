@@ -4,39 +4,24 @@ public class LibraryTestDriver{
 	
 		Book b1 = new Book("The Hunger Games", "Suzanne Collins",  800, false);
 		
-		/*
-		public String toString() {
-			String s =	"Title: " + getName() + "\n" +
-						"Author: " + getAuthor() + "\n" +
-						"Dewey: " + getDewey() + "\n" +
-						"Book ID: " + getId() + "\n" +
-						"Amount: " + getAmount() + "\n" +
-						"Amount Borrowed: " + amountBorrowed + "\n" +
-						"LibraryIDs: ";
+		System.out.println("Created Book b1");
 		
-			if (getLibraryIDs().length == 0) s += "No LibraryIDs\n";
-			else {
-				for(int i=0; i<getLibraryIDs().length; i++) {
-					s += getLibraryIDs()[i] + "\n";
-				}
-			}
+		Book b2 = new Book("The Hobbit", "J.R.R. Tolkien", 800, false);
 		
-			s += "MemberIDs: ";
+		System.out.println("Created Book b2");
 		
-			if (getMemberIDs().length == 0) s += "No MemberIDs";
-			else {
-				for(int j=0; j<getMemberIDs().length; j++) {
-					s += getMemberIDs()[j] + "\n";
-				}
-			}
+		Library l1 = new Library("Library 1", "123 Book Rd");
 		
-			return s;
-		}
-		*/
+		System.out.println("Created Library l1");
 		
-		System.out.print(b1.toString());
+		l1.addBook(b1);
+		l1.addBook(b2);
 		
-		//Library l1 = new Library("Library 1", "123 Book Rd");
+		System.out.println("Added b1 and b2 to l1");
+		
+		System.out.println(l1.toString());
+		
+		System.out.println("Printed l1 list");
 	}
 	
 }
