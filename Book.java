@@ -26,7 +26,7 @@ public class Book {
         dewey = deweyIn;
         adult = adultIn;
 
-        bookId = ((dewey * 10000000) + nextId);
+        bookId = ((dewey * 1000000) + nextId);
         nextId++;
 
         amount = 1;
@@ -37,7 +37,7 @@ public class Book {
 
     }
 
-    public Book(String nameIn, String authorIn, int deweyIn, boolean adultIn, int amountIn, int bookIdIn, int[] libraryId, int[] memberId) {
+    public Book(String nameIn, String authorIn, int deweyIn, boolean adultIn, int amountIn, int bookIdIn, ArrayList<Integer> libraryId, ArrayList<Integer> memberId) {
         
         name = nameIn;
         author = authorIn;
@@ -49,12 +49,43 @@ public class Book {
         amountBorrowed = 0; // This will be done when borrowed book is finished.
 
         belongsToLibraries = new ArrayList<Library>();
+        LibraryManagementSystem.findLibrary(libraryId);
         hasBorrowed = new ArrayList<Member>();
 
 
         // Method to turn the IDs into actual libraries or members would be here.
 
     }
+
+    @Override
+	public String toString() {
+		String toReturn =	"Title: " + this.name + "\n" +
+			"Author: " + this.author + "\n" +
+			"Dewey: " + this.dewey + "\n" +
+			"Book ID: " + this.bookId + "\n" +
+			"Amount: " + this.amount + "\n" +
+			"Amount Borrowed: " + amountBorrowed + "\n" +
+			"LibraryIDs: ";
+		
+		if (getLibraryIDs().length == 0) toReturn += "No LibraryIDs\n";
+		else {
+			for(int i=0; i<getLibraryIDs().length; i++) {
+				toReturn += getLibraryIDs()[i] + "\n";
+			}
+		}
+		
+		toReturn += "MemberIDs: ";
+		
+		if (getMemberIDs().length == 0) toReturn += "No MemberIDs\n";
+		else {
+			for(int j=0; j<getMemberIDs().length; j++) {
+				toReturn += getMemberIDs()[j] + "\n";
+			}
+		}
+		
+		return toReturn;
+	}
+
 
 
     /* 
@@ -100,6 +131,10 @@ public class Book {
         return amount;
     }
 
+    public void incAmount() {
+        amount++;
+    }
+
     /* 
      * ADULT METHODS 
      */
@@ -132,6 +167,7 @@ public class Book {
 
     private void findLibraries() {
         // Leave this for later
+
     }
 
     /* 

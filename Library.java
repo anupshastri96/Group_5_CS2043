@@ -136,7 +136,7 @@ public class Library {
 			while (line != null) {
            	 	for (int i = 0; i < line.length(); i++) {
                     // Decoding would be done here
-             	  	if (line.charAt(i) == ' ') {
+             	  	if (line.charAt(i) == ',') {
                         if (count == 1) {
                             currentID = Integer.parseInt(line.substring(0,i));
                             count++;
@@ -198,7 +198,7 @@ public class Library {
                 int[] libraryIDs = books.get(i).getLibraryIDs();
                 int[] memberIDs = books.get(i).getMemberIDs();
 
-				printer.print(books.get(i).getId() + " " + books.get(i).getDewey() + " " + books.get(i).getName() + " " + books.get(i).getAuthor() + " " + books.get(i).getAmount() + " " + books.get(i).getAdult());
+				printer.print(books.get(i).getId() + "," + books.get(i).getDewey() + "," + books.get(i).getName() + "," + books.get(i).getAuthor() + "," + books.get(i).getAmount() + "," + books.get(i).getAdult());
                 for (int j = 0; j < libraryIDs.length; j++) {
                     // L would also be encoded.
                     printer.print(" L" + libraryIDs[j]);
