@@ -170,13 +170,15 @@ public class Library {
                         buffer = i;
                 	} 
             	}
-
-				Book addBook = new Book(currentName, currentAuthor, currentDewey, currentAdult, currentAmount, currentID, libraryIDs, memberIDs);
-				books.add(addBook);
+                for (int i = 0; i < libraryIDs.size(); i++) {
+                    if (libraryIDs.get(i) == this.getID()) {
+                        Book addBook = new Book(currentName, currentAuthor, currentDewey, currentAdult, currentAmount, currentID, libraryIDs, memberIDs);
+				        books.add(addBook);
+                    }
+                }
 				buffer = -1;
                 count = 1;
             	line = reader.readLine();
-
         	}
 
 		} catch(FileNotFoundException fnf) {

@@ -48,12 +48,8 @@ public class Book {
 
         amountBorrowed = 0; // This will be done when borrowed book is finished.
 
-        belongsToLibraries = new ArrayList<Library>();
-        LibraryManagementSystem.findLibrary(libraryId);
-        hasBorrowed = new ArrayList<Member>();
-
-
-        // Method to turn the IDs into actual libraries or members would be here.
+        belongsToLibraries = LibraryManagementSystem.findLibrary(libraryId);
+        hasBorrowed = LibraryManagementSystem.findMember(memberId);
 
     }
 

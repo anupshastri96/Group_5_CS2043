@@ -14,29 +14,37 @@ public class LibraryManagementSystem {
 	private static ArrayList<Member> members;
 	private static ArrayList<Admin> admins;
 
+	private static Library currentLibrary;
+	private static int loginType;
+
 	// Config Methods
 
-	static ArrayList<Integer> checkConfig() {
-		ArrayList<Integer> FAIL = new ArrayList<Integer>();
+	static void readConfig() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("config.txt"));
 			String line = reader.readLine();
 			int buffer = 0;
 			int count = 1;
-			ArrayList<Integer> toReturn = new ArrayList<Integer>();
+			ArrayList<Integer> configInts = new ArrayList<Integer>();
 			if (line != null) {
 				for (int i = 0; i < line.length(); i++) {
              		if (line.charAt(i) == ',') {
-						toReturn.add(Integer.parseInt(line.substring(buffer,i)));
+						configInts.add(Integer.parseInt(line.substring(buffer,i)));
                 	} else if (i == line.length()-1) {
-						toReturn.add(Integer.parseInt(line.substring(buffer + 1,line.length())));
+						configInts.add(Integer.parseInt(line.substring(buffer + 1,line.length())));
                 	}
 					buffer = i;
             	}
 			} else {
 				//This will do something idk what
 			}
-            return toReturn;
+
+			currentLibrary = findLibrary(configInts.get(0));
+			Library fakeLibrary = new Library(configInts.get(1));
+			Book fakeBook = new Book(configInts.get(2));
+			Member fakeMember = new Member(configInts.get(3));
+			BorrowedBook fakeBorrowedBook = new BorrowedBook(configInts.get(4));
+
 		} catch(FileNotFoundException fnf) {
        		System.out.println("Config file is not there!");
         	System.exit(1);
@@ -44,8 +52,6 @@ public class LibraryManagementSystem {
 			System.out.print("Hi");
 			System.exit(1);
 		}
-		// Can't get this to compile without this here for some reason.
-		return FAIL;
 	}
 
 	static void writeConfig() {
@@ -54,7 +60,11 @@ public class LibraryManagementSystem {
 
 	// Library Methods
 
-	static void addLibrary(Library libraryIn, int loginType) {
+	static Library getCurrentLibrary() {
+		return currentLibrary;
+	}
+
+	static void addLibrary(Library libraryIn) {
 		if (loginType == 1) {
 			boolean isTrue = false;
 			for (int i = 0; i < libraries.size(); i++) {
@@ -74,7 +84,7 @@ public class LibraryManagementSystem {
 		}
 	}
 	
-	static void removeLibrary(Library libraryIn, int loginType) {
+	static void removeLibrary(Library libraryIn) {
 		if (loginType == 1) {
 			for (int i = 0; i < libraries.size(); i++) {
 				if (libraries.get(i).getID() == libraryIn.getID()) {
@@ -200,15 +210,19 @@ public class LibraryManagementSystem {
 		}
 	}
 
-	// Checks if entered username and password are in the system.
 	static boolean checkAdmin(String enteredUser, String enteredPass) {
-		// Do this later
+		for (int i = 0; i < admins.size(); i++) {
+			if (enteredUser == admins.get(i).getUsername() && enteredPass == admins.get(i).getPassword()) {
+				loginType = 1;
+				return true;
+			}
+		}
 		return false;
 	}
 
 	// Member methods
 
-	public void addMember(Member memberIn, int loginType) {
+	public void addMember(Member memberIn) {
 		if (loginType == 1) {
 			boolean isTrue = false;
 			for (int i = 0; i < members.size(); i++) {
@@ -222,6 +236,27 @@ public class LibraryManagementSystem {
 				memberWriteFile();
 			}
 		}
+	}
+
+	static Member findMember(int memberID) {
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).getID() == memberID) {
+				return members.get(i);
+			}
+		}
+		return null;
+	}
+
+	static ArrayList<Member> findMember(ArrayList<Integer> memberIDs) {
+		ArrayList<Member> toReturn = new ArrayList<Member>();
+		for (int i = 0; i < members.size(); i++) {
+			for (int j = 0; j < memberIDs.size(); j++) {
+				if (members.get(i).getID() == memberIDs.get(j)) {
+					toReturn.add(members.get(i));
+				}
+			}
+		}
+		return toReturn;
 	}
 
 	static void memberReadFile() {

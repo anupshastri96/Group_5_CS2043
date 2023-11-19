@@ -14,27 +14,12 @@ import java.util.Scanner;
 
 public class LibraryGUI extends JFrame {
 
-	private static ArrayList<Integer> configInts;
-
-	private static Library currentLibrary;
-	// does nothing v
-	private static int loginType;
-    
-
     public static void main(String[] args) {
 
-        configInts = LibraryManagementSystem.checkConfig();
-
-		Library fakeLibrary = new Library(configInts.get(1));
-		Book fakeBook = new Book(configInts.get(2));
-		Member fakeMember = new Member(configInts.get(3));
-		BorrowedBook fakeBorrowedBook = new BorrowedBook(configInts.get(4));
-		
 		LibraryManagementSystem.libraryReadFile();
 		LibraryManagementSystem.memberReadFile();
 		LibraryManagementSystem.adminReadFile();
-
-		currentLibrary = LibraryManagementSystem.findLibrary(configInts.get(0));
+		LibraryManagementSystem.readConfig();
 
         SwingUtilities.invokeLater(() -> {new LibraryGUI().setVisible(true);});
 
@@ -44,8 +29,8 @@ public class LibraryGUI extends JFrame {
         JPanel root = new JPanel();
         root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
 
-        JLabel titleLabel = new JLabel(currentLibrary.getName());
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
+        JLabel titleLabel = new JLabel("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 12));
 
         JButton librarianButton = new JButton("Librarian");
         librarianButton.addActionListener(new ActionListener() {
@@ -65,13 +50,17 @@ public class LibraryGUI extends JFrame {
         });
         
         root.add(titleLabel);
+		root.add(Box.createHorizontalStrut(1));
+		root.add(Box.createHorizontalStrut(1));
+		root.add(Box.createHorizontalStrut(1));
         root.add(librarianButton);
+		root.add(Box.createHorizontalStrut(1));
         root.add(adminButton);
-        root.setAlignmentX(Component.CENTER_ALIGNMENT);
+		root.add(Box.createHorizontalStrut(1));
 
-        setTitle(currentLibrary.getName());
+        setTitle(LibraryManagementSystem.getCurrentLibrary().getName());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 150);
+        setSize(300, 200);
         setResizable(false);
         add(root);
     }
