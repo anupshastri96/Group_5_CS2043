@@ -61,22 +61,20 @@ public class Book {
 			"Book ID: " + this.bookId + "\n" +
 			"Amount: " + this.amount + "\n" +
 			"Amount Borrowed: " + amountBorrowed + "\n" +
-			"LibraryIDs: ";
+			"Library Names: ";
 		
-		if (getLibraryIDs().length == 0) toReturn += "No LibraryIDs\n";
+		if (getLibraryIDs().size() == 0) toReturn += "No LibraryIDs\n";
 		else {
-			for(int i=0; i<getLibraryIDs().length; i++) {
-				toReturn += getLibraryIDs()[i] + "\n";
+			for(int i=0; i<getLibraryIDs().size(); i++) {
+				toReturn += belongsToLibraries.get(i).getName() + "\n";
 			}
 		}
 		
-		toReturn += "MemberIDs: ";
+		toReturn += "Amount of MemberIDs: ";
 		
-		if (getMemberIDs().length == 0) toReturn += "No MemberIDs\n";
+		if (getMemberIDs().size() == 0) toReturn += "No MemberIDs\n";
 		else {
-			for(int j=0; j<getMemberIDs().length; j++) {
-				toReturn += getMemberIDs()[j] + "\n";
-			}
+			toReturn += hasBorrowed.size() + "\n";
 		}
 		
 		return toReturn;
@@ -145,18 +143,12 @@ public class Book {
     /* 
      * LIBRARY METHODS 
      */
-    public int[] getLibraryIDs() {
-        // All of this should get replaced with cleaner code because it's really gross.
-        int[] toReturn = new int[0];
-        int[] holder = toReturn;
-        for (int i = 0; i < belongsToLibraries.size(); i++) {
-            toReturn = new int[holder.length + 1];
-            for (int j = 0; j < holder.length; j++) {
-                toReturn[j] = holder[j];
+    public ArrayList<Integer> getLibraryIDs() {
+        ArrayList<Integer> toReturn = new ArrayList<Integer>();
+        if (belongsToLibraries.size() != 0) {
+            for (int i = 0; i < belongsToLibraries.size(); i++) {
+                toReturn.add(belongsToLibraries.get(i).getID());
             }
-            toReturn[holder.length] = belongsToLibraries.get(belongsToLibraries.size()).getID();
-            holder = toReturn;
-
         }
         return toReturn;
     }
@@ -166,21 +158,27 @@ public class Book {
 
     }
 
+    public void addLibrary(int libraryID) {
+        boolean canAdd = true;
+        if (belongsToLibraries.size() != 0) {
+            for (int i = 0; i < belongsToLibraries.size(); i++) {
+                if (belongsToLibraries.get(i).getID() == libraryID) {
+                    canAdd = false;
+                }
+            }
+        }
+        if (canAdd) {
+            belongsToLibraries.add(LibraryManagementSystem.findLibrary(libraryID));
+        }
+    }
+
     /* 
      * MEMBER METHODS 
      */
-    public int[] getMemberIDs() {
-        // All of this should get replaced with cleaner code because it's really gross.
-        int[] toReturn = new int[0];
-        int[] holder = toReturn;
+    public ArrayList<Integer> getMemberIDs() {
+       ArrayList<Integer> toReturn = new ArrayList<Integer>();
         for (int i = 0; i < hasBorrowed.size(); i++) {
-            toReturn = new int[holder.length + 1];
-            for (int j = 0; j < holder.length; j++) {
-                toReturn[j] = holder[j];
-            }
-            toReturn[holder.length] = hasBorrowed.get(hasBorrowed.size()).getID();
-            holder = toReturn;
-
+            toReturn.add(hasBorrowed.get(i).getID());
         }
         return toReturn;
     }

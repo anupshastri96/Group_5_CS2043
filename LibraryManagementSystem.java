@@ -13,6 +13,7 @@ public class LibraryManagementSystem {
 	private static ArrayList<Library> libraries;
 	private static ArrayList<Member> members;
 	private static ArrayList<Admin> admins;
+	private static ArrayList<Integer> configInts;
 
 	private static Library currentLibrary;
 	private static int loginType;
@@ -25,7 +26,7 @@ public class LibraryManagementSystem {
 			String line = reader.readLine();
 			int buffer = 0;
 			int count = 1;
-			ArrayList<Integer> configInts = new ArrayList<Integer>();
+			configInts = new ArrayList<Integer>();
 			if (line != null) {
 				for (int i = 0; i < line.length(); i++) {
              		if (line.charAt(i) == ',') {
@@ -65,6 +66,7 @@ public class LibraryManagementSystem {
 	}
 
 	static void addLibrary(Library libraryIn) {
+		loginType = 1;
 		if (loginType == 1) {
 			boolean isTrue = false;
 			for (int i = 0; i < libraries.size(); i++) {
@@ -175,6 +177,11 @@ public class LibraryManagementSystem {
 		}
 	}
 
+	static void changeCurrentLibrary(Library libraryIn) {
+		currentLibrary = libraryIn;
+		// Should write to config
+	}
+
 	// Admin methods
 
 	static void adminReadFile() {
@@ -212,7 +219,7 @@ public class LibraryManagementSystem {
 
 	static boolean checkAdmin(String enteredUser, String enteredPass) {
 		for (int i = 0; i < admins.size(); i++) {
-			if (enteredUser == admins.get(i).getUsername() && enteredPass == admins.get(i).getPassword()) {
+			if (enteredUser.equals(admins.get(i).getUsername()) && enteredPass.equals(admins.get(i).getPassword())) {
 				loginType = 1;
 				return true;
 			}
@@ -223,18 +230,16 @@ public class LibraryManagementSystem {
 	// Member methods
 
 	public void addMember(Member memberIn) {
-		if (loginType == 1) {
-			boolean isTrue = false;
-			for (int i = 0; i < members.size(); i++) {
-				if (members.get(i).getID() == memberIn.getID()) {
-					i = members.size();
-					isTrue = true;
-				}
+		boolean isTrue = false;
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).getID() == memberIn.getID()) {
+				i = members.size();
+				isTrue = true;
 			}
-			if (!isTrue) {
-				members.add(memberIn);
-				memberWriteFile();
-			}
+		}
+		if (!isTrue) {
+			members.add(memberIn);
+			memberWriteFile();
 		}
 	}
 
@@ -246,7 +251,16 @@ public class LibraryManagementSystem {
 		}
 		return null;
 	}
-
+	/* This will be completed when I get to it
+	static Member findMember(String firstName, String lastName) {
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).getID() == memberID) {
+				return members.get(i);
+			}
+		}
+		return null;
+	}
+	*/
 	static ArrayList<Member> findMember(ArrayList<Integer> memberIDs) {
 		ArrayList<Member> toReturn = new ArrayList<Member>();
 		for (int i = 0; i < members.size(); i++) {

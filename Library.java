@@ -84,8 +84,9 @@ public class Library {
 		for (int i = 0; i < books.size(); i++) {
 			if (books.get(i).getId() == bookIn.getId() || (books.get(i).getName() == bookIn.getName() && books.get(i).getAuthor() == bookIn.getAuthor())) {
                 books.get(i).incAmount();
+                books.get(i).addLibrary(this.getID());
+                this.bookWriteFile();
 				i = books.size();
-
 				isTrue = true;
 			}
 		}
@@ -93,6 +94,7 @@ public class Library {
 			if (bookIn.getName() == null ||  bookIn.getAuthor() == null) {
 
 			} else {
+                bookIn.addLibrary(this.getID());
 				books.add(bookIn);
 				this.bookWriteFile();
 			}
@@ -197,17 +199,17 @@ public class Library {
 			for (int i = 0; i < books.size(); i++) {
                 // Encoder should be somewhere here.
                 // These arrays would just turn int string arrays.
-                int[] libraryIDs = books.get(i).getLibraryIDs();
-                int[] memberIDs = books.get(i).getMemberIDs();
+                ArrayList<Integer> libraryIDs = books.get(i).getLibraryIDs();
+                ArrayList<Integer> memberIDs = books.get(i).getMemberIDs();
 
 				printer.print(books.get(i).getId() + "," + books.get(i).getDewey() + "," + books.get(i).getName() + "," + books.get(i).getAuthor() + "," + books.get(i).getAmount() + "," + books.get(i).getAdult());
-                for (int j = 0; j < libraryIDs.length; j++) {
+                for (int j = 0; j < libraryIDs.size(); j++) {
                     // L would also be encoded.
-                    printer.print(" L" + libraryIDs[j]);
+                    printer.print(" L" + libraryIDs.get(j));
                 }
-                for (int j = 0; j < memberIDs.length; j++) {
+                for (int j = 0; j < memberIDs.size(); j++) {
                     // M would also be encoded.
-                    printer.print(" M" + memberIDs[j]);
+                    printer.print(" M" + memberIDs.get(j));
                 }
                 printer.println();
 			}
