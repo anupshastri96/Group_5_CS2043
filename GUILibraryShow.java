@@ -13,11 +13,14 @@ import javax.swing.JPanel;
 
 public class GUILibraryShow extends JFrame implements ActionListener {
 
+    JLabel test;
     JButton editButton;
     JButton removeButton;
     JButton backButton;
 
     GUILibraryShow(Library libraryIn) {
+
+        test = new JLabel(libraryIn.getName());
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
@@ -28,6 +31,11 @@ public class GUILibraryShow extends JFrame implements ActionListener {
         editButton.setBounds(100,100,100,40);
         editButton.setFocusable(false);
         editButton.addActionListener(this);
+
+        removeButton = new JButton("Remove from System");
+        removeButton.setBounds(100,100,100,40);
+        removeButton.setFocusable(false);
+        removeButton.addActionListener(this);
 
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
@@ -48,6 +56,7 @@ public class GUILibraryShow extends JFrame implements ActionListener {
         topPanel.add(backButton);
         this.add(topPanel);
 
+        panel2.add(test);
         panel2.add(removeButton);
         this.add(panel2);
 

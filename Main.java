@@ -6,7 +6,7 @@ public class Main {
 		LibraryManagementSystem.adminReadFile();
 		LibraryManagementSystem.readConfig();
 
-        LibraryStart start = new LibraryStart();
+        GUILibraryStart start = new GUILibraryStart();
 
     }
 }

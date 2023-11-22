@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 
 public class SearchAlgorithm {
-    // All search algorithms should go in here.
 
     private static ArrayList<Integer> toReturn;
     

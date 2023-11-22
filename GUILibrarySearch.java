@@ -77,15 +77,18 @@ public class GUILibrarySearch extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
+        
         if (e.getSource() == searchButton) {
+            
             SearchAlgorithm.librarySearch(nameTextField.getText(),addressTextField.getText(),IDTextField.getText());
             ArrayList<Integer> holder = SearchAlgorithm.getResults();
+            
             if (holder.size() == 1) {
                 this.dispose();
                 GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(holder.get(0)));
             } else {
-                //this.dispose();
-                //GUILibraryResults results = new GUILibraryResults();
+                this.dispose();
+                GUILibraryResults results = new GUILibraryResults(holder);
             }
 
         }  else if (e.getSource() == addButton) {
