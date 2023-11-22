@@ -1,50 +1,46 @@
-import java.awt.event.ActionListener;
+ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
-
 
 import java.util.ArrayList;
 
 
-public class GUILibraryResults extends JFrame implements ActionListener {
+public class GUILibraryEdit extends JFrame implements ActionListener {
 
-    JButton confirmButton;
+    JTextField nameTextField;
+    JTextField addressTextField;
+    JButton submitButton;
     JButton backButton;
-    JComboBox<String> options;
-    ArrayList<Integer> libraryIDs;
+    Library storeLibrary;
 
-    GUILibraryResults(ArrayList<Integer> libraryIDs) {
+    GUILibraryEdit(Library libraryIn) {
 
-        confirmButton = new JButton("Confirm");
-        confirmButton.setBounds(100,100,100,40);
-        confirmButton.setFocusable(false);
-        confirmButton.addActionListener(this);
+        storeLibrary = libraryIn;
+
+        submitButton = new JButton("Submit Changes");
+        submitButton.setBounds(100,100,100,40);
+        submitButton.setFocusable(false);
+        submitButton.addActionListener(this);
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        this.libraryIDs = libraryIDs;
+        nameTextField = new JTextField();
+        nameTextField.setPreferredSize(new Dimension(250,40));
 
-        String[] libraryNames = new String[libraryIDs.size()];
-        for (int i = 0; i < libraryIDs.size(); i++) {
-            String toAdd = LibraryManagementSystem.findLibrary(libraryIDs.get(i)).getName();
-            libraryNames[i] = (toAdd);
-        }
-        options = new JComboBox<>(libraryNames);
+        addressTextField = new JTextField();
+        addressTextField.setPreferredSize(new Dimension(250,40));
+
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -63,8 +59,9 @@ public class GUILibraryResults extends JFrame implements ActionListener {
         topPanel.add(backButton);
         this.add(topPanel);
 
-        panel2.add(options);
-        panel2.add(confirmButton);
+        panel2.add(nameTextField);
+        panel2.add(addressTextField);
+        panel2.add(submitButton);
         this.add(panel2);
 
         this.setVisible(true);
@@ -72,14 +69,18 @@ public class GUILibraryResults extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         
-        if (e.getSource() == confirmButton) {
+        if (e.getSource() == submitButton) {
+            storeLibrary.changeName(nameTextField.getText());
+            storeLibrary.changeAddress(addressTextField.getText());
             this.dispose();
-            GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(libraryIDs.get(options.getSelectedIndex())));
-        } else if (e.getSource() == backButton) {
-            LibraryManagementSystem.logOut();
+            GUILibraryShow show = new GUILibraryShow(storeLibrary);
+        }  else if (e.getSource() == backButton) {
             this.dispose();
-            GUILibrarySearch search = new GUILibrarySearch();
+            GUILibraryShow show = new GUILibraryShow(storeLibrary);
         }
 	}
 	
-}
+}       
+        
+        
+        

@@ -17,9 +17,14 @@ public class GUILibraryShow extends JFrame implements ActionListener {
     JButton editButton;
     JButton removeButton;
     JButton backButton;
+    JButton currentButton;
+    Library storeLibrary;
 
     GUILibraryShow(Library libraryIn) {
 
+        storeLibrary = libraryIn;
+
+        // Add more labels that display the info
         test = new JLabel(libraryIn.getName());
 
         backButton = new JButton("Back");
@@ -37,6 +42,11 @@ public class GUILibraryShow extends JFrame implements ActionListener {
         removeButton.setFocusable(false);
         removeButton.addActionListener(this);
 
+        currentButton = new JButton("Set as Current");
+		currentButton.setBounds(100,100,100,40);
+        currentButton.setFocusable(false);
+        currentButton.addActionListener(this);
+
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,12 +62,13 @@ public class GUILibraryShow extends JFrame implements ActionListener {
         panel2.setPreferredSize(new Dimension(300,300));
         panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+        topPanel.add(removeButton);
         topPanel.add(editButton);
         topPanel.add(backButton);
         this.add(topPanel);
 
         panel2.add(test);
-        panel2.add(removeButton);
+        panel2.add(currentButton);
         this.add(panel2);
 
         this.setVisible(true);
@@ -65,8 +76,16 @@ public class GUILibraryShow extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == editButton) {
-           
-        }  else if (e.getSource() == backButton) {
+            this.dispose();
+            GUILibraryEdit edit = new GUILibraryEdit(storeLibrary);
+        } else if (e.getSource() == currentButton) {
+            LibraryManagementSystem.changeCurrentLibrary(storeLibrary);
+            this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
+        } else if (e.getSource() == removeButton) {
+            LibraryManagementSystem.removeLibrary(storeLibrary);
+            this.dispose();
+            GUILibrarySearch search = new GUILibrarySearch();
+        } else if (e.getSource() == backButton) {
             this.dispose();
             GUILibrarySearch search = new GUILibrarySearch();
 

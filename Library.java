@@ -53,6 +53,7 @@ public class Library {
 
     public void changeName(String s) {
         name = s;
+        LibraryManagementSystem.libraryWriteFile();
     } 
 
 
@@ -65,6 +66,7 @@ public class Library {
 
     public void changeAddress(String s) {
         address = s;
+        LibraryManagementSystem.libraryWriteFile();
     }
 
 

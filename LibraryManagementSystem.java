@@ -106,6 +106,7 @@ public class LibraryManagementSystem {
 				if (libraries.get(i).getID() == libraryIn.getID()) {
 					libraries.remove(i);
 					i = libraries.size();
+					libraryWriteFile();
 				}
 			}
 		}
@@ -193,7 +194,8 @@ public class LibraryManagementSystem {
 
 	static void changeCurrentLibrary(Library libraryIn) {
 		currentLibrary = libraryIn;
-		// Should write to config
+		configInts.set(0, libraryIn.getID());
+		writeConfig();
 	}
 
 	// Admin methods
