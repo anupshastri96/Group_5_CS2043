@@ -17,13 +17,13 @@ public class Library {
     private Scanner bookScan;
 
     public Library(int ID) {
-        // Startup Library class to fix issues with overlap IDs (Currently does not work)
+        // Startup Library class to fix issues with overlap IDs
         nextId = ID;
     }
 
     public Library(String name, String address) {
 
-        this.name = name ;
+        this.name = name;
         this.address = address;
 
         libId = nextId;
@@ -34,7 +34,7 @@ public class Library {
     }
 
     public Library(String name, String address, int libId) {
-        this.name = name ;
+        this.name = name;
         this.address = address;
         this.libId = libId;
 
@@ -73,6 +73,10 @@ public class Library {
      */
     public int getID() {
         return libId;
+    }
+
+    public void setNextID(int nextId) {
+        this.nextId = nextId;
     }
 
 

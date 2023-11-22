@@ -70,7 +70,8 @@ public class LibraryManagementSystem {
 		if (loginType == 1) {
 			boolean isTrue = false;
 			for (int i = 0; i < libraries.size(); i++) {
-				if (libraries.get(i).getID() == libraryIn.getID()) {
+				if (libraries.get(i).getID() == libraryIn.getID() || (libraryIn.getName().equals(libraries.get(i).getName()) && libraryIn.getAddress().equals(libraries.get(i).getAddress()))) {
+					libraries.get(i).setNextID(libraries.get(i).getID() + 1);
 					i = libraries.size();
 					isTrue = true;
 				}
@@ -225,6 +226,10 @@ public class LibraryManagementSystem {
 			}
 		}
 		return false;
+	}
+
+	public static void logOut() {
+		loginType = 0;
 	}
 
 	// Member methods

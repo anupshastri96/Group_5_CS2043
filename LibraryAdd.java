@@ -4,29 +4,37 @@ import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
+import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class AdminChoice extends JFrame implements ActionListener {
+public class LibraryAdd extends JFrame implements ActionListener {
 
-    JButton addLibrariesButton;
+    JTextField nameTextField;
+    JTextField addressTextField;
+    JButton addButton;
     JButton backButton;
 
-    AdminChoice() {
+    LibraryAdd() {
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        addRemoveLibrariesButton = new JButton("Add Library");
-        addLibrariesButton.setBounds(100,100,100,40);
-        addLibrariesButton.setFocusable(false);
-        addLibrariesButton.addActionListener(this);
+        addButton = new JButton("Add");
+        addButton.setBounds(100,100,100,40);
+        addButton.setFocusable(false);
+        addButton.addActionListener(this);
 
+        nameTextField = new JTextField();
+        nameTextField.setPreferredSize(new Dimension(250,40));
+
+        addressTextField = new JTextField();
+        addressTextField.setPreferredSize(new Dimension(250,40));
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,21 +53,24 @@ public class AdminChoice extends JFrame implements ActionListener {
         backPanel.add(backButton);
         this.add(backPanel);
 
-        panel2.add(usernameField);
-        panel2.add(passwordField);
-        panel2.add(submitButton);
+        panel2.add(nameTextField);
+        panel2.add(addressTextField);
+        panel2.add(addButton);
         this.add(panel2);
 
         this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == addLibrariesButton) {
-           
-        } else if (e.getSource() == backButton) {
-            //This goes back to the start because there is no need to go back to login if already logged in
+        if (e.getSource() == addButton) {
+            if (nameTextField.getText() != "" && addressTextField.getText() != "") {
+                Library toAdd = new Library(nameTextField.getText(), addressTextField.getText());
+                LibraryManagementSystem.addLibrary(toAdd);
+            }
+        }  else if (e.getSource() == backButton) {
             this.dispose();
-            LibraryStart start = new LibraryStart();
+            LibrarySearch search = new LibrarySearch();
+
         }
 	}
 	

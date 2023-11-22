@@ -66,8 +66,7 @@ public class AdminLogin extends JFrame implements ActionListener {
         if (e.getSource() == submitButton) {
             if (LibraryManagementSystem.checkAdmin(usernameField.getText(),passwordField.getText())) {
                 this.dispose();
-                AdminChoice Choice = new AdminChoice();
-                System.out.print("Hi");
+                LibrarySearch search = new LibrarySearch();
             }
         } else if (e.getSource() == backButton) {
             this.dispose();
