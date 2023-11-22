@@ -10,12 +10,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class LibraryStart extends JFrame implements ActionListener {
+public class GUILibraryStart extends JFrame implements ActionListener {
 
     JButton adminButton;
     JButton librarianButton;
 
-    LibraryStart() {
+    GUILibraryStart() {
 
         librarianButton = new JButton("Librarian");
 		librarianButton.setBounds(100,100,100,40);
@@ -48,7 +48,7 @@ public class LibraryStart extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == adminButton) {
             this.dispose();
-            AdminLogin login = new AdminLogin();
+            GUIAdminLogin login = new GUIAdminLogin();
         } else if (e.getSource() == librarianButton) {
             System.out.println("Librarian button clicked");
         }

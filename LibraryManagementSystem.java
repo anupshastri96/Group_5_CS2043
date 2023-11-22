@@ -37,7 +37,7 @@ public class LibraryManagementSystem {
 					buffer = i;
             	}
 			} else {
-				//This will do something idk what
+				//Add failsafe here
 			}
 
 			currentLibrary = findLibrary(configInts.get(0));
@@ -56,13 +56,26 @@ public class LibraryManagementSystem {
 	}
 
 	static void writeConfig() {
-		// Update config file
+		try {
+			FileWriter writer = new FileWriter("config.txt");
+        	PrintWriter printer = new PrintWriter(writer);
+			printer.print(configInts.get(0) + "," + configInts.get(1) + "," + configInts.get(2) + "," + configInts.get(3) + "," + configInts.get(4));
+			printer.close();
+
+		} catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
 	}
 
 	// Library Methods
 
 	static Library getCurrentLibrary() {
 		return currentLibrary;
+	}
+
+	static ArrayList<Library> getAllLibraries() {
+		return libraries;
 	}
 
 	static void addLibrary(Library libraryIn) {

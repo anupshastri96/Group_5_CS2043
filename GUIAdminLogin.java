@@ -11,14 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class AdminLogin extends JFrame implements ActionListener {
+public class GUIAdminLogin extends JFrame implements ActionListener {
 
     JTextField usernameField;
     JTextField passwordField;
     JButton submitButton;
     JButton backButton;
 
-    AdminLogin() {
+    GUIAdminLogin() {
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
@@ -66,11 +66,11 @@ public class AdminLogin extends JFrame implements ActionListener {
         if (e.getSource() == submitButton) {
             if (LibraryManagementSystem.checkAdmin(usernameField.getText(),passwordField.getText())) {
                 this.dispose();
-                LibrarySearch search = new LibrarySearch();
+                GUILibrarySearch search = new GUILibrarySearch();
             }
         } else if (e.getSource() == backButton) {
             this.dispose();
-            LibraryStart start = new LibraryStart();
+            GUILibraryStart start = new GUILibraryStart();
         }
 	}
 	

@@ -11,14 +11,14 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class LibraryAdd extends JFrame implements ActionListener {
+public class GUILibraryAdd extends JFrame implements ActionListener {
 
     JTextField nameTextField;
     JTextField addressTextField;
     JButton addButton;
     JButton backButton;
 
-    LibraryAdd() {
+    GUILibraryAdd() {
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
@@ -69,7 +69,7 @@ public class LibraryAdd extends JFrame implements ActionListener {
             }
         }  else if (e.getSource() == backButton) {
             this.dispose();
-            LibrarySearch search = new LibrarySearch();
+            GUILibrarySearch search = new GUILibrarySearch();
 
         }
 	}

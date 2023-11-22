@@ -10,8 +10,10 @@ import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.util.ArrayList;
 
-public class LibrarySearch extends JFrame implements ActionListener {
+
+public class GUILibrarySearch extends JFrame implements ActionListener {
 
     JTextField nameTextField;
     JTextField addressTextField;
@@ -20,7 +22,12 @@ public class LibrarySearch extends JFrame implements ActionListener {
     JButton backButton;
     JButton addButton;
 
-    LibrarySearch() {
+    GUILibrarySearch() {
+
+        searchButton = new JButton("Search");
+        searchButton.setBounds(100,100,100,40);
+        searchButton.setFocusable(false);
+        searchButton.addActionListener(this);
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
@@ -31,11 +38,6 @@ public class LibrarySearch extends JFrame implements ActionListener {
         addButton.setBounds(100,100,100,40);
         addButton.setFocusable(false);
         addButton.addActionListener(this);
-
-        searchButton = new JButton("Search");
-        searchButton.setBounds(100,100,100,40);
-        searchButton.setFocusable(false);
-        searchButton.addActionListener(this);
 
         nameTextField = new JTextField();
         nameTextField.setPreferredSize(new Dimension(250,40));
@@ -76,14 +78,23 @@ public class LibrarySearch extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == searchButton) {
-            // Add functionality
+            SearchAlgorithm.librarySearch(nameTextField.getText(),addressTextField.getText(),IDTextField.getText());
+            ArrayList<Integer> holder = SearchAlgorithm.getResults();
+            if (holder.size() == 1) {
+                this.dispose();
+                GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(holder.get(0)));
+            } else {
+                //this.dispose();
+                //GUILibraryResults results = new GUILibraryResults();
+            }
+
         }  else if (e.getSource() == addButton) {
             this.dispose();
-            LibraryAdd add = new LibraryAdd();
+            GUILibraryAdd add = new GUILibraryAdd();
         } else if (e.getSource() == backButton) {
             LibraryManagementSystem.logOut();
             this.dispose();
-            LibraryStart start = new LibraryStart();
+            GUILibraryStart start = new GUILibraryStart();
         }
 	}
 	
