@@ -44,7 +44,9 @@ public class GUILibraryResults extends JFrame implements ActionListener {
             String toAdd = LibraryManagementSystem.findLibrary(libraryIDs.get(i)).getName();
             libraryNames[i] = (toAdd);
         }
+        
         options = new JComboBox<>(libraryNames);
+        options.addActionListener(this);
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,7 +73,6 @@ public class GUILibraryResults extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        
         if (e.getSource() == confirmButton) {
             this.dispose();
             GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(libraryIDs.get(options.getSelectedIndex())));
