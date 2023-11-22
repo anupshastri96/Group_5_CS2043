@@ -72,6 +72,7 @@ public class GUILibraryEdit extends JFrame implements ActionListener {
         if (e.getSource() == submitButton) {
             storeLibrary.changeName(nameTextField.getText());
             storeLibrary.changeAddress(addressTextField.getText());
+            LibraryManagementSystem.libraryWriteFile();
             this.dispose();
             GUILibraryShow show = new GUILibraryShow(storeLibrary);
         }  else if (e.getSource() == backButton) {

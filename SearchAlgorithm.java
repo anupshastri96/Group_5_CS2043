@@ -10,7 +10,7 @@ public class SearchAlgorithm {
         return toReturn;
     }
     
-
+    // Make all of these not case sensitive
     static void librarySearch (String name, String address, String ID) {
         ArrayList<Library> libraries = LibraryManagementSystem.getAllLibraries();
         toReturn = new ArrayList<Integer>();
@@ -37,8 +37,6 @@ public class SearchAlgorithm {
                     // Second check
                     if (name.length() > libraries.get(i).getName().length()) {
                         canBeAdded = false;
-                    } else if (name.length() < libraries.get(i).getName().length()) {
-                        smallestName = name.length();
                     } else {
                         smallestName = name.length();
                     }
@@ -47,6 +45,7 @@ public class SearchAlgorithm {
                         for (int j = 0; j < smallestName; j++) {
                             if (name.charAt(j) != libraries.get(i).getName().charAt(j)) {
                                 canBeAdded = false;
+                                j = smallestName;
                             }
                         }
                         if (canBeAdded) {
@@ -58,16 +57,18 @@ public class SearchAlgorithm {
                     // Third check
                     if (address.length() > libraries.get(i).getAddress().length()) {
                         canBeAdded = false;
-                    } else if (address.length() < libraries.get(i).getAddress().length()) {
-                        smallestAddress = address.length();
                     } else {
                         smallestAddress = address.length();
                     }
 
-                    if (smallestAddress > 0 && canBeAdded && !added) {
+                    if (smallestAddress > 0 && canBeAdded) {
                         for (int j = 0; j < smallestAddress; j++) {
                             if (address.charAt(j) != libraries.get(i).getAddress().charAt(j)) {
                                 canBeAdded = false;
+                                j = smallestAddress;
+                                if (added) {
+                                    toReturn.remove(toReturn.size() - 1);
+                                }
                             }
                         }
                         if (canBeAdded) {
@@ -78,6 +79,133 @@ public class SearchAlgorithm {
 
                 }
                 smallestName = -1;
+                smallestAddress = -1;
+                added = false;
+                canBeAdded = true;
+
+            }
+        }
+
+    }
+
+    static void memberSearch (String firstname, String lastname, String gender, String address, String ID) {
+        ArrayList<Library> members = LibraryManagementSystem.getAllMembers();
+        toReturn = new ArrayList<Integer>();
+        boolean added = false;
+        boolean canBeAdded = true;
+        int smallestFirstname = -1;
+        int smallestLastname = -1;
+        int smallestGender = -1;
+        int smallestAddress = -1;
+
+        for (int i = 0; i < members.size(); i++) {
+            
+            if (firstname.length() < 1 && lastname.length() && gender.length() && address.length() < 1 && ID.length() < 1) {
+                toReturn.add(members.get(i).getID());
+            } else {
+                // First check
+                if (ID.length() > 0) {
+                    if (Integer.parseInt(ID) == members.get(i).getID()) {
+                        toReturn.clear();
+                        toReturn.add(members.get(i).getID());
+                        i = members.size();
+                    } else {
+                        canBeAdded = false;
+                    }
+                } else {
+                    // Second check
+                    if (firstname.length() > members.get(i).getFirstname().length()) {
+                        canBeAdded = false;
+                    } else {
+                        smallestFirstname = firstname.length();
+                    }
+
+                    if (smallestFirstname > 0 && canBeAdded) {
+                        for (int j = 0; j < smallestFirstname; j++) {
+                            if (firstname.charAt(j) != members.get(i).getFirstname().charAt(j)) {
+                                canBeAdded = false;
+                                j = smallestFirstname;
+                            }
+                        }
+                        if (canBeAdded) {
+                            toReturn.add(members.get(i).getID());
+                            added = true;
+                        }
+                    }
+
+                    // Third check
+                    if (lastname.length() > members.get(i).getLastname().length()) {
+                        canBeAdded = false;
+                    } else {
+                        smallestLastname = lastname.length();
+                    }
+
+                    if (smallestLastname > 0 && canBeAdded) {
+                        for (int j = 0; j < smallestLastname; j++) {
+                            if (lastname.charAt(j) != members.get(i).getLastname().charAt(j)) {
+                                canBeAdded = false;
+                                j = smallestLastname;
+                                if (added) {
+                                    toReturn.remove(toReturn.size() - 1);
+                                }
+                            }
+                        }
+                        if (canBeAdded) {
+                            toReturn.add(members.get(i).getID());
+                            added = true;
+                        }
+                    }
+
+                    // Fourth check
+                    if (gender.length() > members.get(i).getGender().length()) {
+                        canBeAdded = false;
+                    } else {
+                        smallestGender = gender.length();
+                    }
+
+                    if (smallestGender > 0 && canBeAdded) {
+                        for (int j = 0; j < smallestGender; j++) {
+                            if (gender.charAt(j) != members.get(i).getGender().charAt(j)) {
+                                canBeAdded = false;
+                                j = smallestGender;
+                                if (added) {
+                                    toReturn.remove(toReturn.size() - 1);
+                                }
+                            }
+                        }
+                        if (canBeAdded) {
+                            toReturn.add(members.get(i).getID());
+                            added = true;
+                        }
+                    }
+
+                    // Fifth check
+                    if (address.length() > members.get(i).getAddress().length()) {
+                        canBeAdded = false;
+                    } else {
+                        smallestAddress = address.length();
+                    }
+
+                    if (smallestAddress > 0 && canBeAdded) {
+                        for (int j = 0; j < smallestAddress; j++) {
+                            if (address.charAt(j) != members.get(i).getAddress().charAt(j)) {
+                                canBeAdded = false;
+                                j = smallestAddress;
+                                if (added) {
+                                    toReturn.remove(toReturn.size() - 1);
+                                }
+                            }
+                        }
+                        if (canBeAdded) {
+                            toReturn.add(members.get(i).getID());
+                            added = true;
+                        }
+                    }
+
+                }
+                smallestFirstname = -1;
+                smallestLastname = -1;
+                smallestGender = -1;
                 smallestAddress = -1;
                 added = false;
                 canBeAdded = true;

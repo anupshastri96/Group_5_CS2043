@@ -14,6 +14,7 @@ public class Library {
     private static int nextId = 1;
     private int libId;
     private ArrayList<Book> books;
+    private ArrayList<BorrowedBook> borrowedHere;
     private Scanner bookScan;
 
     public Library(int ID) {
@@ -29,7 +30,8 @@ public class Library {
         libId = nextId;
         nextId++;
 
-        books = new ArrayList<>();
+        books = new ArrayList<Book>();
+        borrowedHere = new ArrayList<BorrowedBook>();
     
     }
 
@@ -225,6 +227,18 @@ public class Library {
 			System.out.print("Hi");
 			System.exit(1);
 		}
+    }
+
+    /*
+     * BORROWEDBOOK METHODS
+     */
+
+    public void borrowBook(Member borrower, Book borrowed) {
+        if (borrowed.getAmount() > 0) {
+            BorrowedBook toAdd = new BorrowedBook(borrower, borrowed, libId);
+            borrowedHere.add(toAdd);
+            
+        }
     }
 }
 

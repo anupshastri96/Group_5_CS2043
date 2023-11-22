@@ -82,9 +82,12 @@ public class GUILibraryShow extends JFrame implements ActionListener {
             LibraryManagementSystem.changeCurrentLibrary(storeLibrary);
             this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         } else if (e.getSource() == removeButton) {
-            LibraryManagementSystem.removeLibrary(storeLibrary);
-            this.dispose();
-            GUILibrarySearch search = new GUILibrarySearch();
+            if (storeLibrary != LibraryManagementSystem.getCurrentLibrary()) {
+                LibraryManagementSystem.removeLibrary(storeLibrary);
+                this.dispose();
+                GUILibrarySearch search = new GUILibrarySearch();
+            }
+            GUIErrorMessage message = new GUIErrorMessage("Current library cannot be removed, change current library to another library for this to be able to be removed.");
         } else if (e.getSource() == backButton) {
             this.dispose();
             GUILibrarySearch search = new GUILibrarySearch();

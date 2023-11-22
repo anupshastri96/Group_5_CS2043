@@ -129,6 +129,11 @@ public class Book {
         amount++;
     }
 
+    public void borrow(Member borrowedBy) {
+        amountBorrowed++;
+        hasBorrowed.add(borrowedBy);
+    }
+
     /* 
      * ADULT METHODS 
      */
