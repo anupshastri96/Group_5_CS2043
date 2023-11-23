@@ -1,10 +1,4 @@
-1,library1,123 Street
-2,library2,124 Street
-3,library3,125 Street
-4,library4,126 Street
-5,library5,127 Street
-6,library6,128 Street
-7,library7,129 Street
-8,library8,130 Street
-10,library10,132 Street
-9,library9,131 Street
+1,Library 1,123 Book Rd
+2,1,1
+3,2,2
+4,3,3

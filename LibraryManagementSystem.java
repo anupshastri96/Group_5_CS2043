@@ -10,86 +10,81 @@ import java.util.Scanner;
 public class LibraryManagementSystem {
 // This could end up just being added to the main class instead.
 	
-	private ArrayList<Library> libraries;
-	private ArrayList<Member> members;
-	private ArrayList<Admin> admins;
-	private int loginType;
-	private Scanner fileScan;
-	
-	// Only the current library should be a parameter because everything else should be read in through a file.
-	public LibraryManagementSystem(Library currentLibrary) {
-		
-		libraries = new ArrayList<Library>();
-		members = new ArrayList<Member>();
-		admins = new ArrayList<Admin>();
-		
-		loginType = 1;
+	private static ArrayList<Library> libraries;
+	private static ArrayList<Member> members;
+	private static ArrayList<Admin> admins;
+	private static ArrayList<Integer> configInts;
 
-		this.libraryReadFile();
-		this.memberReadFile();
-		this.adminReadFile();
-
-		this.checkStartupLibrary(currentLibrary);
-		
-	}
+	private static Library currentLibrary;
+	private static int loginType;
 
 	// Config Methods
 
-	/* public Library checkConfig() {
-		
+	static void readConfig() {
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader("config.txt"));
 			String line = reader.readLine();
-			int buffer = -1;
+			int buffer = 0;
 			int count = 1;
-			boolean first = true;
-			String currentName = "";
-			String currentAddress = "";
-			int currentID = -1;
-			while (line != null) {
-				if (count == 1) {
-					for (int i = 0; i < line.length(); i++) {
-             	  		if (line.charAt(i) == ',') {
-							if (first) {
-								currentID = Integer.parseInt(line.substring(0,i));
-								first = false;
-							} else {
-								currentName = line.substring(buffer + 1,i);
-							} 
-                    		buffer = i;
-                		} else if (i == line.length()-1) {
-							currentAddress = line.substring(buffer + 1,line.length());
-                		}
-            		}
-					if (currentName == null || currentAddress == null || currentID == -1) {
-
-					} else {
-						Library currentLibrary = new Library(currentName, currentAddress, currentID);
-						this.checkStartupLibrary(currentLibrary);
-						buffer = -1;
-						first = true;
-						count++;
-            			line = reader.readLine();
-					}
-        		}
+			configInts = new ArrayList<Integer>();
+			if (line != null) {
+				for (int i = 0; i < line.length(); i++) {
+             		if (line.charAt(i) == ',') {
+						configInts.add(Integer.parseInt(line.substring(buffer,i)));
+                	} else if (i == line.length()-1) {
+						configInts.add(Integer.parseInt(line.substring(buffer + 1,line.length())));
+                	}
+					buffer = i;
+            	}
+			} else {
+				//Add failsafe here
 			}
-			return currentLibrary;
+
+			currentLibrary = findLibrary(configInts.get(0));
+			Library fakeLibrary = new Library(configInts.get(1));
+			Book fakeBook = new Book(configInts.get(2));
+			Member fakeMember = new Member(configInts.get(3));
+			BorrowedBook fakeBorrowedBook = new BorrowedBook(configInts.get(4));
+
 		} catch(FileNotFoundException fnf) {
        		System.out.println("Config file is not there!");
         	System.exit(1);
     	} catch (IOException io) {
 			System.out.print("Hi");
 			System.exit(1);
-		} 
-	} */
+		}
+	}
+
+	static void writeConfig() {
+		try {
+			FileWriter writer = new FileWriter("config.txt");
+        	PrintWriter printer = new PrintWriter(writer);
+			printer.print(configInts.get(0) + "," + configInts.get(1) + "," + configInts.get(2) + "," + configInts.get(3) + "," + configInts.get(4));
+			printer.close();
+
+		} catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
+	}
 
 	// Library Methods
 
-	public void addLibrary(Library libraryIn) {
+	static Library getCurrentLibrary() {
+		return currentLibrary;
+	}
+
+	static ArrayList<Library> getAllLibraries() {
+		return libraries;
+	}
+
+	static void addLibrary(Library libraryIn) {
+		loginType = 1;
 		if (loginType == 1) {
 			boolean isTrue = false;
 			for (int i = 0; i < libraries.size(); i++) {
-				if (libraries.get(i).getID() == libraryIn.getID()) {
+				if (libraries.get(i).getID() == libraryIn.getID() || (libraryIn.getName().equals(libraries.get(i).getName()) && libraryIn.getAddress().equals(libraries.get(i).getAddress()))) {
+					libraries.get(i).setNextID(libraries.get(i).getID() + 1);
 					i = libraries.size();
 					isTrue = true;
 				}
@@ -99,25 +94,48 @@ public class LibraryManagementSystem {
 
 				} else {
 					libraries.add(libraryIn);
-					this.libraryWriteFile();
+					libraryWriteFile();
 				}
 			}
 		}
 	}
 	
-	private void removeLibrary(Library libraryIn) {
+	static void removeLibrary(Library libraryIn) {
 		if (loginType == 1) {
 			for (int i = 0; i < libraries.size(); i++) {
 				if (libraries.get(i).getID() == libraryIn.getID()) {
 					libraries.remove(i);
 					i = libraries.size();
+					libraryWriteFile();
 				}
 			}
 		}
 	}
 	
-	private void libraryReadFile() {
+	static Library findLibrary(int libraryID) {
+		for (int i = 0; i < libraries.size(); i++) {
+			if (libraries.get(i).getID() == libraryID) {
+				return libraries.get(i);
+			}
+		}
+		return null;
+	}
+
+	static ArrayList<Library> findLibrary(ArrayList<Integer> libraryIDs) {
+		ArrayList<Library> toReturn = new ArrayList<Library>();
+		for (int i = 0; i < libraries.size(); i++) {
+			for (int j = 0; j < libraryIDs.size(); j++) {
+				if (libraries.get(i).getID() == libraryIDs.get(j)) {
+					toReturn.add(libraries.get(i));
+				}
+			}
+		}
+		return toReturn;
+	}
+	
+	static void libraryReadFile() {
 		try {
+			libraries = new ArrayList<Library>();
 			BufferedReader reader = new BufferedReader(new FileReader("libraryStorage.txt"));
 			String line = reader.readLine();
 			int buffer = -1;
@@ -159,7 +177,7 @@ public class LibraryManagementSystem {
 		}
 	}
 
-	private void libraryWriteFile() {
+	static void libraryWriteFile() {
 		try {
 			FileWriter writer = new FileWriter("libraryStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
@@ -174,23 +192,17 @@ public class LibraryManagementSystem {
 		}
 	}
 
-	private void checkStartupLibrary(Library libraryIn) {
-		int libraryID = libraryIn.getID();
-		boolean inSystem = false;
-		for (int i = 0; i < libraries.size(); i++) {
-			if (libraryID == libraries.get(i).getID()) {
-				inSystem = true;
-			} 
-		}
-		if (!inSystem) {
-			this.addLibrary(libraryIn);
-		}
+	static void changeCurrentLibrary(Library libraryIn) {
+		currentLibrary = libraryIn;
+		configInts.set(0, libraryIn.getID());
+		writeConfig();
 	}
 
 	// Admin methods
 
-	private void adminReadFile() {
+	static void adminReadFile() {
 		try {
+			admins = new ArrayList<Admin>();
 			BufferedReader reader = new BufferedReader(new FileReader("adminStorage.txt"));
 			String line = reader.readLine();
 			int buffer = -1;
@@ -221,42 +233,73 @@ public class LibraryManagementSystem {
 		}
 	}
 
-	// Checks if entered username and password are in the system.
-	private boolean checkAdmin(String enteredUser, String enteredPass) {
-		// Do this later
+	static boolean checkAdmin(String enteredUser, String enteredPass) {
+		for (int i = 0; i < admins.size(); i++) {
+			if (enteredUser.equals(admins.get(i).getUsername()) && enteredPass.equals(admins.get(i).getPassword())) {
+				loginType = 1;
+				return true;
+			}
+		}
 		return false;
+	}
+
+	public static void logOut() {
+		loginType = 0;
 	}
 
 	// Member methods
 
 	public void addMember(Member memberIn) {
-		if (loginType == 1) {
-			boolean isTrue = false;
-			for (int i = 0; i < members.size(); i++) {
-				if (members.get(i).getID() == memberIn.getID()) {
-					i = members.size();
-					isTrue = true;
-				}
-			}
-			if (!isTrue) {
-				members.add(memberIn);
-				this.memberWriteFile();
+		boolean isTrue = false;
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).getID() == memberIn.getID()) {
+				i = members.size();
+				isTrue = true;
 			}
 		}
-	}
-	
-	private void removeMember(Member memberIn) {
-		if (loginType == 1) {
-			for (int i = 0; i < members.size(); i++) {
-				if (members.get(i).getID() == memberIn.getID()) {
-					members.remove(i);
-					i = members.size();
-				}
-			}
+		if (!isTrue) {
+			members.add(memberIn);
+			memberWriteFile();
 		}
 	}
 
-	private void memberReadFile() {
+	static Member findMember(int memberID) {
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).getID() == memberID) {
+				return members.get(i);
+			}
+		}
+		return null;
+	}
+
+	/* This will be completed when I get to it
+	static Member findMember(String firstName, String lastName) {
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).getID() == memberID) {
+				return members.get(i);
+			}
+		}
+		return null;
+	}
+	*/
+	static ArrayList<Member> findMember(ArrayList<Integer> memberIDs) {
+		ArrayList<Member> toReturn = new ArrayList<Member>();
+		for (int i = 0; i < members.size(); i++) {
+			for (int j = 0; j < memberIDs.size(); j++) {
+				if (members.get(i).getID() == memberIDs.get(j)) {
+					toReturn.add(members.get(i));
+				}
+			}
+		}
+		return toReturn;
+	}
+
+	static ArrayList<Member> getAllMembers() {
+		return members;
+	}
+	
+
+	static void memberReadFile() {
 		
 		try {
 
@@ -305,7 +348,7 @@ public class LibraryManagementSystem {
 		
 	}
 
-	private void memberWriteFile() {
+	static void memberWriteFile() {
 		try {
 			FileWriter writer = new FileWriter("memberStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);

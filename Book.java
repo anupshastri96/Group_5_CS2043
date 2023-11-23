@@ -37,7 +37,7 @@ public class Book {
 
     }
 
-    public Book(String nameIn, String authorIn, int deweyIn, boolean adultIn, int amountIn, int bookIdIn, int[] libraryId, int[] memberId) {
+    public Book(String nameIn, String authorIn, int deweyIn, boolean adultIn, int amountIn, int bookIdIn, ArrayList<Integer> libraryId, ArrayList<Integer> memberId) {
         
         name = nameIn;
         author = authorIn;
@@ -48,44 +48,38 @@ public class Book {
 
         amountBorrowed = 0; // This will be done when borrowed book is finished.
 
-        belongsToLibraries = new ArrayList<Library>();
-        hasBorrowed = new ArrayList<Member>();
-
-
-        // Method to turn the IDs into actual libraries or members would be here.
+        belongsToLibraries = LibraryManagementSystem.findLibrary(libraryId);
+        hasBorrowed = LibraryManagementSystem.findMember(memberId);
 
     }
 
-    /*
-	 * TOSTRING
-	 */
+    @Override
 	public String toString() {
-		String s =	"Title: " + this.name + "\n" +
+		String toReturn =	"Title: " + this.name + "\n" +
 			"Author: " + this.author + "\n" +
 			"Dewey: " + this.dewey + "\n" +
 			"Book ID: " + this.bookId + "\n" +
 			"Amount: " + this.amount + "\n" +
 			"Amount Borrowed: " + amountBorrowed + "\n" +
-			"LibraryIDs: ";
+			"Library Names: ";
 		
-		if (getLibraryIDs().length == 0) s += "No LibraryIDs\n";
+		if (getLibraryIDs().size() == 0) toReturn += "No LibraryIDs\n";
 		else {
-			for(int i=0; i<getLibraryIDs().length; i++) {
-				s += getLibraryIDs()[i] + "\n";
+			for(int i=0; i<getLibraryIDs().size(); i++) {
+				toReturn += belongsToLibraries.get(i).getName() + "\n";
 			}
 		}
 		
-		s += "MemberIDs: ";
+		toReturn += "Amount of MemberIDs: ";
 		
-		if (getMemberIDs().length == 0) s += "No MemberIDs\n";
+		if (getMemberIDs().size() == 0) toReturn += "No MemberIDs\n";
 		else {
-			for(int j=0; j<getMemberIDs().length; j++) {
-				s += getMemberIDs()[j] + "\n";
-			}
+			toReturn += hasBorrowed.size() + "\n";
 		}
 		
-		return s;
+		return toReturn;
 	}
+
 
 
     /* 
@@ -135,6 +129,11 @@ public class Book {
         amount++;
     }
 
+    public void borrow(Member borrowedBy) {
+        amountBorrowed++;
+        hasBorrowed.add(borrowedBy);
+    }
+
     /* 
      * ADULT METHODS 
      */
@@ -149,20 +148,43 @@ public class Book {
     /* 
      * LIBRARY METHODS 
      */
-    public int[] getLibraryIDs() {
-        int[] toReturn = new int[0];
+    public ArrayList<Integer> getLibraryIDs() {
+        ArrayList<Integer> toReturn = new ArrayList<Integer>();
+        if (belongsToLibraries.size() != 0) {
+            for (int i = 0; i < belongsToLibraries.size(); i++) {
+                toReturn.add(belongsToLibraries.get(i).getID());
+            }
+        }
         return toReturn;
     }
 
     private void findLibraries() {
         // Leave this for later
+
+    }
+
+    public void addLibrary(int libraryID) {
+        boolean canAdd = true;
+        if (belongsToLibraries.size() != 0) {
+            for (int i = 0; i < belongsToLibraries.size(); i++) {
+                if (belongsToLibraries.get(i).getID() == libraryID) {
+                    canAdd = false;
+                }
+            }
+        }
+        if (canAdd) {
+            belongsToLibraries.add(LibraryManagementSystem.findLibrary(libraryID));
+        }
     }
 
     /* 
      * MEMBER METHODS 
      */
-    public int[] getMemberIDs() {
-        int[] toReturn = new int[0];
+    public ArrayList<Integer> getMemberIDs() {
+       ArrayList<Integer> toReturn = new ArrayList<Integer>();
+        for (int i = 0; i < hasBorrowed.size(); i++) {
+            toReturn.add(hasBorrowed.get(i).getID());
+        }
         return toReturn;
     }
 

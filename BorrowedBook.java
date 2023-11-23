@@ -3,68 +3,58 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class BorrowedBook {
+	
 	private int id;
 	private static int nextID = 0;
-	private int associatedMemberID;
-	private Date expectedReturnDate;
+	private boolean active;
+	private Member borrower;
+	private Library borrowedFrom;
+	private Book borrowed;
 	private Date borrowDate;
+	private int daysExtended;
 	private Date returnDate;
 
 	public BorrowedBook(int ID) {
 		nextID = ID;
 	}
 	
-	public BorrowedBook(int id, int membID,Date exretdate,Date borrowdt) 
-	{
-		this.id = id;
-		this.associatedMemberID = membID;
-		this.expectedReturnDate = exretdate;
-		this.borrowDate = borrowdt;
+	public BorrowedBook(Member borrower, Book borrowed, int libraryID) {
+		id = nextID;
+		nextID++;
+
+		borrowedFrom = LibraryManagementSystem.findLibrary(libraryID);
+		this.borrower = borrower;
+		
+		this.borrowed = borrowed;
+		borrowDate = new Date();
+
+		active = true;
 	}
-	private void extendReturnDate() 
-	{
+
+	public BorrowedBook(int ID, Member borrower, Book borrowed, int libraryID, Date borrowDate, boolean active) {
+		id = ID;
+
+		borrowedFrom = LibraryManagementSystem.findLibrary(libraryID);
+		this.borrower = borrower;
 		
-			 Calendar calendar = Calendar.getInstance();
-			 calendar.setTime(expectedReturnDate);  
-			 int daysToAdd = 7;  
-		     calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
-		     Date newDate = calendar.getTime();
-		     expectedReturnDate = newDate;
-			
-		
-	}
-	
-	public double getLateFees() 
-	{
-		
-		if(expectedReturnDate.before(returnDate)) 
-		{
-			//print returned on time in GUI or already returned
-			return 0;
-		}
-		else 
-		{
-			//to be determined
-			int fee = 0;
-			return fee;
-		}
-		
+		this.borrowed = borrowed;
+		this.borrowDate = borrowDate;
+		this.active = active;
+
+		//Do something with date
 	}
 	
-	private void returnbook(Date returned) 
-	{
+	private void extendReturnDate(int addDays) {
+		daysExtended += addDays;
+	}
+	
+	public double getLateFees() {
+		return 0;
+	}
+	
+	private void returnbook(Date returned) {
 		returnDate = returned;
-		if(expectedReturnDate.before(returnDate)) 
-		{
-			//print returned on time in GUI or already returned
-			
-		}
-		else 
-		{
-			//print not returned on time and calc late fees
-			
-		}
-		
+		active = false;
 	}
 	
 

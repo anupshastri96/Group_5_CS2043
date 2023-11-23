@@ -37,18 +37,16 @@ public class Member {
 	{
 		return lastName;
 	}
-	public int getAge() 
-	{
+	public int getAge() {
 		int year = 2023;
 		int age = birthdate - year;
 		return age;
 	}
-	public int getBirthdate() 
-	{
+
+	public int getBirthdate() {
 		return birthdate;
 	}
-	public String getGender() 
-	{
+	public String getGender() {
 		if(!gender.isEmpty()) 
 		{
 			return gender;
@@ -58,8 +56,7 @@ public class Member {
 			return null;
 		}
 	}
-	public int getID() 
-	{
+	public int getID() {
 		return memID;
 	}
 
