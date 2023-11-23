@@ -88,7 +88,11 @@ public class SearchAlgorithm {
 
     }
 
+<<<<<<< HEAD
     static void memberSearch (String firstname, String lastname, String gender, String address, String ID) {
+=======
+    static void memberSearch (String firstname, String lastname, String gender, String ID) {
+>>>>>>> main
         ArrayList<Library> members = LibraryManagementSystem.getAllMembers();
         toReturn = new ArrayList<Integer>();
         boolean added = false;
@@ -96,7 +100,10 @@ public class SearchAlgorithm {
         int smallestFirstname = -1;
         int smallestLastname = -1;
         int smallestGender = -1;
+<<<<<<< HEAD
         int smallestAddress = -1;
+=======
+>>>>>>> main
 
         for (int i = 0; i < members.size(); i++) {
             
@@ -179,6 +186,7 @@ public class SearchAlgorithm {
                         }
                     }
 
+<<<<<<< HEAD
                     // Fifth check
                     if (address.length() > members.get(i).getAddress().length()) {
                         canBeAdded = false;
@@ -202,11 +210,16 @@ public class SearchAlgorithm {
                         }
                     }
 
+=======
+>>>>>>> main
                 }
                 smallestFirstname = -1;
                 smallestLastname = -1;
                 smallestGender = -1;
+<<<<<<< HEAD
                 smallestAddress = -1;
+=======
+>>>>>>> main
                 added = false;
                 canBeAdded = true;
 

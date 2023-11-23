@@ -250,17 +250,31 @@ public class LibraryManagementSystem {
 	// Member methods
 
 	public void addMember(Member memberIn) {
-		boolean isTrue = false;
-		for (int i = 0; i < members.size(); i++) {
-			if (members.get(i).getID() == memberIn.getID()) {
-				i = members.size();
-				isTrue = true;
+		if (loginType == 1) {
+			boolean isTrue = false;
+			for (int i = 0; i < members.size(); i++) {
+				if (members.get(i).getID() == memberIn.getID()) {
+					i = members.size();
+					isTrue = true;
+				}
+			}
+			if (!isTrue) {
+				members.add(memberIn);
+				this.memberWriteFile();
 			}
 		}
-		if (!isTrue) {
-			members.add(memberIn);
-			memberWriteFile();
+	}
+	
+	private void removeMember(Member memberIn) {
+		if (loginType == 1) {
+			for (int i = 0; i < members.size(); i++) {
+				if (members.get(i).getID() == memberIn.getID()) {
+					members.remove(i);
+					i = members.size();
+				}
+			}
 		}
+		return toReturn;
 	}
 
 	static Member findMember(int memberID) {
@@ -293,7 +307,8 @@ public class LibraryManagementSystem {
 		return toReturn;
 	}
 
-	static void memberReadFile() {
+
+	private void memberReadFile() {
 		
 		try {
 
