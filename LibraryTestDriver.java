@@ -2,7 +2,7 @@ public class LibraryTestDriver{
 	
 	public static void main(String args[]) {
 	
-		Book b1 = new Book("The Hunger Games", "Suzanne Collins",  800, false);
+		Book b1 = new Book("The Hunger Games", "Suzanne Collins", 800, false);
 		
 		System.out.println("Created Book b1");
 		
@@ -36,7 +36,7 @@ public class LibraryTestDriver{
 		System.out.println(l1.toString());
 		System.out.println("Printed l1 list (3)");
 		
-		Book b4 = new Book("The Hunger Games", "Suzanne Collins",  800, false);
+		Book b4 = new Book("The Hunger Games", "Suzanne Collins", 800, false);
 		System.out.println("Created Book b4 with same values as b1");
 		
 		l1.addBook(b4);
@@ -44,6 +44,29 @@ public class LibraryTestDriver{
 		
 		System.out.println(l1.toString());
 		System.out.println("Printed l1 list (4)");
+		
+		
+		
+		Book bk;
+		String str1;
+		String str2;
+		int gen;
+		
+		Library lib = new Library("Test Library", "999 Book Rd");
+		
+		for(int i=0; i<10; i++) {
+			str1 = "name" + i;
+			str2 = "author" + i;
+			gen = i;
+			while(gen >= 10) gen = gen - 10;
+			bk = new Book(str1, str2, gen*100, false);
+			lib.addBook(bk);
+		}
+		System.out.println("Added books to lib");
+		
+		System.out.println(lib.toString());
+		System.out.println("printed new lib");
+		
 	}
 	
 }
