@@ -102,9 +102,23 @@ public class Library {
         boolean isReal = false;
     	books.remove(b);
     }
+	
+	public Book getBook(int n) {
+		if (n >= 0 && n < books.size()) {
+			return books.get(n);
+		} else {
+			return null;
+		}
+	}
+
     
     public String toString() {
-    	String s = "======================\n";
+		String s =	"Library: " + getName() + "\n" +
+				"Address: " + getAddress() + "\n" +
+				"LibID: " + getID() + "\n" +
+				"# Books: " + books.size() + "\n";
+				
+    	s += "======================\n";
     	
     	for(int i=0; i<books.size(); i++) {
     		s += books.get(i).toString() + "======================\n";
@@ -114,6 +128,7 @@ public class Library {
     }
     
     private void bookReadFile() {
+		/*
         try {
 
 			BufferedReader reader = new BufferedReader(new FileReader("bookStorage.txt"));
@@ -184,9 +199,11 @@ public class Library {
 			System.out.print("Hi");
 			System.exit(1);
 		}
+		*/
     }
 
     private void bookWriteFile() {
+		/*
         try {
 			FileWriter writer = new FileWriter("bookStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
@@ -213,5 +230,6 @@ public class Library {
 			System.out.print("Hi");
 			System.exit(1);
 		}
+		*/
     }
 }
