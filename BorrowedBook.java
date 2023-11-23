@@ -1,7 +1,10 @@
 package lib;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.JOptionPane;
 
 public class BorrowedBook {
 	private int id;
@@ -35,13 +38,16 @@ public class BorrowedBook {
 		
 		if(expectedReturnDate.before(returnDate)) 
 		{
-			//print returned on time in GUI or already returned
+			JOptionPane.showMessageDialog(null, "RETURNED ON TIME");
 			return 0;
 		}
 		else 
 		{
 			//to be determined
-			int fee = 0;
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			 long differenceInMilliseconds = returnDate.getTime() - borrowDate.getTime();
+		     long differenceInDays = differenceInMilliseconds / (24 * 60 * 60 * 1000);
+			double fee = (double) (differenceInDays*10);
 			return fee;
 		}
 		
@@ -52,11 +58,14 @@ public class BorrowedBook {
 		returnDate = returned;
 		if(expectedReturnDate.before(returnDate)) 
 		{
+			JOptionPane.showMessageDialog(null, "RETURNED ON TIME");
 			//print returned on time in GUI or already returned
 			
 		}
 		else 
 		{
+			double display = getLateFees();
+			JOptionPane.showMessageDialog(null, "YOUR LATE FEES ARE: " + display);
 			//print not returned on time and calc late fees
 			
 		}
