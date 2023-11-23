@@ -1,4 +1,4 @@
-public class Main {
+public class StartGUI {
     public static void main(String[] args) {
 
 		// This is the class that should be ran whenever the GUI is opened.
