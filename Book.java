@@ -27,7 +27,7 @@ public class Book implements Serializable {
         dewey = deweyIn;
         adult = adultIn;
 
-        bookId = ((dewey * 10000000) + nextId);
+        bookId = ((dewey * 1000000) + nextId);
         nextId++;
 
         amount = 1;
@@ -57,18 +57,17 @@ public class Book implements Serializable {
 
     }
 
-	
-	/*
+    /*
 	 * TOSTRING
 	 */
 	public String toString() {
-		String s =	"Title: " + getName() + "\n" +
-				"Author: " + getAuthor() + "\n" +
-				"Dewey: " + getDewey() + "\n" +
-				"Book ID: " + getId() + "\n" +
-				"Amount: " + getAmount() + "\n" +
-				"Amount Borrowed: " + amountBorrowed + "\n" +
-				"LibraryIDs: ";
+		String s =	"Title: " + this.name + "\n" +
+			"Author: " + this.author + "\n" +
+			"Dewey: " + this.dewey + "\n" +
+			"Book ID: " + this.bookId + "\n" +
+			"Amount: " + this.amount + "\n" +
+			"Amount Borrowed: " + amountBorrowed + "\n" +
+			"LibraryIDs: ";
 		
 		if (getLibraryIDs().length == 0) s += "No LibraryIDs\n";
 		else {
@@ -88,7 +87,8 @@ public class Book implements Serializable {
 		
 		return s;
 	}
-	
+
+
     /* 
      * NAME METHODS 
      */
@@ -132,6 +132,10 @@ public class Book implements Serializable {
         return amount;
     }
 
+    public void incAmount() {
+        amount++;
+    }
+
     /* 
      * ADULT METHODS 
      */
@@ -147,18 +151,7 @@ public class Book implements Serializable {
      * LIBRARY METHODS 
      */
     public int[] getLibraryIDs() {
-        // All of this should get replaced with cleaner code because it's really gross.
         int[] toReturn = new int[0];
-        int[] holder = toReturn;
-        for (int i = 0; i < belongsToLibraries.size(); i++) {
-            toReturn = new int[holder.length + 1];
-            for (int j = 0; j < holder.length; j++) {
-                toReturn[j] = holder[j];
-            }
-            toReturn[holder.length] = belongsToLibraries.get(belongsToLibraries.size()).getID();
-            holder = toReturn;
-
-        }
         return toReturn;
     }
 
@@ -170,18 +163,7 @@ public class Book implements Serializable {
      * MEMBER METHODS 
      */
     public int[] getMemberIDs() {
-        // All of this should get replaced with cleaner code because it's really gross.
         int[] toReturn = new int[0];
-        int[] holder = toReturn;
-        for (int i = 0; i < hasBorrowed.size(); i++) {
-            toReturn = new int[holder.length + 1];
-            for (int j = 0; j < holder.length; j++) {
-                toReturn[j] = holder[j];
-            }
-            toReturn[holder.length] = hasBorrowed.get(hasBorrowed.size()).getID();
-            holder = toReturn;
-
-        }
         return toReturn;
     }
 

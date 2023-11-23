@@ -2,9 +2,28 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.util.Scanner;
+
 
 public class LibraryGUI extends JFrame {
+
+    private static Library currentLibrary;
+    private static String currentLibraryName;
+
     public static void main(String[] args) {
+        currentLibrary = checkConfig();
+        currentLibraryName = currentLibrary.getName();
+
+
+
+
         SwingUtilities.invokeLater(() -> {new LibraryGUI().setVisible(true);});
     }
 
@@ -12,7 +31,7 @@ public class LibraryGUI extends JFrame {
         JPanel root = new JPanel();
         root.setLayout(new BoxLayout(root, BoxLayout.Y_AXIS));
 
-        JLabel titleLabel = new JLabel("Harriet Irving Library");
+        JLabel titleLabel = new JLabel(currentLibraryName);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 18));
 
         JButton librarianButton = new JButton("Librarian");
@@ -32,10 +51,60 @@ public class LibraryGUI extends JFrame {
         root.add(adminButton);
         root.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        setTitle("Harriet Irving Library");
+        setTitle(currentLibraryName);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 150);
         setResizable(false);
         add(root);
     }
+    
+    static Library checkConfig() {
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader("config.txt"));
+			String line = reader.readLine();
+			int buffer = -1;
+			int count = 1;
+			boolean first = true;
+			String currentName = "";
+			String currentAddress = "";
+			int currentID = -1;
+            Library cLibrary = new Library(currentName, currentAddress, currentID);
+            System.out.print(line);
+			while (line != null) {
+				if (count == 1) {
+					for (int i = 0; i < line.length(); i++) {
+             	  		if (line.charAt(i) == ',') {
+							if (first) {
+								currentID = Integer.parseInt(line.substring(0,i));
+								first = false;
+							} else {
+								currentName = line.substring(buffer + 1,i);
+							} 
+                    		buffer = i;
+                		} else if (i == line.length()-1) {
+							currentAddress = line.substring(buffer + 1,line.length());
+                		}
+            		}
+					if (currentName == null || currentAddress == null || currentID == -1) {
+
+					} else {
+						cLibrary = new Library(currentName, currentAddress, currentID);
+						LibraryManagementSystem l1 = new LibraryManagementSystem(cLibrary);
+						buffer = -1;
+						first = true;
+						count++;
+            			line = reader.readLine();
+					}
+        		}
+			}
+            return cLibrary;
+		} catch(FileNotFoundException fnf) {
+       		System.out.println("Config file is not there!");
+        	System.exit(1);
+    	} catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
+        return currentLibrary;
+	} 
 }
