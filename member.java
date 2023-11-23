@@ -3,6 +3,7 @@ public class Member {
 	private String firstName;
 	private String lastName;
 	private String gender;
+	private String address;
 	private static int nextID = 0;
     private int memID;
 
@@ -10,12 +11,13 @@ public class Member {
 		nextID = ID;	
 	}
 	
-	public Member(int birthyear, String frstNm, String lstNm, String gender) 
+	public Member(int birthyear, String frstNm, String lstNm, String gender, String address) 
 	{
 		this.birthdate = birthyear;
 		this.firstName = frstNm;
 		this.lastName = lstNm;
 		this.gender = gender;
+		this.address = address;
 		memID = nextID;
         nextID++;
 		

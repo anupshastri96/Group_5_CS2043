@@ -88,8 +88,8 @@ public class SearchAlgorithm {
 
     }
 
-    static void memberSearch (String firstname, String lastname, String gender, String ID) {
-        ArrayList<Library> members = LibraryManagementSystem.getAllMembers();
+    static void memberSearch (String firstname, String lastname, String gender, String address, String ID) {
+        ArrayList<Member> members = LibraryManagementSystem.getAllMembers();
         toReturn = new ArrayList<Integer>();
         boolean added = false;
         boolean canBeAdded = true;
@@ -99,7 +99,7 @@ public class SearchAlgorithm {
 
         for (int i = 0; i < members.size(); i++) {
             
-            if (firstname.length() < 1 && lastname.length() && gender.length() && address.length() < 1 && ID.length() < 1) {
+            if (firstname.length() < 1 && lastname.length() < 1 && gender.length() < 1 && address.length() < 1 && ID.length() < 1) {
                 toReturn.add(members.get(i).getID());
             } else {
                 // First check

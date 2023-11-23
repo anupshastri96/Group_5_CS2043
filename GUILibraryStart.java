@@ -50,7 +50,8 @@ public class GUILibraryStart extends JFrame implements ActionListener {
             this.dispose();
             GUIAdminLogin login = new GUIAdminLogin();
         } else if (e.getSource() == librarianButton) {
-            System.out.println("Librarian button clicked");
+            this.dispose();
+            GUILibrarianChoice choice = new GUILibrarianChoice();
         }
 	}
 	

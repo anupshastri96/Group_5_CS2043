@@ -6,6 +6,9 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+
 
 public class Library {
 
@@ -42,8 +45,22 @@ public class Library {
 
         books = new ArrayList<>();
         this.bookReadFile();
+    }
 
-
+       
+    public String toString() {
+		String s =	"Library: " + getName() + "\n" +
+				"Address: " + getAddress() + "\n" +
+				"LibID: " + getID() + "\n" +
+				"# Books: " + books.size() + "\n";
+				
+    	s += "======================\n";
+    	
+    	for(int i=0; i<books.size(); i++) {
+    		s += books.get(i).toString() + "======================\n";
+    	}
+    	
+    	return s;
     }
 
     /*
@@ -122,22 +139,6 @@ public class Library {
 			return null;
 		}
 	}
-
-    
-    public String toString() {
-		String s =	"Library: " + getName() + "\n" +
-				"Address: " + getAddress() + "\n" +
-				"LibID: " + getID() + "\n" +
-				"# Books: " + books.size() + "\n";
-				
-    	s += "======================\n";
-    	
-    	for(int i=0; i<books.size(); i++) {
-    		s += books.get(i).toString() + "======================\n";
-    	}
-    	
-    	return s;
-    }
  
     private void bookReadFile() {
         try {
