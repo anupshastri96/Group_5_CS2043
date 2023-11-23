@@ -114,9 +114,23 @@ public class Library {
         boolean isReal = false;
     	books.remove(b);
     }
+	
+	public Book getBook(int n) {
+		if (n >= 0 && n < books.size()) {
+			return books.get(n);
+		} else {
+			return null;
+		}
+	}
+
     
     public String toString() {
-    	String s = "======================\n";
+		String s =	"Library: " + getName() + "\n" +
+				"Address: " + getAddress() + "\n" +
+				"LibID: " + getID() + "\n" +
+				"# Books: " + books.size() + "\n";
+				
+    	s += "======================\n";
     	
     	for(int i=0; i<books.size(); i++) {
     		s += books.get(i).toString() + "======================\n";
