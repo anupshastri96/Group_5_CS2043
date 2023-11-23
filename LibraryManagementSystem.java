@@ -249,32 +249,18 @@ public class LibraryManagementSystem {
 
 	// Member methods
 
-	public void addMember(Member memberIn) {
-		if (loginType == 1) {
-			boolean isTrue = false;
-			for (int i = 0; i < members.size(); i++) {
-				if (members.get(i).getID() == memberIn.getID()) {
-					i = members.size();
-					isTrue = true;
-				}
-			}
-			if (!isTrue) {
-				members.add(memberIn);
-				this.memberWriteFile();
+	static void addMember(Member memberIn) {
+		boolean isTrue = false;
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).getID() == memberIn.getID()) {
+				i = members.size();
+				isTrue = true;
 			}
 		}
-	}
-	
-	private void removeMember(Member memberIn) {
-		if (loginType == 1) {
-			for (int i = 0; i < members.size(); i++) {
-				if (members.get(i).getID() == memberIn.getID()) {
-					members.remove(i);
-					i = members.size();
-				}
-			}
+		if (!isTrue) {
+			members.add(memberIn);
+			memberWriteFile();
 		}
-		return toReturn;
 	}
 
 	static Member findMember(int memberID) {
@@ -285,6 +271,7 @@ public class LibraryManagementSystem {
 		}
 		return null;
 	}
+
 	/* This will be completed when I get to it
 	static Member findMember(String firstName, String lastName) {
 		for (int i = 0; i < members.size(); i++) {
@@ -307,8 +294,12 @@ public class LibraryManagementSystem {
 		return toReturn;
 	}
 
+	static ArrayList<Member> getAllMembers() {
+		return members;
+	}
+	
 
-	private void memberReadFile() {
+	static void memberReadFile() {
 		
 		try {
 

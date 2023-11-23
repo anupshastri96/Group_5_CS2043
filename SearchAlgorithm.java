@@ -88,26 +88,18 @@ public class SearchAlgorithm {
 
     }
 
-<<<<<<< HEAD
-    static void memberSearch (String firstname, String lastname, String gender, String address, String ID) {
-=======
     static void memberSearch (String firstname, String lastname, String gender, String ID) {
->>>>>>> main
-        ArrayList<Library> members = LibraryManagementSystem.getAllMembers();
+        ArrayList<Member> members = LibraryManagementSystem.getAllMembers();
         toReturn = new ArrayList<Integer>();
         boolean added = false;
         boolean canBeAdded = true;
         int smallestFirstname = -1;
         int smallestLastname = -1;
         int smallestGender = -1;
-<<<<<<< HEAD
-        int smallestAddress = -1;
-=======
->>>>>>> main
 
         for (int i = 0; i < members.size(); i++) {
             
-            if (firstname.length() < 1 && lastname.length() && gender.length() && address.length() < 1 && ID.length() < 1) {
+            if (firstname.length() < 1 && lastname.length() < 1 && gender.length() < 1 && ID.length() < 1) {
                 toReturn.add(members.get(i).getID());
             } else {
                 // First check
@@ -186,40 +178,10 @@ public class SearchAlgorithm {
                         }
                     }
 
-<<<<<<< HEAD
-                    // Fifth check
-                    if (address.length() > members.get(i).getAddress().length()) {
-                        canBeAdded = false;
-                    } else {
-                        smallestAddress = address.length();
-                    }
-
-                    if (smallestAddress > 0 && canBeAdded) {
-                        for (int j = 0; j < smallestAddress; j++) {
-                            if (address.charAt(j) != members.get(i).getAddress().charAt(j)) {
-                                canBeAdded = false;
-                                j = smallestAddress;
-                                if (added) {
-                                    toReturn.remove(toReturn.size() - 1);
-                                }
-                            }
-                        }
-                        if (canBeAdded) {
-                            toReturn.add(members.get(i).getID());
-                            added = true;
-                        }
-                    }
-
-=======
->>>>>>> main
                 }
                 smallestFirstname = -1;
                 smallestLastname = -1;
                 smallestGender = -1;
-<<<<<<< HEAD
-                smallestAddress = -1;
-=======
->>>>>>> main
                 added = false;
                 canBeAdded = true;
 

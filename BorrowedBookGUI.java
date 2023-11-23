@@ -139,7 +139,7 @@ public class BorrowedBookGUI extends JFrame {
             e.printStackTrace();
         }
 		
-		BorrowedBook book = new BorrowedBook(bookid,memid,convertedBorrowDate,convertedReturnDate);
+		//BorrowedBook book = new BorrowedBook(bookid,memid,convertedBorrowDate,convertedReturnDate);
 		
 	}
 

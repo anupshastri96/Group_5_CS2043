@@ -6,6 +6,9 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.util.Scanner;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+
 
 public class Library {
 
@@ -13,6 +16,7 @@ public class Library {
     private String address;
     private static int nextId = 1;
     private int libId;
+    private int numBooks;
     private ArrayList<Book> books;
     private ArrayList<BorrowedBook> borrowedHere;
     private Scanner bookScan;
@@ -30,20 +34,37 @@ public class Library {
         libId = nextId;
         nextId++;
 
+        numBooks = 0;
+
         books = new ArrayList<Book>();
         borrowedHere = new ArrayList<BorrowedBook>();
     
     }
 
-    public Library(String name, String address, int libId) {
+    public Library(String name, String address, int numBooks, int libId) {
         this.name = name;
         this.address = address;
+        this.numBooks = numBooks;
         this.libId = libId;
 
         books = new ArrayList<>();
         this.bookReadFile();
+    }
 
-
+       
+    public String toString() {
+		String s =	"Library: " + getName() + "\n" +
+				"Address: " + getAddress() + "\n" +
+				"LibID: " + getID() + "\n" +
+				"# Books: " + books.size() + "\n";
+				
+    	s += "======================\n";
+    	
+    	for(int i=0; i<books.size(); i++) {
+    		s += books.get(i).toString() + "======================\n";
+    	}
+    	
+    	return s;
     }
 
     /*
@@ -114,20 +135,18 @@ public class Library {
         boolean isReal = false;
     	books.remove(b);
     }
-    
-    public String toString() {
-    	String s = "======================\n";
-    	
-    	for(int i=0; i<books.size(); i++) {
-    		s += books.get(i).toString() + "======================\n";
-    	}
-    	
-    	return s;
-    }
+	
+	public Book getBook(int n) {
+		if (n >= 0 && n < books.size()) {
+			return books.get(n);
+		} else {
+			return null;
+		}
+	}
  
     private void bookReadFile() {
-        try {
-
+       /* try {
+            
 			BufferedReader reader = new BufferedReader(new FileReader("bookStorage.txt"));
 			String line = reader.readLine();
 			int buffer = -1;
@@ -191,17 +210,28 @@ public class Library {
             	line = reader.readLine();
         	}
 
+
 		} catch(FileNotFoundException fnf) {
             System.out.println("Book storage file is not there!");
             System.exit(1);
         } catch (IOException io) {
 			System.out.print("Hi");
 			System.exit(1);
-		}
+		} */
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bookStorage.bin"))) {
+            for(int i=0; i<nbks; i++) {
+				bk = (Book) ois.readObject();
+				this.addBook(bk);
+			}
+			System.out.println("Books successfully read from a file.");
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void bookWriteFile() {
-        try {
+    
+            /*
 			FileWriter writer = new FileWriter("bookStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			for (int i = 0; i < books.size(); i++) {
@@ -222,11 +252,16 @@ public class Library {
                 printer.println();
 			}
 			printer.close();
-
-		} catch (IOException io) {
-			System.out.print("Hi");
-			System.exit(1);
-		}
+        */
+       try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("bookStorage.bin"))) {
+            for(int i=0; i<nbks; i++) {
+				oos.writeObject(this.getBook(i));
+			}
+            System.out.println("Books written to a file.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
     }
 
     /*

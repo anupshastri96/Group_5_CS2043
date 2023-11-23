@@ -1,11 +1,11 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class test {
+public class libraryTest {
 	static ArrayList<Library> liblist = new ArrayList<Library>();
 	static Library placeholder = new Library("place", "1holder");
     public static void main(String[] args) {
-
+/*
     	Scanner myObj = new Scanner(System.in);  // Create a Scanner object
         System.out.println("Enter library quantity:");
         String number = myObj.nextLine();  // Read user input
@@ -25,7 +25,7 @@ public class test {
 
         l1.addMember(m1);
         l1.addMember(m2);
-   
+   */
     }
     private static void libadd(int quant) 
     {

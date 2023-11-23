@@ -1,6 +1,9 @@
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.swing.JOptionPane;
 
 public class BorrowedBook {
 	
@@ -11,9 +14,10 @@ public class BorrowedBook {
 	private Library borrowedFrom;
 	private Book borrowed;
 	private Date borrowDate;
+	private Date expectedReturnDate;
 	private int daysExtended;
 	private Date returnDate;
-
+	
 	public BorrowedBook(int ID) {
 		nextID = ID;
 	}
@@ -43,16 +47,30 @@ public class BorrowedBook {
 
 		//Do something with date
 	}
-	
+
 	private void extendReturnDate(int addDays) {
 		daysExtended += addDays;
 	}
 	
-	public double getLateFees() {
-		return 0;
+	public double getLateFees() 
+	{
+		
+		if(expectedReturnDate.before(returnDate)) 
+		{
+			//print returned on time in GUI or already returned
+			return 0;
+		}
+		else 
+		{
+			//to be determined
+			int fee = 0;
+			return fee;
+		}
+		
 	}
 	
 	private void returnbook(Date returned) {
+		// Remove parameter and just get current date
 		returnDate = returned;
 		active = false;
 	}
