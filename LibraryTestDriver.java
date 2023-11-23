@@ -73,7 +73,7 @@ public class LibraryTestDriver{
 			bk = new Book(str1, str2, gen*nbks, false);
 			lib.addBook(bk);
 		}
-		System.out.println("Added 100 books to lib");
+		System.out.println("Added " + nbks + " books to lib");
 		
 		System.out.println(lib.toString());
 		System.out.println("Printed new lib (1)");
