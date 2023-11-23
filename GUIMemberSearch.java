@@ -1,102 +1,107 @@
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+package lib;
 
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 
-import java.util.ArrayList;
+public class GUIMemberSearch extends JFrame {
 
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 
-public class GUIMemberSearch extends JFrame implements ActionListener {
-    // Borrowedbook GUI will be very similar
-    // Fix this up later
-    JTextField nameTextField;
-    JTextField addressTextField;
-    JTextField IDTextField;
-    JButton searchButton;
-    JButton backButton;
-    JButton addButton;
-
-    GUIMemberSearch() {
-
-        searchButton = new JButton("Search");
-        searchButton.setBounds(100,100,100,40);
-        searchButton.setFocusable(false);
-        searchButton.addActionListener(this);
-
-        backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
-        backButton.setFocusable(false);
-        backButton.addActionListener(this);
-
-        addButton = new JButton("Add");
-        addButton.setBounds(100,100,100,40);
-        addButton.setFocusable(false);
-        addButton.addActionListener(this);
-
-        nameTextField = new JTextField();
-        nameTextField.setPreferredSize(new Dimension(250,40));
-
-        addressTextField = new JTextField();
-        addressTextField.setPreferredSize(new Dimension(250,40));
-
-        IDTextField = new JTextField();
-        IDTextField.setPreferredSize(new Dimension(250,40));
-
-
-        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
-        this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
-
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
-
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        topPanel.add(addButton);
-        topPanel.add(backButton);
-        this.add(topPanel);
-
-        panel2.add(nameTextField);
-        panel2.add(addressTextField);
-        panel2.add(IDTextField);
-        panel2.add(searchButton);
-        this.add(panel2);
-
-        this.setVisible(true);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        
-        if (e.getSource() == searchButton) {
-            // Add book search method
-        /*    if (holder.size() == 1) {
-                this.dispose();
-                GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(holder.get(0)));
-            } else {
-                this.dispose();
-                GUILibraryResults results = new GUILibraryResults(holder);
-            }
-*/
-        }  else if (e.getSource() == addButton) {
-            // Add functionality when class is added
-            this.dispose();
-            GUIMemberAdd add = new GUIMemberAdd();
-        } else if (e.getSource() == backButton) {
-            this.dispose();
-            GUILibrarianChoice start = new GUILibrarianChoice();
-        }
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUIMemberSearch frame = new GUIMemberSearch();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	
+
+	/**
+	 * Create the frame.
+	 */
+	public GUIMemberSearch() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 653, 426);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("FIRST NAME:");
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(154, 84, 81, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("LAST NAME:");
+		lblNewLabel_1_1.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		lblNewLabel_1_1.setBounds(154, 123, 81, 14);
+		contentPane.add(lblNewLabel_1_1);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(305, 81, 146, 20);
+		contentPane.add(textField);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(305, 120, 146, 20);
+		contentPane.add(textField_1);
+		
+		JLabel lblNewLabel_1_4 = new JLabel("GENDER:");
+		lblNewLabel_1_4.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		lblNewLabel_1_4.setBounds(154, 167, 81, 14);
+		contentPane.add(lblNewLabel_1_4);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"", "MALE", "FEMALE", "OTHER"}));
+		comboBox.setBounds(335, 163, 88, 22);
+		contentPane.add(comboBox);
+		
+		JLabel lblNewLabel_1_1_1 = new JLabel("ID:");
+		lblNewLabel_1_1_1.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		lblNewLabel_1_1_1.setBounds(154, 212, 81, 14);
+		contentPane.add(lblNewLabel_1_1_1);
+		
+		textField_2 = new JTextField();
+		textField_2.setColumns(10);
+		textField_2.setBounds(305, 209, 146, 20);
+		contentPane.add(textField_2);
+		
+		JLabel lblMembershipSearch = new JLabel("MEMBERSHIP SEARCH");
+		lblMembershipSearch.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblMembershipSearch.setBounds(239, 11, 184, 36);
+		contentPane.add(lblMembershipSearch);
+		
+		JButton btnNewButton = new JButton("SEARCH");
+		btnNewButton.setBounds(257, 289, 89, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("BACK");
+		btnNewButton_1.setBounds(538, 19, 89, 23);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("ADD");
+		btnNewButton_2.setBounds(10, 19, 89, 23);
+		contentPane.add(btnNewButton_2);
+	}
 }

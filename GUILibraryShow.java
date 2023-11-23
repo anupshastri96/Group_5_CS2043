@@ -1,98 +1,83 @@
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+package lib;
 
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JTextArea;
+import java.awt.Color;
+import javax.swing.UIManager;
+import javax.swing.JLabel;
+import java.awt.Font;
 
+public class GUILibraryShow extends JFrame {
 
-public class GUILibraryShow extends JFrame implements ActionListener {
+	private JPanel contentPane;
 
-    JLabel test;
-    JButton editButton;
-    JButton removeButton;
-    JButton backButton;
-    JButton currentButton;
-    Library storeLibrary;
-
-    GUILibraryShow(Library libraryIn) {
-
-        storeLibrary = libraryIn;
-
-        // Add more labels that display the info
-        test = new JLabel(libraryIn.getName());
-
-        backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
-        backButton.setFocusable(false);
-        backButton.addActionListener(this);
-
-        editButton = new JButton("Edit");
-        editButton.setBounds(100,100,100,40);
-        editButton.setFocusable(false);
-        editButton.addActionListener(this);
-
-        removeButton = new JButton("Remove from System");
-        removeButton.setBounds(100,100,100,40);
-        removeButton.setFocusable(false);
-        removeButton.addActionListener(this);
-
-        currentButton = new JButton("Set as Current");
-		currentButton.setBounds(100,100,100,40);
-        currentButton.setFocusable(false);
-        currentButton.addActionListener(this);
-
-
-        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
-        this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
-
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
-
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        topPanel.add(removeButton);
-        topPanel.add(editButton);
-        topPanel.add(backButton);
-        this.add(topPanel);
-
-        panel2.add(test);
-        panel2.add(currentButton);
-        this.add(panel2);
-
-        this.setVisible(true);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == editButton) {
-            this.dispose();
-            GUILibraryEdit edit = new GUILibraryEdit(storeLibrary);
-        } else if (e.getSource() == currentButton) {
-            LibraryManagementSystem.changeCurrentLibrary(storeLibrary);
-            this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
-        } else if (e.getSource() == removeButton) {
-            if (storeLibrary != LibraryManagementSystem.getCurrentLibrary()) {
-                LibraryManagementSystem.removeLibrary(storeLibrary);
-                this.dispose();
-                GUILibrarySearch search = new GUILibrarySearch();
-            }
-            GUIErrorMessage message = new GUIErrorMessage("Current library cannot be removed, change current library to another library for this to be able to be removed.");
-        } else if (e.getSource() == backButton) {
-            this.dispose();
-            GUILibrarySearch search = new GUILibrarySearch();
-
-        }
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUILibraryShow frame = new GUILibraryShow();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	
+
+	/**
+	 * Create the frame.
+	 */
+	public GUILibraryShow() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 636, 399);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JButton btnNewButton = new JButton("REMOVE FROM SYSTEM");
+		btnNewButton.setBounds(10, 19, 147, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("EDIT");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_1.setBounds(363, 19, 89, 23);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton_2 = new JButton("BACK");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_2.setBounds(499, 19, 89, 23);
+		contentPane.add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("SET CURRENT");
+		btnNewButton_3.setBounds(191, 19, 113, 23);
+		contentPane.add(btnNewButton_3);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBackground(UIManager.getColor("Button.background"));
+		textArea.setBounds(98, 87, 435, 238);
+		contentPane.add(textArea);
+		
+		JLabel lblInformation = new JLabel("INFORMATION");
+		lblInformation.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblInformation.setBounds(244, 42, 184, 36);
+		contentPane.add(lblInformation);
+	}
 }

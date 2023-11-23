@@ -1,86 +1,63 @@
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+package lib;
 
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
 
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-
-
-import javax.swing.JTextField;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JFrame;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
+import java.awt.Font;
 
+public class GUILibraryResults extends JFrame {
 
-import java.util.ArrayList;
+	private JPanel contentPane;
 
-
-public class GUILibraryResults extends JFrame implements ActionListener {
-
-    JButton confirmButton;
-    JButton backButton;
-    JComboBox<String> options;
-    ArrayList<Integer> libraryIDs;
-
-    GUILibraryResults(ArrayList<Integer> libraryIDs) {
-
-        confirmButton = new JButton("Confirm");
-        confirmButton.setBounds(100,100,100,40);
-        confirmButton.setFocusable(false);
-        confirmButton.addActionListener(this);
-
-        backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
-        backButton.setFocusable(false);
-        backButton.addActionListener(this);
-
-        this.libraryIDs = libraryIDs;
-
-        String[] libraryNames = new String[libraryIDs.size()];
-        for (int i = 0; i < libraryIDs.size(); i++) {
-            String toAdd = LibraryManagementSystem.findLibrary(libraryIDs.get(i)).getName();
-            libraryNames[i] = (toAdd);
-        }
-        
-        options = new JComboBox<>(libraryNames);
-        options.addActionListener(this);
-
-        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
-        this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
-
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
-
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        topPanel.add(backButton);
-        this.add(topPanel);
-
-        panel2.add(options);
-        panel2.add(confirmButton);
-        this.add(panel2);
-
-        this.setVisible(true);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == confirmButton) {
-            this.dispose();
-            GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(libraryIDs.get(options.getSelectedIndex())));
-        } else if (e.getSource() == backButton) {
-            LibraryManagementSystem.logOut();
-            this.dispose();
-            GUILibrarySearch search = new GUILibrarySearch();
-        }
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUILibraryResults frame = new GUILibraryResults();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	
+
+	/**
+	 * Create the frame.
+	 */
+	public GUILibraryResults() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 694, 413);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setBounds(145, 103, 106, 22);
+		contentPane.add(comboBox);
+		
+		JButton btnNewButton = new JButton("CONFIRM");
+		btnNewButton.setBounds(365, 103, 89, 23);
+		contentPane.add(btnNewButton);
+		
+		JLabel lblSearchResults = new JLabel("SEARCH RESULTS");
+		lblSearchResults.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblSearchResults.setBounds(245, 26, 184, 36);
+		contentPane.add(lblSearchResults);
+		
+		JButton btnNewButton_1 = new JButton("BACK");
+		btnNewButton_1.setBounds(547, 34, 89, 23);
+		contentPane.add(btnNewButton_1);
+	}
+
 }

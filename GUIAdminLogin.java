@@ -1,77 +1,81 @@
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.Font;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+package lib;
 
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JLabel;
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JButton;
 
+public class GUIAdminLogin extends JFrame {
 
-public class GUIAdminLogin extends JFrame implements ActionListener {
+	private JPanel contentPane;
+	private JTextField textField;
+	private JTextField textField_1;
 
-    JTextField usernameField;
-    JTextField passwordField;
-    JButton submitButton;
-    JButton backButton;
-
-    GUIAdminLogin() {
-
-        backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
-        backButton.setFocusable(false);
-        backButton.addActionListener(this);
-
-        usernameField = new JTextField();
-        usernameField.setPreferredSize(new Dimension(250,40));
-
-        passwordField = new JTextField();
-        passwordField.setPreferredSize(new Dimension(250,40));
-
-
-        submitButton = new JButton("Submit");
-		submitButton.setBounds(100,100,100,40);
-        submitButton.setFocusable(false);
-        submitButton.addActionListener(this);
-
-        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
-        this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
-
-        JPanel backPanel = new JPanel();
-        backPanel.setPreferredSize(new Dimension(300,40));
-        backPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
-
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        backPanel.add(backButton);
-        this.add(backPanel);
-
-        panel2.add(usernameField);
-        panel2.add(passwordField);
-        panel2.add(submitButton);
-        this.add(panel2);
-
-        this.setVisible(true);
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == submitButton) {
-            if (LibraryManagementSystem.checkAdmin(usernameField.getText(),passwordField.getText())) {
-                this.dispose();
-                GUILibrarySearch search = new GUILibrarySearch();
-            }
-        } else if (e.getSource() == backButton) {
-            this.dispose();
-            GUILibraryStart start = new GUILibraryStart();
-        }
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUIAdminLogin frame = new GUIAdminLogin();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	
+
+	/**
+	 * Create the frame.
+	 */
+	public GUIAdminLogin() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 613, 411);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		JLabel lblNewLabel_1 = new JLabel("USERNAME:");
+		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		lblNewLabel_1.setBounds(154, 84, 81, 14);
+		contentPane.add(lblNewLabel_1);
+		
+		JLabel lblNewLabel_1_1 = new JLabel("PASSWORD:");
+		lblNewLabel_1_1.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		lblNewLabel_1_1.setBounds(154, 123, 81, 14);
+		contentPane.add(lblNewLabel_1_1);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(305, 81, 146, 20);
+		contentPane.add(textField);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(305, 120, 146, 20);
+		contentPane.add(textField_1);
+		
+		JLabel lblAdminLogin = new JLabel("ADMIN LOGIN");
+		lblAdminLogin.setFont(new Font("Times New Roman", Font.BOLD, 16));
+		lblAdminLogin.setBounds(239, 11, 184, 36);
+		contentPane.add(lblAdminLogin);
+		
+		JButton btnNewButton_1 = new JButton("BACK");
+		btnNewButton_1.setBounds(498, 19, 89, 23);
+		contentPane.add(btnNewButton_1);
+		
+		JButton btnNewButton = new JButton("LOGIN");
+		btnNewButton.setBounds(261, 191, 89, 23);
+		contentPane.add(btnNewButton);
+	}
+
 }
