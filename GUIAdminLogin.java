@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
@@ -13,51 +14,58 @@ import javax.swing.JPanel;
 
 public class GUIAdminLogin extends JFrame implements ActionListener {
 
-    JTextField usernameField;
-    JTextField passwordField;
-    JButton submitButton;
-    JButton backButton;
+    private JTextField usernameField;
+    private JTextField passwordField;
+    private JButton submitButton;
+    private JButton backButton;
+    private JPanel contentPane;
 
     GUIAdminLogin() {
 
-        backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
+        backButton = new JButton("BACK");
+		backButton.setBounds(498, 19, 89, 23);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
         usernameField = new JTextField();
-        usernameField.setPreferredSize(new Dimension(250,40));
+        usernameField.setColumns(10);
+		usernameField.setBounds(305, 81, 146, 20);
 
         passwordField = new JTextField();
-        passwordField.setPreferredSize(new Dimension(250,40));
+        passwordField.setColumns(10);
+		passwordField.setBounds(305, 120, 146, 20);
 
 
-        submitButton = new JButton("Submit");
-		submitButton.setBounds(100,100,100,40);
+        submitButton = new JButton("LOGIN");
+		submitButton.setBounds(261, 191, 89, 23);
         submitButton.setFocusable(false);
         submitButton.addActionListener(this);
 
+        JLabel user = new JLabel("USERNAME:");
+		user.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		user.setBounds(154, 84, 81, 14);
+		
+		JLabel pass = new JLabel("PASSWORD:");
+		pass.setFont(new Font("Times New Roman", Font.PLAIN, 12));
+		pass.setBounds(154, 123, 81, 14);
+
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
+        this.setBounds(100, 100, 613, 411);
         this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+    
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
-        JPanel backPanel = new JPanel();
-        backPanel.setPreferredSize(new Dimension(300,40));
-        backPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
-
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        backPanel.add(backButton);
-        this.add(backPanel);
-
-        panel2.add(usernameField);
-        panel2.add(passwordField);
-        panel2.add(submitButton);
-        this.add(panel2);
+        contentPane.add(backButton);
+        contentPane.add(usernameField);
+        contentPane.add(passwordField);
+        contentPane.add(submitButton);
+        contentPane.add(user);
+        contentPane.add(pass);
+    
 
         this.setVisible(true);
     }

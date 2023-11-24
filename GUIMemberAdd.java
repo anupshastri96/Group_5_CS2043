@@ -90,6 +90,7 @@ public class GUIMemberAdd extends JFrame implements ActionListener{
 		contentPane.add(addtxt);
 		
 		genderField = new JComboBox<>(genders);
+		genderField.setBounds(335, 163, 88, 22);
 		contentPane.add(genderField);
 		
 		add = new JButton("Add member");
@@ -102,7 +103,7 @@ public class GUIMemberAdd extends JFrame implements ActionListener{
 
 	public void actionPerformed(ActionEvent e) {
         if (e.getSource() == add) {
-            String gender = genders[genderField.getSelectedIndex()];
+            String gender = (String) genderField.getSelectedItem();
 			String address = addtxt.getText();
 			String DOB = DOBtxt.getText();
 			String Fname = Nametxt.getText();

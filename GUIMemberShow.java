@@ -11,20 +11,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 
-public class GUILibraryShow extends JFrame implements ActionListener {
+public class GUIMemberShow extends JFrame implements ActionListener {
 
     JLabel test;
     JButton editButton;
     JButton backButton;
     JButton currentButton;
-    Library storeLibrary;
+    Member storeMember;
 
-    GUILibraryShow(Library libraryIn) {
+    GUIMemberShow(Member memberIn) {
 
-        storeLibrary = libraryIn;
+        storeMember = memberIn;
 
         // Add more labels that display the info
-        test = new JLabel(libraryIn.getName());
+        test = new JLabel(memberIn.getFirstname());
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
@@ -70,13 +70,10 @@ public class GUILibraryShow extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == editButton) {
             this.dispose();
-            GUILibraryEdit edit = new GUILibraryEdit(storeLibrary);
-        } else if (e.getSource() == currentButton) {
-            LibraryManagementSystem.changeCurrentLibrary(storeLibrary);
-            this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
+            GUIMemberEdit edit = new GUIMemberEdit(storeMember);
         } else if (e.getSource() == backButton) {
             this.dispose();
-            GUILibrarySearch search = new GUILibrarySearch();
+            GUIMemberSearch search = new GUIMemberSearch();
 
         }
 	}

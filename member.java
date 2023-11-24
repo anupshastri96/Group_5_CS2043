@@ -1,10 +1,10 @@
 public class Member {
-	private int birthdate;
+	private int birthyear;
 	private String firstName;
 	private String lastName;
 	private String gender;
 	private String address;
-	private static int nextID = 0;
+	private static int nextID = 1;
     private int memID;
 
 	public Member(int ID) {
@@ -13,7 +13,7 @@ public class Member {
 	
 	public Member(int birthyear, String frstNm, String lstNm, String gender, String address) 
 	{
-		this.birthdate = birthyear;
+		this.birthyear = birthyear;
 		this.firstName = frstNm;
 		this.lastName = lstNm;
 		this.gender = gender;
@@ -22,14 +22,19 @@ public class Member {
         nextID++;
 		
 	}
-	public Member(int birthyear, String frstNm, String lstNm, String gender, int id) 
+	public Member(int birthyear, String frstNm, String lstNm, String gender, String address, int id) 
 	{
-		this.birthdate = birthyear;
+		this.birthyear = birthyear;
 		this.firstName = frstNm;
 		this.lastName = lstNm;
+		this.address = address;
 		this.gender = gender;
 		memID = id;
 		
+	}
+
+	public void setNextID(int nextID) {
+		this.nextID = nextID;
 	}
 		public String getFirstname() 
 	{
@@ -40,13 +45,14 @@ public class Member {
 		return lastName;
 	}
 	public int getAge() {
+		// Get actual year
 		int year = 2023;
-		int age = birthdate - year;
+		int age = birthyear - year;
 		return age;
 	}
 
-	public int getBirthdate() {
-		return birthdate;
+	public int getBirthyear() {
+		return birthyear;
 	}
 	public String getGender() {
 		if(!gender.isEmpty()) 
@@ -57,6 +63,10 @@ public class Member {
 		{
 			return null;
 		}
+	}
+
+	public String getAddress() {
+		return address;
 	}
 	public int getID() {
 		return memID;

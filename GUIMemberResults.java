@@ -1,46 +1,52 @@
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
+
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 
-public class GUILibraryShow extends JFrame implements ActionListener {
+import java.util.ArrayList;
 
-    JLabel test;
-    JButton editButton;
+
+public class GUIMemberResults extends JFrame implements ActionListener {
+
+    JButton confirmButton;
     JButton backButton;
-    JButton currentButton;
-    Library storeLibrary;
+    JComboBox<String> options;
+    ArrayList<Integer> memberIDs;
 
-    GUILibraryShow(Library libraryIn) {
+    GUIMemberResults(ArrayList<Integer> memberIDs) {
 
-        storeLibrary = libraryIn;
-
-        // Add more labels that display the info
-        test = new JLabel(libraryIn.getName());
+        confirmButton = new JButton("Confirm");
+        confirmButton.setBounds(100,100,100,40);
+        confirmButton.setFocusable(false);
+        confirmButton.addActionListener(this);
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        editButton = new JButton("Edit");
-        editButton.setBounds(100,100,100,40);
-        editButton.setFocusable(false);
-        editButton.addActionListener(this);
+        this.memberIDs = memberIDs;
 
-        currentButton = new JButton("Set as Current");
-		currentButton.setBounds(100,100,100,40);
-        currentButton.setFocusable(false);
-        currentButton.addActionListener(this);
-
+        String[] memberNames = new String[memberIDs.size()];
+        for (int i = 0; i < memberIDs.size(); i++) {
+            String toAdd = (LibraryManagementSystem.findMember(memberIDs.get(i)).getFirstname() + " " + LibraryManagementSystem.findMember(memberIDs.get(i)).getAddress());
+            memberNames[i] = (toAdd);
+        }
+        
+        options = new JComboBox<>(memberNames);
+        options.addActionListener(this);
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -56,28 +62,23 @@ public class GUILibraryShow extends JFrame implements ActionListener {
         panel2.setPreferredSize(new Dimension(300,300));
         panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        topPanel.add(editButton);
         topPanel.add(backButton);
         this.add(topPanel);
 
-        panel2.add(test);
-        panel2.add(currentButton);
+        panel2.add(options);
+        panel2.add(confirmButton);
         this.add(panel2);
 
         this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == editButton) {
+        if (e.getSource() == confirmButton) {
             this.dispose();
-            GUILibraryEdit edit = new GUILibraryEdit(storeLibrary);
-        } else if (e.getSource() == currentButton) {
-            LibraryManagementSystem.changeCurrentLibrary(storeLibrary);
-            this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
+            GUIMemberShow show = new GUIMemberShow(LibraryManagementSystem.findMember(memberIDs.get(options.getSelectedIndex())));
         } else if (e.getSource() == backButton) {
             this.dispose();
-            GUILibrarySearch search = new GUILibrarySearch();
-
+            GUIMemberSearch search = new GUIMemberSearch();
         }
 	}
 	

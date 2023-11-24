@@ -6,8 +6,12 @@ import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.util.Scanner;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
+
+import java.io.IOException;
 
 
 public class Library {
@@ -143,7 +147,14 @@ public class Library {
 			return null;
 		}
 	}
- 
+
+    public ArrayList<Book> getAllBooks() {
+        return books;
+    }
+    
+    public int getNumBooks() {
+		return numBooks;
+	}
     private void bookReadFile() {
        /* try {
             
@@ -219,9 +230,9 @@ public class Library {
 			System.exit(1);
 		} */
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bookStorage.bin"))) {
-            for(int i=0; i<nbks; i++) {
-				bk = (Book) ois.readObject();
-				this.addBook(bk);
+            for(int i=0; i< numBooks; i++) {
+				Book bookRead = (Book) ois.readObject();
+				this.addBook(bookRead);
 			}
 			System.out.println("Books successfully read from a file.");
         } catch (IOException | ClassNotFoundException e) {
@@ -254,7 +265,7 @@ public class Library {
 			printer.close();
         */
        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("bookStorage.bin"))) {
-            for(int i=0; i<nbks; i++) {
+            for(int i=0; i<numBooks; i++) {
 				oos.writeObject(this.getBook(i));
 			}
             System.out.println("Books written to a file.");

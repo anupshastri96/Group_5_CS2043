@@ -87,11 +87,17 @@ public class GUIMemberSearch extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         
         if (e.getSource() == searchButton) {
-            String gender = genders[genderField.getSelectedIndex()];
 
-            SearchAlgorithm.memberSearch(firstNameTextField.getText(),lastNameTextField.getText(),gender,IDTextField.getText());
+            SearchAlgorithm.memberSearch(firstNameTextField.getText(),lastNameTextField.getText(),genderField.getSelectedIndex(),IDTextField.getText());
             ArrayList<Integer> holder = SearchAlgorithm.getResults();
 
+            if (holder.size() == 1) {
+                this.dispose();
+                GUIMemberShow show = new GUIMemberShow(LibraryManagementSystem.findMember(holder.get(0)));
+            } else {
+                this.dispose();
+                GUIMemberResults results = new GUIMemberResults(holder);
+            }
             
         }  else if (e.getSource() == addButton) {
             

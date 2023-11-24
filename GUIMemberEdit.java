@@ -10,36 +10,36 @@ import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.util.ArrayList;
 
-public class GUILibraryShow extends JFrame implements ActionListener {
 
-    JLabel test;
-    JButton editButton;
+public class GUIMemberEdit extends JFrame implements ActionListener {
+
+    JTextField nameTextField;
+    JTextField addressTextField;
+    JButton submitButton;
     JButton backButton;
-    JButton currentButton;
-    Library storeLibrary;
+    Member storeMember;
 
-    GUILibraryShow(Library libraryIn) {
+    GUIMemberEdit(Member memberIn) {
 
-        storeLibrary = libraryIn;
+        storeMember = memberIn;
 
-        // Add more labels that display the info
-        test = new JLabel(libraryIn.getName());
+        submitButton = new JButton("Submit Changes");
+        submitButton.setBounds(100,100,100,40);
+        submitButton.setFocusable(false);
+        submitButton.addActionListener(this);
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        editButton = new JButton("Edit");
-        editButton.setBounds(100,100,100,40);
-        editButton.setFocusable(false);
-        editButton.addActionListener(this);
+        nameTextField = new JTextField();
+        nameTextField.setPreferredSize(new Dimension(250,40));
 
-        currentButton = new JButton("Set as Current");
-		currentButton.setBounds(100,100,100,40);
-        currentButton.setFocusable(false);
-        currentButton.addActionListener(this);
+        addressTextField = new JTextField();
+        addressTextField.setPreferredSize(new Dimension(250,40));
 
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
@@ -56,29 +56,30 @@ public class GUILibraryShow extends JFrame implements ActionListener {
         panel2.setPreferredSize(new Dimension(300,300));
         panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        topPanel.add(editButton);
         topPanel.add(backButton);
         this.add(topPanel);
 
-        panel2.add(test);
-        panel2.add(currentButton);
+        panel2.add(nameTextField);
+        panel2.add(addressTextField);
+        panel2.add(submitButton);
         this.add(panel2);
 
         this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == editButton) {
+        
+        if (e.getSource() == submitButton) {
+            /* 
+            storeMember.changeFirstName(nameTextField.getText());
+            storeMember.changeAddress(addressTextField.getText());
+            LibraryManagementSystem.libraryWriteFile();
             this.dispose();
-            GUILibraryEdit edit = new GUILibraryEdit(storeLibrary);
-        } else if (e.getSource() == currentButton) {
-            LibraryManagementSystem.changeCurrentLibrary(storeLibrary);
-            this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
-        } else if (e.getSource() == backButton) {
+            GUILibraryShow show = new GUILibraryShow(storeMember); */
+        }  else if (e.getSource() == backButton) {
             this.dispose();
-            GUILibrarySearch search = new GUILibrarySearch();
-
+            GUIMemberShow show = new GUIMemberShow(storeMember);
         }
 	}
 	
-}
+}       

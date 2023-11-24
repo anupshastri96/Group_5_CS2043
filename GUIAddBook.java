@@ -13,13 +13,14 @@ import java.awt.event.ActionListener;
 
 public class GUIAddBook extends JFrame implements ActionListener{
 
-    public GUIAddBook() {
+    String[] deweySubjects = {"000 Generalities","100 Philosophy & psychology","200 Religion","300 Social sciences","400 Language","500 Natural sciences & mathematics","600 Technology (Applied sciences)","700 The arts","800 Literature & rhetoric","900 Geography & history"};
+    JComboBox<String> cb;
+    JButton addButton;
+    JButton backButton;
+    JTextField titleText;
+    JTextField authorText;
 
-        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 250);
-        this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+    public GUIAddBook() {
 
         JPanel panel = new JPanel();
 
@@ -27,7 +28,7 @@ public class GUIAddBook extends JFrame implements ActionListener{
         titleLabel.setBounds(10, 20, 80, 25);
         panel.add(titleLabel);
 
-        JTextField titleText = new JTextField(20);
+        titleText = new JTextField(20);
         titleText.setBounds(100, 20, 165, 25);
         panel.add(titleText);
 
@@ -35,7 +36,7 @@ public class GUIAddBook extends JFrame implements ActionListener{
         authorLabel.setBounds(10, 50, 80, 25);
         panel.add(authorLabel);
 
-        JTextField authorText = new JTextField(20);
+        authorText = new JTextField(20);
         authorText.setBounds(100, 50, 165, 25);
         panel.add(authorText);
 
@@ -44,17 +45,34 @@ public class GUIAddBook extends JFrame implements ActionListener{
         deweyLabel.setVisible(true);
         panel.add(deweyLabel);
 
-        String[] deweySubjects = {"000 Generalities","100 Philosophy & psychology","200 Religion","300 Social sciences","400 Language","500 Natural sciences & mathematics","600 Technology (Applied sciences)","700 The arts","800 Literature & rhetoric","900 Geography & history"};
-        JComboBox<String> cb = new JComboBox<String>(deweySubjects);
+        cb = new JComboBox<>(deweySubjects);
         cb.setBounds(100, 80, 120, 25);
         panel.add(cb);
 
-        JButton addButton = new JButton("Add Book");
+        addButton = new JButton("Add Book");
         addButton.setBounds(10, 130, 150, 25);
         panel.add(addButton);
-        addButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            
+        addButton.addActionListener(this);
+
+        addButton = new JButton("Back");
+        addButton.setBounds(10, 130, 150, 25);
+        panel.add(addButton);
+        addButton.addActionListener(this);
+
+        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(300, 250);
+        this.setResizable(false);
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+
+        this.add(panel);
+
+        this.setVisible(true);
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addButton) {
                 String title = titleText.getText();
                 String author = authorText.getText();
                 String deweydecimal = (String) cb.getSelectedItem();
@@ -68,13 +86,9 @@ public class GUIAddBook extends JFrame implements ActionListener{
                 // Clear the text fields after adding the book
                 titleText.setText("");
                 authorText.setText("");
-            }
-        });
-
-
-
-        this.add(panel);
-
-        this.setVisible(true);
-    }
+        } else if (e.getSource() == backButton) {
+            this.dispose();
+            GUILibrarianChoice choice = new GUILibrarianChoice();
+        }
+	}
 }

@@ -88,18 +88,27 @@ public class SearchAlgorithm {
 
     }
 
-    static void memberSearch (String firstname, String lastname, String gender, String ID) {
+    static void memberSearch (String firstname, String lastname, int gender, String ID) {
         ArrayList<Member> members = LibraryManagementSystem.getAllMembers();
         toReturn = new ArrayList<Integer>();
         boolean added = false;
         boolean canBeAdded = true;
         int smallestFirstname = -1;
         int smallestLastname = -1;
-        int smallestGender = -1;
+        int otherGender = -1;
 
         for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).getGender().equals("Male")) {
+                otherGender = 1;
+            } else if (members.get(i).getGender().equals("Female")) {
+                otherGender = 2;
+            } else if (members.get(i).getGender().equals("Other")) {
+                otherGender = 3;
+            } else {
+                otherGender = 0;
+            }
             
-            if (firstname.length() < 1 && lastname.length() < 1 && gender.length() < 1 && ID.length() < 1) {
+            if (firstname.length() < 1 && lastname.length() < 1 && gender == 0 && ID.length() < 1) {
                 toReturn.add(members.get(i).getID());
             } else {
                 // First check
@@ -156,17 +165,88 @@ public class SearchAlgorithm {
                     }
 
                     // Fourth check
-                    if (gender.length() > members.get(i).getGender().length()) {
+                    if (gender != otherGender) {
                         canBeAdded = false;
+                        if (added) {
+                            toReturn.remove(toReturn.size() - 1);
+                        }
                     } else {
-                        smallestGender = gender.length();
+                        if (canBeAdded) {
+                            toReturn.add(members.get(i).getID());
+                            added = true;
+                        }
                     }
 
-                    if (smallestGender > 0 && canBeAdded) {
-                        for (int j = 0; j < smallestGender; j++) {
-                            if (gender.charAt(j) != members.get(i).getGender().charAt(j)) {
+
+
+                }
+                smallestFirstname = -1;
+                smallestLastname = -1;
+                otherGender = -1;
+                added = false;
+                canBeAdded = true;
+
+            }
+        }
+
+    }
+
+/*
+    static void bookSearch (String name, String author, int gender, String ID) {
+        ArrayList<Book> books = LibraryManagementSystem.getCurrentLibrary().getAllBooks();
+        toReturn = new ArrayList<Integer>();
+        boolean added = false;
+        boolean canBeAdded = true;
+        int smallestFirstname = -1;
+        int smallestLastname = -1;
+        int otherGender = -1;
+
+        for (int i = 0; i < books.size(); i++) {
+            if (firstname.length() < 1 && lastname.length() < 1 && gender == 0 && ID.length() < 1) {
+                toReturn.add(members.get(i).getID());
+            } else {
+                // First check
+                if (ID.length() > 0) {
+                    if (Integer.parseInt(ID) == members.get(i).getID()) {
+                        toReturn.clear();
+                        toReturn.add(members.get(i).getID());
+                        i = members.size();
+                    } else {
+                        canBeAdded = false;
+                    }
+                } else {
+                    // Second check
+                    if (firstname.length() > members.get(i).getFirstname().length()) {
+                        canBeAdded = false;
+                    } else {
+                        smallestFirstname = firstname.length();
+                    }
+
+                    if (smallestFirstname > 0 && canBeAdded) {
+                        for (int j = 0; j < smallestFirstname; j++) {
+                            if (firstname.charAt(j) != members.get(i).getFirstname().charAt(j)) {
                                 canBeAdded = false;
-                                j = smallestGender;
+                                j = smallestFirstname;
+                            }
+                        }
+                        if (canBeAdded) {
+                            toReturn.add(members.get(i).getID());
+                            added = true;
+                        }
+                    }
+
+                    // Third check
+                    if (lastname.length() > members.get(i).getLastname().length()) {
+                        canBeAdded = false;
+                    } else {
+                        smallestLastname = lastname.length();
+                    }
+
+                    if (smallestLastname > 0 && canBeAdded) {
+                        for (int j = 0; j < smallestLastname; j++) {
+                            if (lastname.charAt(j) != members.get(i).getLastname().charAt(j)) {
+                                canBeAdded = false;
+                                j = smallestLastname;
                                 if (added) {
                                     toReturn.remove(toReturn.size() - 1);
                                 }
@@ -178,15 +258,30 @@ public class SearchAlgorithm {
                         }
                     }
 
+                    // Fourth check
+                    if (gender != otherGender) {
+                        canBeAdded = false;
+                        if (added) {
+                            toReturn.remove(toReturn.size() - 1);
+                        }
+                    } else {
+                        if (canBeAdded) {
+                            toReturn.add(members.get(i).getID());
+                            added = true;
+                        }
+                    }
+
+
+
                 }
                 smallestFirstname = -1;
                 smallestLastname = -1;
-                smallestGender = -1;
+                otherGender = -1;
                 added = false;
                 canBeAdded = true;
 
             }
         }
 
-    }
+    } */
 }
