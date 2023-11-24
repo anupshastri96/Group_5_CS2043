@@ -16,8 +16,9 @@ import java.util.ArrayList;
 public class GUIBookSearch extends JFrame implements ActionListener {
     // Fix this up later
     JTextField nameTextField;
-    JTextField addressTextField;
+    JTextField authorTextField;
     JTextField IDTextField;
+    //Add checkbox
     JButton searchButton;
     JButton backButton;
     JButton addButton;
@@ -42,8 +43,8 @@ public class GUIBookSearch extends JFrame implements ActionListener {
         nameTextField = new JTextField();
         nameTextField.setPreferredSize(new Dimension(250,40));
 
-        addressTextField = new JTextField();
-        addressTextField.setPreferredSize(new Dimension(250,40));
+        authorTextField = new JTextField();
+        authorTextField.setPreferredSize(new Dimension(250,40));
 
         IDTextField = new JTextField();
         IDTextField.setPreferredSize(new Dimension(250,40));
@@ -68,7 +69,7 @@ public class GUIBookSearch extends JFrame implements ActionListener {
         this.add(topPanel);
 
         panel2.add(nameTextField);
-        panel2.add(addressTextField);
+        panel2.add(authorTextField);
         panel2.add(IDTextField);
         panel2.add(searchButton);
         this.add(panel2);
@@ -80,17 +81,21 @@ public class GUIBookSearch extends JFrame implements ActionListener {
         
         if (e.getSource() == searchButton) {
             // Add book search method
-        /*    if (holder.size() == 1) {
+            boolean convert = false;
+            SearchAlgorithm.bookSearch(nameTextField.getText(),authorTextField.getText(),convert,IDTextField.getText());
+            ArrayList<Integer> holder = SearchAlgorithm.getResults();
+            
+            if (holder.size() == 1) {
                 this.dispose();
                 GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(holder.get(0)));
             } else {
                 this.dispose();
                 GUILibraryResults results = new GUILibraryResults(holder);
             }
-*/
+
         }  else if (e.getSource() == addButton) {
-            //this.dispose();
-            //GUIBookAdd add = new GUIBookAdd();
+            this.dispose();
+            GUIBookAdd add = new GUIBookAdd();
         } else if (e.getSource() == backButton) {
             this.dispose();
             GUILibrarianChoice start = new GUILibrarianChoice();

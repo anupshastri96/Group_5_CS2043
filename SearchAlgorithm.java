@@ -191,82 +191,88 @@ public class SearchAlgorithm {
 
     }
 
-/*
-    static void bookSearch (String name, String author, int gender, String ID) {
+
+    static void bookSearch (String name, String author, boolean adult, String ID) {
         ArrayList<Book> books = LibraryManagementSystem.getCurrentLibrary().getAllBooks();
         toReturn = new ArrayList<Integer>();
         boolean added = false;
         boolean canBeAdded = true;
-        int smallestFirstname = -1;
-        int smallestLastname = -1;
-        int otherGender = -1;
+        int smallestName = -1;
+        int smallestAuthor = -1;
+        boolean currentAdult = false;
 
         for (int i = 0; i < books.size(); i++) {
-            if (firstname.length() < 1 && lastname.length() < 1 && gender == 0 && ID.length() < 1) {
-                toReturn.add(members.get(i).getID());
+            if (name.length() < 1 && name.length() < 1 && adult == false && ID.length() < 1) {
+                toReturn.add(books.get(i).getId());
             } else {
                 // First check
                 if (ID.length() > 0) {
-                    if (Integer.parseInt(ID) == members.get(i).getID()) {
+                    if (Integer.parseInt(ID) == books.get(i).getId()) {
                         toReturn.clear();
-                        toReturn.add(members.get(i).getID());
-                        i = members.size();
+                        toReturn.add(books.get(i).getId());
+                        i = books.size();
                     } else {
                         canBeAdded = false;
                     }
                 } else {
                     // Second check
-                    if (firstname.length() > members.get(i).getFirstname().length()) {
+                    if (name.length() > books.get(i).getName().length()) {
                         canBeAdded = false;
                     } else {
-                        smallestFirstname = firstname.length();
+                        smallestName = name.length();
                     }
 
-                    if (smallestFirstname > 0 && canBeAdded) {
-                        for (int j = 0; j < smallestFirstname; j++) {
-                            if (firstname.charAt(j) != members.get(i).getFirstname().charAt(j)) {
+                    if (smallestName > 0 && canBeAdded) {
+                        for (int j = 0; j < smallestName; j++) {
+                            if (name.charAt(j) != books.get(i).getName().charAt(j)) {
                                 canBeAdded = false;
-                                j = smallestFirstname;
+                                j = smallestName;
                             }
                         }
                         if (canBeAdded) {
-                            toReturn.add(members.get(i).getID());
+                            toReturn.add(books.get(i).getId());
                             added = true;
                         }
                     }
 
                     // Third check
-                    if (lastname.length() > members.get(i).getLastname().length()) {
+                    if (author.length() > books.get(i).getAuthor().length()) {
                         canBeAdded = false;
                     } else {
-                        smallestLastname = lastname.length();
+                        smallestAuthor = author.length();
                     }
 
-                    if (smallestLastname > 0 && canBeAdded) {
-                        for (int j = 0; j < smallestLastname; j++) {
-                            if (lastname.charAt(j) != members.get(i).getLastname().charAt(j)) {
+                    if (smallestAuthor > 0 && canBeAdded) {
+                        for (int j = 0; j < smallestAuthor; j++) {
+                            if (author.charAt(j) != books.get(i).getAuthor().charAt(j)) {
                                 canBeAdded = false;
-                                j = smallestLastname;
+                                j = smallestAuthor;
                                 if (added) {
                                     toReturn.remove(toReturn.size() - 1);
                                 }
                             }
                         }
                         if (canBeAdded) {
-                            toReturn.add(members.get(i).getID());
+                            toReturn.add(books.get(i).getId());
                             added = true;
                         }
                     }
 
                     // Fourth check
-                    if (gender != otherGender) {
+
+                    if (books.get(i).getAdult().equals("T")) {
+                        currentAdult = true;
+                    } else {
+                        currentAdult = false;
+                    }
+                    if (adult != currentAdult) {
                         canBeAdded = false;
                         if (added) {
                             toReturn.remove(toReturn.size() - 1);
                         }
                     } else {
                         if (canBeAdded) {
-                            toReturn.add(members.get(i).getID());
+                            toReturn.add(books.get(i).getId());
                             added = true;
                         }
                     }
@@ -274,14 +280,14 @@ public class SearchAlgorithm {
 
 
                 }
-                smallestFirstname = -1;
-                smallestLastname = -1;
-                otherGender = -1;
+                smallestName = -1;
+                smallestAuthor = -1;
+                currentAdult = false;
                 added = false;
                 canBeAdded = true;
 
             }
         }
 
-    } */
+    }
 }

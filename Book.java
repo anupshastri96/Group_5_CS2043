@@ -34,6 +34,7 @@ public class Book implements Serializable {
         amountBorrowed = 0;
 
         belongsToLibraries = new ArrayList<Library>();
+        belongsToLibraries.add(LibraryManagementSystem.getCurrentLibrary());
         hasBorrowed = new ArrayList<Member>();
 
     }

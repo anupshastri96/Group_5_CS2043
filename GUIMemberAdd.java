@@ -90,10 +90,10 @@ public class GUIMemberAdd extends JFrame implements ActionListener{
 		contentPane.add(addtxt);
 		
 		genderField = new JComboBox<>(genders);
-		genderField.setBounds(335, 163, 88, 22);
+		genderField.setBounds(280, 275, 146, 20);
 		contentPane.add(genderField);
 		
-		add = new JButton("Add member");
+		add = new JButton("ADD MEMBER");
 		add.addActionListener(this);
 		add.setBounds(309, 315, 111, 23);
 		contentPane.add(add);

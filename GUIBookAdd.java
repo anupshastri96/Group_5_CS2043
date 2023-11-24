@@ -11,16 +11,28 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GUIAddBook extends JFrame implements ActionListener{
+import java.util.ArrayList;
+import java.io.FileReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.FileWriter;
+import java.io.BufferedReader;
+import java.util.Scanner;
 
-    String[] deweySubjects = {"000 Generalities","100 Philosophy & psychology","200 Religion","300 Social sciences","400 Language","500 Natural sciences & mathematics","600 Technology (Applied sciences)","700 The arts","800 Literature & rhetoric","900 Geography & history"};
+public class GUIBookAdd extends JFrame implements ActionListener{
+
+
+    String[] deweySubjects;
     JComboBox<String> cb;
     JButton addButton;
     JButton backButton;
     JTextField titleText;
     JTextField authorText;
 
-    public GUIAddBook() {
+    public GUIBookAdd() {
+
+        deweySubjects = this.getDeweyInfo();
 
         JPanel panel = new JPanel();
 
@@ -71,6 +83,30 @@ public class GUIAddBook extends JFrame implements ActionListener{
         this.setVisible(true);
     }
 
+    private String[] getDeweyInfo() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("libraryStorage.txt"));
+			String line = reader.readLine();
+            ArrayList<String> holder = new ArrayList<>();
+            while (line != null) {
+                holder.add(line);
+                line = reader.readLine();
+            }
+            String[] toReturn = new String[holder.size()];
+            for (int i = 0; i < holder.size(); i++) {
+                toReturn[i] = holder.get(i);
+            }
+            return toReturn;
+        } catch(FileNotFoundException fnf) {
+            System.out.println("Library storage file is not there!");
+            System.exit(1);
+        } catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
+        return null;
+    }
+
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
                 String title = titleText.getText();
@@ -79,16 +115,15 @@ public class GUIAddBook extends JFrame implements ActionListener{
                 String sub = deweydecimal.substring(0,3);
                 int deweyIn = Integer.parseInt(sub);
             
-                // Create a new book and add it to the library (assuming library is already created)
+                
                 Book newBook = new Book(title, author, deweyIn, true);
-                // Library.addBook(newBook); fix this static method issue
-
+                LibraryManagementSystem.getCurrentLibrary().addBook(newBook);
                 // Clear the text fields after adding the book
                 titleText.setText("");
                 authorText.setText("");
         } else if (e.getSource() == backButton) {
             this.dispose();
-            GUILibrarianChoice choice = new GUILibrarianChoice();
+            GUIBookSearch search = new GUIBookSearch();
         }
 	}
 }
