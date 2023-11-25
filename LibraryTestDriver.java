@@ -85,7 +85,7 @@ public class LibraryTestDriver{
 		System.out.println("Printed new lib (1)");
 		
 		
-		/* 
+		 
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("bookStorage.bin"))) {
             for(int i=0; i<nbks; i++) {
 				oos.writeObject(lib.getBook(i));
@@ -94,12 +94,12 @@ public class LibraryTestDriver{
             System.out.println("Books written to a file.");
         } catch (IOException e) {
             e.printStackTrace();
-        } */
+        } 
 		
 		
 		
 		Library dupLib = new Library("The Better Test Library", "999.1 Book Rd");
-		/* 
+		 
 		try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bookStorage.bin"))) {
             for(int i=0; i<nbks; i++) {
 				bk = (Book) ois.readObject();
@@ -109,7 +109,7 @@ public class LibraryTestDriver{
 			System.out.println(nbks + " books successfully read from a file.");
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        } */
+        }
 		
 		System.out.println(dupLib.toString());
 		System.out.println("Printed dupLib (1)");

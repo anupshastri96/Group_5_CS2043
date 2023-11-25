@@ -129,7 +129,9 @@ public class Library implements Serializable{
             
             bookIn.addLibrary(libId);
 			books.add(bookIn);
+            numBooks++;
 			this.bookWriteFile();
+            LibraryManagementSystem.libraryWriteFile();
 			
 		}
 
@@ -242,13 +244,12 @@ public class Library implements Serializable{
 			System.exit(1);
 		} */ 
         try {
-            FileInputStream fis = new FileInputStream("bookStorage.bin");
-            ObjectInputStream ois = new ObjectInputStream(fis);
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bookStorage.bin"));
             for(int i=0; i< numBooks; i++) {
+                
 				Book bookRead = (Book) ois.readObject();
                 if (bookRead.checkLibrary(this)) {
-                    this.addBook(bookRead);
-                    System.out.println(bookRead.toString());
+                    books.add(bookRead);
                     System.out.println("Book read from file.");
                 } else {
                     i--;
@@ -292,7 +293,7 @@ public class Library implements Serializable{
         FileOutputStream fos = new FileOutputStream("bookStorage.bin");
         ObjectOutputStream oos = new ObjectOutputStream(fos);
             for(int i=0; i<numBooks; i++) {
-				oos.writeObject(this.getBook(i));
+				oos.writeObject(books.get(i));
 			}
             oos.close();
             System.out.println("Book written to a file.");

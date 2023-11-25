@@ -176,12 +176,13 @@ public class Book implements Serializable {
 
     public boolean checkLibrary(Library in) {
         for (int i = 0; i < belongsToLibraries.size(); i++) {
-            if (in == belongsToLibraries.get(i)) {
+            if (in.getID() == belongsToLibraries.get(i).getID()) {
                 return true;
             }
         }
         return false;
     }
+
 
     public void addLibrary(int libraryID) {
         
