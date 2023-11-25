@@ -3,6 +3,7 @@ import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.util.Scanner;
@@ -11,10 +12,9 @@ import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
-import java.io.IOException;
 
 
-public class Library {
+public class Library implements Serializable{
 
     private String name;
     private String address;
@@ -42,6 +42,8 @@ public class Library {
 
         books = new ArrayList<Book>();
         borrowedHere = new ArrayList<BorrowedBook>();
+
+        bookReadFile();
     
     }
 
@@ -52,7 +54,7 @@ public class Library {
         this.libId = libId;
 
         books = new ArrayList<>();
-        this.bookReadFile();
+        bookReadFile();
     }
 
        
@@ -124,13 +126,11 @@ public class Library {
 			}
 		}
 		if (!isTrue) {
-			if (bookIn.getName() == null ||  bookIn.getAuthor() == null) {
-
-			} else {
-                bookIn.addLibrary(this.getID());
-				books.add(bookIn);
-				this.bookWriteFile();
-			}
+            
+            bookIn.addLibrary(libId);
+			books.add(bookIn);
+			this.bookWriteFile();
+			
 		}
 
     }
@@ -148,6 +148,15 @@ public class Library {
 		}
 	}
 
+    public Book findBook(int bookID) {
+		for (int i = 0; i < books.size(); i++) {
+			if (books.get(i).getId() == bookID) {
+				return books.get(i);
+			}
+		}
+		return null;
+	}
+
     public ArrayList<Book> getAllBooks() {
         return books;
     }
@@ -156,7 +165,7 @@ public class Library {
 		return numBooks;
 	}
     private void bookReadFile() {
-       /* try {
+       /*   try {
             
 			BufferedReader reader = new BufferedReader(new FileReader("bookStorage.txt"));
 			String line = reader.readLine();
@@ -204,6 +213,7 @@ public class Library {
                                 count++;
                             }
                             libraryIDs.add(Integer.parseInt(line.substring(buffer + 2,i)));
+                            System.out.println(line.substring(buffer + 2,i));
                         } else if (count == 8) {
                             memberIDs.add(Integer.parseInt(line.substring(buffer + 2,i)));
                         }
@@ -215,6 +225,8 @@ public class Library {
                         Book addBook = new Book(currentName, currentAuthor, currentDewey, currentAdult, currentAmount, currentID, libraryIDs, memberIDs);
 				        books.add(addBook);
                     }
+                    System.out.println(libraryIDs.get(i));
+                    
                 }
 				buffer = -1;
                 count = 1;
@@ -228,21 +240,29 @@ public class Library {
         } catch (IOException io) {
 			System.out.print("Hi");
 			System.exit(1);
-		} */
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bookStorage.bin"))) {
+		} */ 
+        try {
+            FileInputStream fis = new FileInputStream("bookStorage.bin");
+            ObjectInputStream ois = new ObjectInputStream(fis);
             for(int i=0; i< numBooks; i++) {
 				Book bookRead = (Book) ois.readObject();
-				this.addBook(bookRead);
+                if (bookRead.checkLibrary(this)) {
+                    this.addBook(bookRead);
+                    System.out.println(bookRead.toString());
+                    System.out.println("Book read from file.");
+                } else {
+                    i--;
+                }
 			}
-			System.out.println("Books successfully read from a file.");
+            ois.close();
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
-        }
+        } 
     }
 
     private void bookWriteFile() {
-    
-            /*
+     /* 
+        try {
 			FileWriter writer = new FileWriter("bookStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			for (int i = 0; i < books.size(); i++) {
@@ -263,15 +283,22 @@ public class Library {
                 printer.println();
 			}
 			printer.close();
-        */
-       try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("bookStorage.bin"))) {
+        } catch(IOException ioe) {
+            System.out.print("Hi");
+			System.exit(1);
+        }
+      */
+       try {
+        FileOutputStream fos = new FileOutputStream("bookStorage.bin");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
             for(int i=0; i<numBooks; i++) {
 				oos.writeObject(this.getBook(i));
 			}
-            System.out.println("Books written to a file.");
+            oos.close();
+            System.out.println("Book written to a file.");
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        } 
 		
     }
 

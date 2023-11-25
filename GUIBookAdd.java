@@ -6,6 +6,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import java.awt.event.ActionEvent;
@@ -35,6 +36,7 @@ public class GUIBookAdd extends JFrame implements ActionListener{
         deweySubjects = this.getDeweyInfo();
 
         JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(300,250));
 
         JLabel titleLabel = new JLabel("Title:");
         titleLabel.setBounds(10, 20, 80, 25);
@@ -66,10 +68,10 @@ public class GUIBookAdd extends JFrame implements ActionListener{
         panel.add(addButton);
         addButton.addActionListener(this);
 
-        addButton = new JButton("Back");
-        addButton.setBounds(10, 130, 150, 25);
-        panel.add(addButton);
-        addButton.addActionListener(this);
+        backButton = new JButton("Back");
+        backButton.setBounds(10, 160, 150, 25);
+        panel.add(backButton);
+        backButton.addActionListener(this);
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -85,7 +87,7 @@ public class GUIBookAdd extends JFrame implements ActionListener{
 
     private String[] getDeweyInfo() {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("libraryStorage.txt"));
+            BufferedReader reader = new BufferedReader(new FileReader("DeweyDecimalData.txt"));
 			String line = reader.readLine();
             ArrayList<String> holder = new ArrayList<>();
             while (line != null) {
@@ -98,7 +100,7 @@ public class GUIBookAdd extends JFrame implements ActionListener{
             }
             return toReturn;
         } catch(FileNotFoundException fnf) {
-            System.out.println("Library storage file is not there!");
+            System.out.println("Dewey info is not there!");
             System.exit(1);
         } catch (IOException io) {
 			System.out.print("Hi");
@@ -115,9 +117,9 @@ public class GUIBookAdd extends JFrame implements ActionListener{
                 String sub = deweydecimal.substring(0,3);
                 int deweyIn = Integer.parseInt(sub);
             
-                
                 Book newBook = new Book(title, author, deweyIn, true);
                 LibraryManagementSystem.getCurrentLibrary().addBook(newBook);
+                System.out.print(LibraryManagementSystem.getCurrentLibrary().toString());
                 // Clear the text fields after adding the book
                 titleText.setText("");
                 authorText.setText("");

@@ -95,7 +95,7 @@ public class GUILibrarySearch extends JFrame implements ActionListener {
             this.dispose();
             GUILibraryAdd add = new GUILibraryAdd();
         } else if (e.getSource() == backButton) {
-            LibraryManagementSystem.logOut();
+            
             this.dispose();
             GUILibraryStart start = new GUILibraryStart();
         }

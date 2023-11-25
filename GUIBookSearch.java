@@ -87,10 +87,10 @@ public class GUIBookSearch extends JFrame implements ActionListener {
             
             if (holder.size() == 1) {
                 this.dispose();
-                GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(holder.get(0)));
+                GUIBookShow show = new GUIBookShow(LibraryManagementSystem.getCurrentLibrary().findBook(holder.get(0)));
             } else {
                 this.dispose();
-                GUILibraryResults results = new GUILibraryResults(holder);
+                GUIBookResults results = new GUIBookResults(holder);
             }
 
         }  else if (e.getSource() == addButton) {

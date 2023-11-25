@@ -18,14 +18,14 @@ import javax.swing.JPanel;
 import java.util.ArrayList;
 
 
-public class GUILibraryResults extends JFrame implements ActionListener {
+public class GUIBookResults extends JFrame implements ActionListener {
 
     JButton confirmButton;
     JButton backButton;
     JComboBox<String> options;
-    ArrayList<Integer> libraryIDs;
+    ArrayList<Integer> bookIDs;
 
-    GUILibraryResults(ArrayList<Integer> libraryIDs) {
+    GUIBookResults(ArrayList<Integer> bookIDs) {
 
         confirmButton = new JButton("Confirm");
         confirmButton.setBounds(100,100,100,40);
@@ -37,15 +37,15 @@ public class GUILibraryResults extends JFrame implements ActionListener {
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        this.libraryIDs = libraryIDs;
+        this.bookIDs = bookIDs;
 
-        String[] libraryNames = new String[libraryIDs.size()];
-        for (int i = 0; i < libraryIDs.size(); i++) {
-            String toAdd = LibraryManagementSystem.findLibrary(libraryIDs.get(i)).getName();
-            libraryNames[i] = (toAdd);
+        String[] bookNames = new String[bookIDs.size()];
+        for (int i = 0; i < bookIDs.size(); i++) {
+            String toAdd = LibraryManagementSystem.getCurrentLibrary().findBook(bookIDs.get(i)).getName();
+            bookNames[i] = (toAdd);
         }
         
-        options = new JComboBox<>(libraryNames);
+        options = new JComboBox<>(bookNames);
         options.addActionListener(this);
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
@@ -75,11 +75,10 @@ public class GUILibraryResults extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == confirmButton) {
             this.dispose();
-            GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(libraryIDs.get(options.getSelectedIndex())));
+            GUIBookShow show = new GUIBookShow(LibraryManagementSystem.getCurrentLibrary().findBook(bookIDs.get(options.getSelectedIndex())));
         } else if (e.getSource() == backButton) {
-            
             this.dispose();
-            GUILibrarySearch search = new GUILibrarySearch();
+            GUIBookSearch search = new GUIBookSearch();
         }
 	}
 	

@@ -36,11 +36,14 @@ public class LibraryManagementSystem {
                 	}
 					buffer = i;
             	}
+			} 
+			if (findLibrary(configInts.get(0)) == null) {
+				Library failSafe = new Library("Failsafe Activated", "0", -1, -1);
+				currentLibrary = failSafe;
 			} else {
-				//Add failsafe here
+				currentLibrary = findLibrary(configInts.get(0));
 			}
 
-			currentLibrary = findLibrary(configInts.get(0));
 			Library fakeLibrary = new Library(configInts.get(1));
 			Book fakeBook = new Book(configInts.get(2));
 			Member fakeMember = new Member(configInts.get(3));
@@ -83,8 +86,8 @@ public class LibraryManagementSystem {
 		return libraries;
 	}
 
-	static void addLibrary(Library libraryIn) {
-		if (loginType == 1) {
+	static void addLibrary(Library libraryIn, boolean reading) {
+		if (!reading) {
 			boolean isTrue = false;
 			for (int i = 0; i < libraries.size(); i++) {
 				if (libraries.get(i).getID() == libraryIn.getID() || (libraryIn.getName().equals(libraries.get(i).getName()) && libraryIn.getAddress().equals(libraries.get(i).getAddress()))) {
@@ -101,6 +104,18 @@ public class LibraryManagementSystem {
 					libraryWriteFile();
 				}
 			}
+		} else {
+			boolean isSame = false;
+			for (int i = 0; i < libraries.size(); i++) {
+				if (libraries.get(i).getID() == libraryIn.getID() || (libraryIn.getName().equals(libraries.get(i).getName()) && libraryIn.getAddress().equals(libraries.get(i).getAddress()))) {
+					isSame = true;
+				}
+			}
+			if (!isSame) {
+				libraries.add(libraryIn);
+				
+			}
+			
 		}
 	}
 	
@@ -136,7 +151,7 @@ public class LibraryManagementSystem {
 			String currentAddress = "";
 			int currentNumBooks = -1;
 			int currentID = -1;
-			while (line != null) {
+			while (line != null ) {
            	 	for (int i = 0; i < line.length(); i++) {
              	  	if (line.charAt(i) == ',') {
 						if (count == 1) {
@@ -152,17 +167,14 @@ public class LibraryManagementSystem {
 						currentNumBooks = Integer.parseInt(line.substring(buffer + 1,line.length()));
                 	}
             	}
-				if (currentName == null || currentAddress == null || currentID == -1) {
-
-				} else {
-					Library addLibrary = new Library(currentName, currentAddress, currentNumBooks, currentID);
-					libraries.add(addLibrary);
-					buffer = -1;
-					count = 1;
-            		line = reader.readLine();
-				}
+				Library addLibrary = new Library(currentName, currentAddress, currentNumBooks, currentID);
+				libraries.add(addLibrary);
+				buffer = -1;
+				count = 1;
+            	line = reader.readLine();
+			
         	}
-
+			
 		} catch(FileNotFoundException fnf) {
             System.out.println("Library storage file is not there!");
             System.exit(1);
@@ -238,9 +250,6 @@ public class LibraryManagementSystem {
 		return false;
 	}
 
-	public static void logOut() {
-		loginType = 0;
-	}
 
 	// Member methods
 

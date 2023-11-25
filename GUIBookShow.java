@@ -1,52 +1,39 @@
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-
 import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 
-import java.util.ArrayList;
+public class GUIBookShow extends JFrame implements ActionListener {
 
-
-public class GUILibraryResults extends JFrame implements ActionListener {
-
-    JButton confirmButton;
+    JLabel test;
+    JButton editButton;
     JButton backButton;
-    JComboBox<String> options;
-    ArrayList<Integer> libraryIDs;
+    Book storeBook;
 
-    GUILibraryResults(ArrayList<Integer> libraryIDs) {
+    GUIBookShow(Book bookIn) {
 
-        confirmButton = new JButton("Confirm");
-        confirmButton.setBounds(100,100,100,40);
-        confirmButton.setFocusable(false);
-        confirmButton.addActionListener(this);
+        storeBook = bookIn;
+
+        // Add more labels that display the info
+        test = new JLabel(bookIn.getName());
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        this.libraryIDs = libraryIDs;
-
-        String[] libraryNames = new String[libraryIDs.size()];
-        for (int i = 0; i < libraryIDs.size(); i++) {
-            String toAdd = LibraryManagementSystem.findLibrary(libraryIDs.get(i)).getName();
-            libraryNames[i] = (toAdd);
-        }
-        
-        options = new JComboBox<>(libraryNames);
-        options.addActionListener(this);
+        editButton = new JButton("Edit");
+        editButton.setBounds(100,100,100,40);
+        editButton.setFocusable(false);
+        editButton.addActionListener(this);
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,24 +49,24 @@ public class GUILibraryResults extends JFrame implements ActionListener {
         panel2.setPreferredSize(new Dimension(300,300));
         panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+        topPanel.add(editButton);
         topPanel.add(backButton);
         this.add(topPanel);
 
-        panel2.add(options);
-        panel2.add(confirmButton);
+        panel2.add(test);
         this.add(panel2);
 
         this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == confirmButton) {
-            this.dispose();
-            GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(libraryIDs.get(options.getSelectedIndex())));
+        if (e.getSource() == editButton) {
+            //this.dispose();
+           // GUIBookEdit edit = new GUIBookEdit(storeBook);
         } else if (e.getSource() == backButton) {
-            
             this.dispose();
-            GUILibrarySearch search = new GUILibrarySearch();
+            GUIBookSearch search = new GUIBookSearch();
+
         }
 	}
 	

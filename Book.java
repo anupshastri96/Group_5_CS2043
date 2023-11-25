@@ -65,9 +65,9 @@ public class Book implements Serializable {
 			"Amount Borrowed: " + amountBorrowed + "\n" +
 			"Library Names: ";
 		
-		if (getLibraryIDs().size() == 0) toReturn += "No LibraryIDs\n";
+		if (belongsToLibraries.size() == 0) toReturn += "No Librarys\n";
 		else {
-			for(int i=0; i<getLibraryIDs().size(); i++) {
+			for(int i=0; i<belongsToLibraries.size(); i++) {
 				toReturn += belongsToLibraries.get(i).getName() + "\n";
 			}
 		}
@@ -81,6 +81,22 @@ public class Book implements Serializable {
 		
 		return toReturn;
 	}
+
+    public String makeReadable() {
+        String toReturn = (this.getId() + "," + this.getDewey() + "," + this.getName() + "," + this.getAuthor() + "," + this.getAmount());
+        if (adult) {
+            toReturn += ",T";
+        } else {
+            toReturn += ",F";
+        }
+        for (int i = 0; i < belongsToLibraries.size(); i++) {
+            toReturn = (",L" + belongsToLibraries.get(i).getID());
+        }
+        for (int i = 0; i < hasBorrowed.size(); i++) {
+            toReturn = (",M" + hasBorrowed.get(i).getID());
+        }
+        return toReturn;
+    }
 
 
 
@@ -152,20 +168,23 @@ public class Book implements Serializable {
      */
     public ArrayList<Integer> getLibraryIDs() {
         ArrayList<Integer> toReturn = new ArrayList<Integer>();
-        if (belongsToLibraries.size() != 0) {
-            for (int i = 0; i < belongsToLibraries.size(); i++) {
-                toReturn.add(belongsToLibraries.get(i).getID());
-            }
+        for (int i = 0; i < belongsToLibraries.size(); i++) {
+            toReturn.add(belongsToLibraries.get(i).getID());
         }
         return toReturn;
     }
 
-    private void findLibraries() {
-        // Leave this for later
-
+    public boolean checkLibrary(Library in) {
+        for (int i = 0; i < belongsToLibraries.size(); i++) {
+            if (in == belongsToLibraries.get(i)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addLibrary(int libraryID) {
+        
         boolean canAdd = true;
         if (belongsToLibraries.size() != 0) {
             for (int i = 0; i < belongsToLibraries.size(); i++) {
@@ -175,6 +194,7 @@ public class Book implements Serializable {
             }
         }
         if (canAdd) {
+            
             belongsToLibraries.add(LibraryManagementSystem.findLibrary(libraryID));
         }
     }

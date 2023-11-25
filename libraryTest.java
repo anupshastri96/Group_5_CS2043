@@ -53,7 +53,7 @@ public class libraryTest {
     {
     	//LibraryManagementSystem l1 = new LibraryManagementSystem(placeholder);
     	for(int i = 0; i<liblist.size();i++) {
-    		l1.addLibrary(liblist.get(i));
+    		l1.addLibrary(liblist.get(i), false);
     	}
     	
     	

@@ -65,7 +65,7 @@ public class GUILibraryAdd extends JFrame implements ActionListener {
         if (e.getSource() == addButton) {
             if (nameTextField.getText() != "" && addressTextField.getText() != "") {
                 Library toAdd = new Library(nameTextField.getText(), addressTextField.getText());
-                LibraryManagementSystem.addLibrary(toAdd);
+                LibraryManagementSystem.addLibrary(toAdd, false);
             }
         }  else if (e.getSource() == backButton) {
             this.dispose();

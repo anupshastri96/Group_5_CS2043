@@ -202,11 +202,15 @@ public class SearchAlgorithm {
         boolean currentAdult = false;
 
         for (int i = 0; i < books.size(); i++) {
-            if (name.length() < 1 && name.length() < 1 && adult == false && ID.length() < 1) {
+            System.out.println(books.get(i).toString());
+        }
+
+        for (int i = 0; i < books.size(); i++) {
+            if (name.length() < 1 && name.length() < 1 && adult == false && ID.length() < 1 && books.get(i).checkLibrary(LibraryManagementSystem.getCurrentLibrary())) {
                 toReturn.add(books.get(i).getId());
             } else {
                 // First check
-                if (ID.length() > 0) {
+                if (ID.length() > 0 && books.get(i).checkLibrary(LibraryManagementSystem.getCurrentLibrary())) {
                     if (Integer.parseInt(ID) == books.get(i).getId()) {
                         toReturn.clear();
                         toReturn.add(books.get(i).getId());
@@ -222,7 +226,7 @@ public class SearchAlgorithm {
                         smallestName = name.length();
                     }
 
-                    if (smallestName > 0 && canBeAdded) {
+                    if (smallestName > 0 && canBeAdded && books.get(i).checkLibrary(LibraryManagementSystem.getCurrentLibrary())) {
                         for (int j = 0; j < smallestName; j++) {
                             if (name.charAt(j) != books.get(i).getName().charAt(j)) {
                                 canBeAdded = false;

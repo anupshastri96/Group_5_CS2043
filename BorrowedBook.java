@@ -1,4 +1,6 @@
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -26,7 +28,8 @@ public class BorrowedBook {
 		this.borrower = borrower;
 		
 		this.borrowed = borrowed;
-		borrowDate = new Date();
+  
+   		borrowDate = new Date(); 
 		daysExtended = 0;
 		active = true;
 	}
@@ -41,7 +44,6 @@ public class BorrowedBook {
 		this.borrowDate = borrowDate;
 		this.active = active;
 
-		//Do something with date
 	}
 
 
@@ -63,9 +65,10 @@ public class BorrowedBook {
 		}
 	}
 	
-	private void returnbook(Date returned) {
+	private double returnbook(Date returned) {
 		returnDate = returned;
 		active = false;
+		return getLateFees();
 		
 	}
 	
