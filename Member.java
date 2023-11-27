@@ -44,14 +44,15 @@ public class Member {
 	public void setNextID(int nextID) {
 		this.nextID = nextID;
 	}
-		public String getFirstname() 
-	{
+	
+	public String getFirstname() {
 		return firstName;
 	}
-		public String getLastname() 
-	{
+	
+	public String getLastname() {
 		return lastName;
 	}
+	
 	public int getAge() {
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
@@ -62,13 +63,11 @@ public class Member {
 	public int getBirthyear() {
 		return birthyear;
 	}
+	
 	public String getGender() {
-		if(!gender.isEmpty()) 
-		{
+		if(!gender.isEmpty()) {
 			return gender;
-		}
-		else 
-		{
+		} else {
 			return null;
 		}
 	}
@@ -76,6 +75,7 @@ public class Member {
 	public String getAddress() {
 		return address;
 	}
+	
 	public int getID() {
 		return memID;
 	}
