@@ -110,6 +110,16 @@ public class BorrowedBook {
 		}
 		
 	}
+	public double checkedOutLength(){
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date newDate = calendar.getTime();
+		 long differenceInMilliseconds = borrowDate.getTime() - newDate.getTime();
+	     long differenceInDays = differenceInMilliseconds / (24 * 60 * 60 * 1000);
+		double daysChecked = (double) differenceInDays;
+		return daysChecked;
+		
+	}
 	
 	private void returnbook(Date returned) 
 	{
