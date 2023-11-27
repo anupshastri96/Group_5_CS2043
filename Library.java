@@ -199,6 +199,29 @@ public class Library implements Serializable{
         }
     }
 
+	public void returnBook(BorrowedBook brwd) {
+		// check if book is in this library
+		for(int i=0; i<books.size(); i++) {
+			if(brwd.getBook().getId() == books.get(i).getId()) {
+				// remove book from borrowed list (??)
+				
+				// remove member from the book's own members list
+				boolean done = false;
+				for(int j=0; j<brwd.getBook().getMemberIDs().size() && (done == false); j++) {
+					if(brwd.getMember().getID() == brwd.getBook().getMemberIDs().get(j)) {
+						// remove from that list
+						brwd.getBook().returnBook(brwd.getMember());
+						
+						brwd.returnBook();
+						brwd.getLateFees();
+						done = true;
+					}
+				}
+			}
+		}
+		
+	}
+
     public ArrayList<BorrowedBook> getAllBorrowedBooks() {
         return borrowedHere;
     }
