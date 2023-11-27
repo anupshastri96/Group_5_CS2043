@@ -13,7 +13,7 @@ public class BorrowedBook {
 	private Date expectedReturnDate;
 	private Date borrowDate;
 	private Date returnDate;
-	private ArrayList<BorrowedBook> borrowedbooks = new ArrayList<BorrowedBook>();
+	public ArrayList<BorrowedBook> borrowedbooks = new ArrayList<BorrowedBook>();
 	private static int nextID = 0;
 	private boolean active;
 	private Member borrower;
@@ -75,6 +75,19 @@ public class BorrowedBook {
 		     Date newDate = calendar.getTime();
 		     expectedReturnDate = newDate;
 			
+		
+	}
+	
+	private double checkouttime() 
+	{
+		Calendar calendar = Calendar.getInstance();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		Date newDate = calendar.getTime();
+		 long differenceInMilliseconds = borrowDate.getTime() - newDate.getTime();
+	     long differenceInDays = differenceInMilliseconds / (24 * 60 * 60 * 1000);
+		double days = (double) differenceInDays;
+		return days;
+		
 		
 	}
 	
