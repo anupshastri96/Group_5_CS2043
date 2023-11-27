@@ -127,6 +127,21 @@ public class BorrowedBook {
 		//return getLateFees();
 		
 	}
-	
 
+	/*
+	 * GET METHODS
+	 */
+	
+	public Book getBook() {
+		return borrowed;
+	}
+	
+	public Member getMember() {
+		return borrower;
+	}
+	
+	public Library getLibrary() {
+		return borrowedFrom;
+	}
+	
 }
