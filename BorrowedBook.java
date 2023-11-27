@@ -63,24 +63,19 @@ public class BorrowedBook {
 		this.borrowDate = borrowDate;
 		this.active = active;
 
-	}/*
-	private void extendReturnDate(int daysToAdd) 
-	{
-		
-			 Calendar calendar = Calendar.getInstance();
-			 calendar.setTime(expectedReturnDate);  
-			   
-		     calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
-		     Date newDate = calendar.getTime();
-		     expectedReturnDate = newDate;
-			
-		
+	}
+	
+	private void extendReturnDate(int daysToAdd) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(expectedReturnDate);  
+
+		calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
+		Date newDate = calendar.getTime();
+		expectedReturnDate = newDate;
+
+		daysExtended += daysToAdd;
 	}
 
-	private void extendReturnDate(int addDays) {
-		daysExtended += addDays;
-	} */
-	
 	public double getLateFees() 
 	{
 		

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Member {
 	private int birthyear;
@@ -52,8 +53,8 @@ public class Member {
 		return lastName;
 	}
 	public int getAge() {
-		// Get actual year
-		int year = 2023;
+		Calendar calendar = Calendar.getInstance();
+		int year = calendar.get(Calendar.YEAR);
 		int age = birthyear - year;
 		return age;
 	}
