@@ -3,7 +3,7 @@ public class Member {
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private String address;
+	private String address; //not used?
 	private static int nextID = 0;
     private int memID;
 
