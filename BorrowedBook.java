@@ -121,8 +121,9 @@ public class BorrowedBook {
 		}
 	}
 	
-	private void returnbook(Date returned) {
-		returnDate = returned;
+	public void returnbook() {
+		Date currentDate = new Date();
+		returnDate = currentDate;
 		active = false;
 		//return getLateFees();
 		
