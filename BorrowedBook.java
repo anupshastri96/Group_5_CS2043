@@ -22,7 +22,6 @@ public class BorrowedBook {
 	private Library borrowedFrom;
 	private Book borrowed;
 	private int daysExtended;
-	//private Date returnDate;
 	
 	public BorrowedBook(int ID) {
 		nextID = ID;
@@ -43,8 +42,7 @@ public class BorrowedBook {
 	}
 
 	
-	public BorrowedBook(int id, int membID,Date exretdate,Date borrowdt, boolean active) 
-	{
+	public BorrowedBook(int id, int membID,Date exretdate,Date borrowdt, boolean active) {
 		
 		this.id = id;
 		this.associatedMemberID = membID;
@@ -76,20 +74,16 @@ public class BorrowedBook {
 		daysExtended += daysToAdd;
 	}
 
-	public double getLateFees() 
-	{
+	public double getLateFees() {
 		
-		if(expectedReturnDate.before(returnDate)) 
-		{
+		if(expectedReturnDate.before(returnDate)) {
 			JOptionPane.showMessageDialog(null, "RETURNED ON TIME");
 			return 0;
-		}
-		else 
-		{
+		} else {
 			//to be determined
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			 long differenceInMilliseconds = returnDate.getTime() - borrowDate.getTime();
-		     long differenceInDays = differenceInMilliseconds / (24 * 60 * 60 * 1000);
+			long differenceInMilliseconds = returnDate.getTime() - borrowDate.getTime();
+		    long differenceInDays = differenceInMilliseconds / (24 * 60 * 60 * 1000);
 			double fee = (double) (differenceInDays*10);
 			return fee;
 		}
@@ -108,14 +102,11 @@ public class BorrowedBook {
 		Date currentDate = new Date();
 		returnDate = currentDate;
 		active = false;
-		//return getLateFees();
-		
 	}
 
 	/*
 	 * GET METHODS
 	 */
-	
 	public Book getBook() {
 		return borrowed;
 	}
