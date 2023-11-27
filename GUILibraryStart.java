@@ -15,6 +15,7 @@ public class GUILibraryStart extends JFrame implements ActionListener {
 
     private JButton adminButton;
     private JButton librarianButton;
+    private JButton analyticsButton;
     private JPanel contentPane;
 
     GUILibraryStart() {
@@ -28,6 +29,11 @@ public class GUILibraryStart extends JFrame implements ActionListener {
         adminButton.setBounds(168, 148, 89, 23);
         adminButton.setFocusable(false);
         adminButton.addActionListener(this);
+
+        analyticsButton = new JButton("View Analytics");
+        analyticsButton.setBounds(0, 0, 89, 23);
+        analyticsButton.setFocusable(false);
+        analyticsButton.addActionListener(this);
         
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
@@ -40,6 +46,7 @@ public class GUILibraryStart extends JFrame implements ActionListener {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+        contentPane.add(analyticsButton);
         contentPane.add(librarianButton);
         contentPane.add(adminButton);
 
@@ -53,6 +60,9 @@ public class GUILibraryStart extends JFrame implements ActionListener {
         } else if (e.getSource() == librarianButton) {
             this.dispose();
             GUILibrarianChoice choice = new GUILibrarianChoice();
+        } else if (e.getSource() == analyticsButton) {
+            this.dispose();
+            GUIAnalyticsSearch search = new GUIAnalyticsSearch();
         }
 	}
 	

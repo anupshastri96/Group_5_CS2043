@@ -111,15 +111,18 @@ public class GUIBookAdd extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
-                String title = titleText.getText();
-                String author = authorText.getText();
-                String deweydecimal = (String) cb.getSelectedItem();
-                String sub = deweydecimal.substring(0,3);
-                int deweyIn = Integer.parseInt(sub);
+                if (titleText.getText().equals("") || authorText.getText().equals("")) {
+
+                } else {
+                    String title = titleText.getText();
+                    String author = authorText.getText();
+                    String deweydecimal = (String) cb.getSelectedItem();
+                    String sub = deweydecimal.substring(0,3);
+                    int deweyIn = Integer.parseInt(sub);
             
-                Book newBook = new Book(title, author, deweyIn, true);
-                LibraryManagementSystem.getCurrentLibrary().addBook(newBook);
-                System.out.print(LibraryManagementSystem.getCurrentLibrary().toString());
+                    Book newBook = new Book(title, author, deweyIn, true);
+                    LibraryManagementSystem.getCurrentLibrary().addBook(newBook);
+                }
                 // Clear the text fields after adding the book
                 titleText.setText("");
                 authorText.setText("");

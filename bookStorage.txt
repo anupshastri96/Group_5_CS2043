@@ -1,3 +1,0 @@
-100000001,100,name0,author0,1,F L2
-100000002,100,name1,author1,1,F L2
-100000003,100,name2,author2,1,F L2

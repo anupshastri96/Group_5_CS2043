@@ -1,10 +1,14 @@
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.util.Scanner;
 
 public class LibraryManagementSystem {
@@ -13,6 +17,8 @@ public class LibraryManagementSystem {
 	private static ArrayList<Library> libraries;
 	private static ArrayList<Member> members;
 	private static ArrayList<Admin> admins;
+	private static ArrayList<Book> allBooks;
+	private static ArrayList<BorrowedBook> allBorrowedBooks;
 	private static ArrayList<Integer> configInts;
 
 	private static Library currentLibrary;
@@ -280,16 +286,6 @@ public class LibraryManagementSystem {
 		return null;
 	}
 
-	/* This will be completed when I get to it
-	static Member findMember(String firstName, String lastName) {
-		for (int i = 0; i < members.size(); i++) {
-			if (members.get(i).getID() == memberID) {
-				return members.get(i);
-			}
-		}
-		return null;
-	}
-	*/
 	static ArrayList<Member> findMember(ArrayList<Integer> memberIDs) {
 		ArrayList<Member> toReturn = new ArrayList<Member>();
 		for (int i = 0; i < members.size(); i++) {
@@ -320,6 +316,7 @@ public class LibraryManagementSystem {
 			String currentLastname = "";
 			String currentGender = "";
 			String currentAddress = "";
+			ArrayList<Integer> borrowedID = new ArrayList<>();
 			int currentID = -1;
 
 			while (line != null) {
@@ -335,14 +332,18 @@ public class LibraryManagementSystem {
 							currentGender = line.substring(buffer + 1,i);
 						} else if (count == 5) {
 							currentAddress = line.substring(buffer + 1,i);
-						} 
+						} else if (count == 6) {
+							currentBirthdate = Integer.parseInt(line.substring(buffer + 1,i));
+						} else {
+							borrowedID.add(Integer.parseInt(line.substring(buffer + 1,i)));
+						}
         	            buffer = i;
 						count++;
         	        } else if (i == line.length()-1) {
-						currentBirthdate = Integer.parseInt(line.substring(buffer + 1,line.length()));
+						borrowedID.add(Integer.parseInt(line.substring(buffer + 1,line.length())));
         	        }
         	    }
-				Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentAddress, currentID);
+				Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentAddress, currentID, borrowedID);
 				members.add(addMember);
 				buffer = -1;
 				count = 1;
@@ -350,7 +351,7 @@ public class LibraryManagementSystem {
         	}
 
 		} catch(FileNotFoundException fnf) {
-            System.out.println("Admin storage file is not there!");
+            System.out.println("Member storage file is not there!");
             System.exit(1);
         } catch (IOException io) {
 			System.out.print("Hi");
@@ -363,8 +364,18 @@ public class LibraryManagementSystem {
 		try {
 			FileWriter writer = new FileWriter("memberStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
+			String toPrint = "";
 			for (int i = 0; i < members.size(); i++) {
-				printer.println(members.get(i).getID() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getAddress() + "," + members.get(i).getBirthyear());
+				toPrint = (members.get(i).getID() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getAddress() + "," + members.get(i).getBirthyear());
+				if (members.get(i).getBorrowed() != null && !members.get(i).getBorrowed().isEmpty()) {
+					for (int j = 0; j < members.get(i).getBorrowed().size(); j++) {
+						toPrint += ("," + members.get(i).getBorrowed().get(j).getId());
+					}
+				} else {
+					toPrint += (",-1");
+				}
+				
+				printer.println(toPrint);
 			}
 			printer.close();
 
@@ -373,4 +384,102 @@ public class LibraryManagementSystem {
 			System.exit(1);
 		}
 	}
+
+	// Book methods
+
+	static void bookWriteFile() {
+		try {
+        	FileOutputStream fos = new FileOutputStream("bookStorage.bin");
+        	ObjectOutputStream oos = new ObjectOutputStream(fos);
+            for(int i=0; i<libraries.size(); i++) {
+				for (int j = 0; j < libraries.get(i).getNumBooks(); j++) {
+					oos.writeObject(libraries.get(i).getBook(j));
+				}
+			}
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+	}
+
+	static Book checkAllBooks(Book bookIn) {
+		for (int i = 0; i < libraries.size(); i++) {
+			for (int j = 0; j < libraries.get(i).getNumBooks(); j++) {
+				if (libraries.get(i).getBook(j).getId() == bookIn.getId() || (libraries.get(i).getBook(j).getName().equals(bookIn.getName()) && libraries.get(i).getBook(j).getAuthor().equals(bookIn.getAuthor()) && (libraries.get(i).getBook(j).getDewey() == bookIn.getDewey()))) {
+					return libraries.get(i).getBook(j);
+				}
+			}
+		}
+		return null;
+	}
+
+	// Analytics methods
+
+	static Library getMostDewey(int deweyIn) {
+		int highestAmount = 0;
+		int currentAmount = 0;
+		Library highestLibrary = new Library("None", "None", -1, -1);
+		for (int i = 0; i < libraries.size(); i++) {
+			for (int j = 0; j < libraries.get(i).getAllBooks().size(); j++) {
+				if (libraries.get(i).getAllBooks().get(j).getDewey() == deweyIn) {
+					currentAmount++;
+				}
+			}
+			if (currentAmount > highestAmount) {
+				highestLibrary = libraries.get(i);
+			}
+			currentAmount = 0;
+		}
+		return highestLibrary;
+	}
+
+	static int getAveAge(int deweyIn) {
+		int ageTotal = 0;
+		int count = 0;
+		for (int i = 0; i < members.size(); i++) {
+			if (members.get(i).getBorrowed() != null) {
+				for (int j = 0; j < members.get(i).getBorrowed().size(); j++) {
+					if (members.get(i).getBorrowed().get(j).getDewey() == deweyIn) {
+						ageTotal += members.get(i).getAge();
+						count++;
+					}
+				}
+			}
+		}
+		if (count != 0) {
+			return (ageTotal / count);
+		} else {
+			return 0;
+		}
+	}
+
+	static String getTopGender(int deweyIn) {
+		int maleTotal = 0;
+		int femaleTotal = 0;
+		int otherTotal = 0;
+		for (int i = 0; i < members.size(); i++) {
+			for (int j = 0; j < members.get(i).getBorrowed().size(); j++) {
+				if (members.get(i).getBorrowed().get(j).getDewey() == deweyIn) {
+					if (members.get(i).getGender().equals("Male")) {
+						maleTotal++;
+					} else if (members.get(i).getGender().equals("Female")) {
+						femaleTotal++;
+					} else if (members.get(i).getGender().equals("Other")) {
+						otherTotal++;
+					}
+				}
+			}
+		} // Add more checks
+		if (maleTotal > femaleTotal && maleTotal > otherTotal) {
+			return ("Male");
+		} else if (femaleTotal > maleTotal && femaleTotal > otherTotal) {
+			return ("Female");
+		} else if (otherTotal > maleTotal && otherTotal > femaleTotal) {
+			return ("Other");
+		} else {
+			return ("All");
+		}
+	}
+
+	
 }

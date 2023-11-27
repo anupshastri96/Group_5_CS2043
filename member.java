@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Member {
 	private int birthyear;
 	private String firstName;
@@ -6,6 +8,7 @@ public class Member {
 	private String address;
 	private static int nextID = 1;
     private int memID;
+	private ArrayList<Book> hasBorrowed;
 
 	public Member(int ID) {
 		nextID = ID;	
@@ -20,17 +23,21 @@ public class Member {
 		this.address = address;
 		memID = nextID;
         nextID++;
+		hasBorrowed = new ArrayList<>();
 		
 	}
-	public Member(int birthyear, String frstNm, String lstNm, String gender, String address, int id) 
-	{
+	public Member(int birthyear, String frstNm, String lstNm, String gender, String address, int id, ArrayList<Integer> hasBorrowedID)  {
 		this.birthyear = birthyear;
 		this.firstName = frstNm;
 		this.lastName = lstNm;
 		this.address = address;
 		this.gender = gender;
 		memID = id;
-		
+		if (hasBorrowedID.get(0) == -1) {
+			hasBorrowed = new ArrayList<>();
+		} else {
+			this.hasBorrowed = hasBorrowed;
+		}
 	}
 
 	public void setNextID(int nextID) {
@@ -71,5 +78,15 @@ public class Member {
 	public int getID() {
 		return memID;
 	}
+
+	public ArrayList<Book> getBorrowed() {
+		if (!hasBorrowed.isEmpty()) {
+			return hasBorrowed;
+		} else {
+			return null;
+		}
+	}
+
+	
 
 }

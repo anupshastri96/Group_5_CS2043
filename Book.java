@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.io.Serializable;
 
 public class Book implements Serializable {
@@ -8,12 +12,13 @@ public class Book implements Serializable {
     private static int nextId = 0;
     private int bookId;
     private int dewey;
+    private String subject;
     private boolean adult;
     private int amount;
     private int amountBorrowed;
 
     private ArrayList<Library> belongsToLibraries;
-    private ArrayList<Member> hasBorrowed;
+    private ArrayList<Member> currentlyBorrowing;
     
     public Book(int ID) {
         // Startup Book class to fix issues with overlap IDs (Currently does not work)
@@ -35,7 +40,7 @@ public class Book implements Serializable {
 
         belongsToLibraries = new ArrayList<Library>();
         belongsToLibraries.add(LibraryManagementSystem.getCurrentLibrary());
-        hasBorrowed = new ArrayList<Member>();
+        currentlyBorrowing = new ArrayList<Member>();
 
     }
 
@@ -51,7 +56,7 @@ public class Book implements Serializable {
         amountBorrowed = 0; // This will be done when borrowed book is finished.
 
         belongsToLibraries = LibraryManagementSystem.findLibrary(libraryId);
-        hasBorrowed = LibraryManagementSystem.findMember(memberId);
+        currentlyBorrowing = LibraryManagementSystem.findMember(memberId);
 
     }
 
@@ -76,27 +81,11 @@ public class Book implements Serializable {
 		
 		if (getMemberIDs().size() == 0) toReturn += "No MemberIDs\n";
 		else {
-			toReturn += hasBorrowed.size() + "\n";
+			toReturn += currentlyBorrowing.size() + "\n";
 		}
 		
 		return toReturn;
 	}
-
-    public String makeReadable() {
-        String toReturn = (this.getId() + "," + this.getDewey() + "," + this.getName() + "," + this.getAuthor() + "," + this.getAmount());
-        if (adult) {
-            toReturn += ",T";
-        } else {
-            toReturn += ",F";
-        }
-        for (int i = 0; i < belongsToLibraries.size(); i++) {
-            toReturn = (",L" + belongsToLibraries.get(i).getID());
-        }
-        for (int i = 0; i < hasBorrowed.size(); i++) {
-            toReturn = (",M" + hasBorrowed.get(i).getID());
-        }
-        return toReturn;
-    }
 
 
 
@@ -129,12 +118,43 @@ public class Book implements Serializable {
         return bookId;
     }
 
+    public void setNextID(int nextId) {
+        this.nextId = nextId;
+    }
+
     /* 
      * DEWEY METHODS 
      */
     public int getDewey() {
         return dewey;
     }
+    /* 
+    private void getDeweyInfo() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader("DeweyDecimalData.txt"));
+			String line = reader.readLine();
+            
+            while (line != null) {
+                if (Integer.parseInt(line.subString(0,3)) == bookId) {
+
+                }
+                holder.add(line);
+                line = reader.readLine();
+            }
+            String[] toReturn = new String[holder.size()];
+            for (int i = 0; i < holder.size(); i++) {
+                toReturn[i] = holder.get(i);
+            }
+            return toReturn;
+        } catch(FileNotFoundException fnf) {
+            System.out.println("Dewey info is not there!");
+            System.exit(1);
+        } catch (IOException io) {
+			System.out.print("Hi");
+			System.exit(1);
+		}
+        return null;
+    } */
 
     /* 
      * AMOUNT METHODS 
@@ -148,8 +168,17 @@ public class Book implements Serializable {
     }
 
     public void borrow(Member borrowedBy) {
-        amountBorrowed++;
-        hasBorrowed.add(borrowedBy);
+        if (amount - amountBorrowed > 0) {
+            amountBorrowed++;
+            currentlyBorrowing.add(borrowedBy);
+        }
+    }
+
+    public void returnBook(Member borrowedBy) {
+        if (amountBorrowed > 0 && checkMember(borrowedBy)) {
+            amountBorrowed--;
+            currentlyBorrowing.remove(borrowedBy);
+        }
     }
 
     /* 
@@ -205,14 +234,19 @@ public class Book implements Serializable {
      */
     public ArrayList<Integer> getMemberIDs() {
        ArrayList<Integer> toReturn = new ArrayList<Integer>();
-        for (int i = 0; i < hasBorrowed.size(); i++) {
-            toReturn.add(hasBorrowed.get(i).getID());
+        for (int i = 0; i < currentlyBorrowing.size(); i++) {
+            toReturn.add(currentlyBorrowing.get(i).getID());
         }
         return toReturn;
     }
 
-    private void findMembers() {
-        // Leave this for later
+    private boolean checkMember(Member memberIn) {
+        for (int i = 0; i < currentlyBorrowing.size(); i++) {
+            if (currentlyBorrowing.get(i).getID() == memberIn.getID() ) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }   

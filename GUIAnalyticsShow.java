@@ -10,33 +10,33 @@ import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import java.util.ArrayList;
 
-public class GUIBookShow extends JFrame implements ActionListener {
 
-    JLabel title;
-    JLabel author;
-    JLabel subject;
-    JButton editButton;
+public class GUIAnalyticsShow extends JFrame implements ActionListener {
+
+    //Add checkbox
+    JLabel commonlyFoundIn;
+    JLabel ageGroup;
+    JLabel commonGender;
     JButton backButton;
-    Book storeBook;
 
-    GUIBookShow(Book bookIn) {
+    GUIAnalyticsShow(int deweyIn) {
 
-        storeBook = bookIn;
-        
-        title = new JLabel(bookIn.getName());
-        author = new JLabel(bookIn.getAuthor());
-        //subject = new JLabel(bookIn.getSubject());
+        commonlyFoundIn = new JLabel("Name: " + LibraryManagementSystem.getMostDewey(deweyIn).getName() +
+                                "Address : " + LibraryManagementSystem.getMostDewey(deweyIn).getAddress());
+
+        //ageGroup = new JLabel("Average age group: " + LibraryManagementSystem.getAveAge(deweyIn));
+
+        //commonGender = new JLabel("Popular with: " + LibraryManagementSystem.getTopGender(deweyIn));
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        editButton = new JButton("Edit");
-        editButton.setBounds(100,100,100,40);
-        editButton.setFocusable(false);
-        editButton.addActionListener(this);
+       
+
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,26 +52,19 @@ public class GUIBookShow extends JFrame implements ActionListener {
         panel2.setPreferredSize(new Dimension(300,300));
         panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        topPanel.add(editButton);
         topPanel.add(backButton);
         this.add(topPanel);
 
-        panel2.add(title);
-        panel2.add(author);
-        //panel2.add(title);
+        panel2.add(commonlyFoundIn);
         this.add(panel2);
 
         this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == editButton) {
-            //this.dispose();
-           // GUIBookEdit edit = new GUIBookEdit(storeBook);
-        } else if (e.getSource() == backButton) {
+        if (e.getSource() == backButton) {
             this.dispose();
-            GUIBookSearch search = new GUIBookSearch();
-
+            GUIAnalyticsSearch search = new GUIAnalyticsSearch();
         }
 	}
 	
