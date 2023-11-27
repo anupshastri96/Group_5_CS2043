@@ -145,6 +145,7 @@ public class Book implements Serializable {
                 }
                 line = reader.readLine();
             }
+            reader.close();
         } catch(FileNotFoundException fnf) {
             System.out.println("Dewey info is not there!");
             System.exit(1);
