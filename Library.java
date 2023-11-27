@@ -213,6 +213,7 @@ public class Library implements Serializable{
 						brwd.getBook().returnBook(brwd.getMember());
 						
 						brwd.returnBook();
+						LibraryManagementSystem.borrowedBookWriteFile();
 						brwd.getLateFees();
 						done = true;
 					}
