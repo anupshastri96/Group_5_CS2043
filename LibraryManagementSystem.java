@@ -474,15 +474,23 @@ public class LibraryManagementSystem {
 					}
 				}
 			}
-		} // Add more checks
-		if (maleTotal > femaleTotal && maleTotal > otherTotal) {
-			return ("Male");
+		} // Temporary checks
+		if (maleTotal == 0 && femaleTotal == 0 && otherTotal == 0) {
+			return ("no one");
+	 	} else if (maleTotal > femaleTotal && maleTotal > otherTotal) {
+			return ("males");
 		} else if (femaleTotal > maleTotal && femaleTotal > otherTotal) {
-			return ("Female");
+			return ("females");
 		} else if (otherTotal > maleTotal && otherTotal > femaleTotal) {
-			return ("Other");
+			return ("other genders");
+		} else if (maleTotal == femaleTotal && otherTotal < maleTotal) {
+			return ("males and females");
+		} else if (otherTotal == maleTotal && otherTotal < femaleTotal) {
+			return ("males and other genders");
+		} else if (femaleTotal == otherTotal && otherTotal > maleTotal) {
+			return ("female and other genders");
 		} else {
-			return ("All");
+			return ("all genders");
 		}
 	}
 

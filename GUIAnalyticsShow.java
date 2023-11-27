@@ -25,7 +25,7 @@ public class GUIAnalyticsShow extends JFrame implements ActionListener {
 
         commonlyFoundIn = new JLabel("Name: " + LibraryManagementSystem.getMostDewey(deweyIn).getName() +
                                 "Address : " + LibraryManagementSystem.getMostDewey(deweyIn).getAddress());
-
+        // Add check for age group to make sure it doesnt display the 0
         ageGroup = new JLabel("Average age group: " + LibraryManagementSystem.getAveAge(deweyIn));
 
         commonGender = new JLabel("Popular with: " + LibraryManagementSystem.getTopGender(deweyIn));
@@ -56,6 +56,8 @@ public class GUIAnalyticsShow extends JFrame implements ActionListener {
         this.add(topPanel);
 
         panel2.add(commonlyFoundIn);
+        panel2.add(ageGroup);
+        panel2.add(commonGender);
         this.add(panel2);
 
         this.setVisible(true);
