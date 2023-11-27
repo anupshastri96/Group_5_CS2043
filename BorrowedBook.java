@@ -81,18 +81,6 @@ public class BorrowedBook {
 		daysExtended += addDays;
 	} */
 	
-	/*public double getLateFees() {
-		if(expectedReturnDate.before(returnDate)) 
-		{
-			//print returned on time in GUI or already returned
-			return 0;
-		}
-		else 
-		{
-			//to be determined
-			int fee = 0;
-			return fee;
-		}	}
 	public double getLateFees() 
 	{
 		
@@ -111,7 +99,7 @@ public class BorrowedBook {
 			return fee;
 		}
 		
-	} */
+	}
 
 	public boolean checkLibrary(Library libraryIn) {
 		if (libraryIn.getID() == borrowedFrom.getID()) {
@@ -121,7 +109,7 @@ public class BorrowedBook {
 		}
 	}
 	
-	public void returnbook() {
+	public void returnBook() {
 		Date currentDate = new Date();
 		returnDate = currentDate;
 		active = false;
