@@ -112,6 +112,14 @@ public class BorrowedBook {
 		}
 		
 	} */
+
+	public boolean checkLibrary(Library libraryIn) {
+		if (libraryIn.getID() == borrowedFrom.getID()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	private void returnbook(Date returned) {
 		returnDate = returned;

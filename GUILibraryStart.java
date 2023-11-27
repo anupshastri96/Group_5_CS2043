@@ -21,7 +21,7 @@ public class GUILibraryStart extends JFrame implements ActionListener {
     GUILibraryStart() {
 
         librarianButton = new JButton("Librarian");
-	   librarianButton.setBounds(100,10,100,25);
+	    librarianButton.setBounds(100,10,100,25);
         librarianButton.setFocusable(false);
         librarianButton.addActionListener(this);
 

@@ -17,8 +17,6 @@ public class LibraryManagementSystem {
 	private static ArrayList<Library> libraries;
 	private static ArrayList<Member> members;
 	private static ArrayList<Admin> admins;
-	private static ArrayList<Book> allBooks;
-	private static ArrayList<BorrowedBook> allBorrowedBooks;
 	private static ArrayList<Integer> configInts;
 
 	private static Library currentLibrary;
@@ -44,7 +42,7 @@ public class LibraryManagementSystem {
             	}
 			} 
 			if (findLibrary(configInts.get(0)) == null) {
-				Library failSafe = new Library("Failsafe Activated", "0", -1, -1);
+				Library failSafe = new Library("Failsafe Activated", "0", -1, -1, -1);
 				currentLibrary = failSafe;
 			} else {
 				currentLibrary = findLibrary(configInts.get(0));
@@ -157,6 +155,7 @@ public class LibraryManagementSystem {
 			String currentName = "";
 			String currentAddress = "";
 			int currentNumBooks = -1;
+			int currentNumBorrowedBooks = -1;
 			int currentID = -1;
 			while (line != null ) {
            	 	for (int i = 0; i < line.length(); i++) {
@@ -167,14 +166,16 @@ public class LibraryManagementSystem {
 							currentName = line.substring(buffer + 1,i);
 						} else if (count == 3) {
 							currentAddress = line.substring(buffer + 1,i);
+						} else if (count == 4) {
+							currentNumBooks = Integer.parseInt(line.substring(buffer + 1,i));
 						}
                     	buffer = i;
 						count++;
                 	} else if (i == line.length()-1) {
-						currentNumBooks = Integer.parseInt(line.substring(buffer + 1,line.length()));
+						currentNumBorrowedBooks = Integer.parseInt(line.substring(buffer + 1,line.length()));
                 	}
             	}
-				Library addLibrary = new Library(currentName, currentAddress, currentNumBooks, currentID);
+				Library addLibrary = new Library(currentName, currentAddress, currentNumBooks, currentNumBorrowedBooks, currentID);
 				libraries.add(addLibrary);
 				buffer = -1;
 				count = 1;
@@ -196,7 +197,7 @@ public class LibraryManagementSystem {
 			FileWriter writer = new FileWriter("libraryStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			for (int i = 0; i < libraries.size(); i++) {
-				printer.println(libraries.get(i).getID() + "," + libraries.get(i).getName() + "," + libraries.get(i).getAddress() + "," + libraries.get(i).getNumBooks());
+				printer.println(libraries.get(i).getID() + "," + libraries.get(i).getName() + "," + libraries.get(i).getAddress() + "," + libraries.get(i).getNumBooks() + "," + libraries.get(i).getNumBorrowedBooks());
 			}
 			printer.close();
 
@@ -403,6 +404,24 @@ public class LibraryManagementSystem {
         } 
 	}
 
+		static void borrowedBookWriteFile() {
+		try {
+        	FileOutputStream fos = new FileOutputStream("borrowedBookStorage.bin");
+        	ObjectOutputStream oos = new ObjectOutputStream(fos);
+            for(int i=0; i<libraries.size(); i++) {
+				ArrayList<BorrowedBook> borrowedBooks = libraries.get(i).getAllBorrowedBooks();
+				if (!borrowedBooks.isEmpty() && borrowedBooks.size() > 0) {
+					for (int j = 0; j < borrowedBooks.size(); j++) {
+						oos.writeObject(borrowedBooks.get(j));
+					}
+				}
+			}
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } 
+	}
+
 	
 
 	static Book checkAllBooks(Book bookIn) {
@@ -421,7 +440,7 @@ public class LibraryManagementSystem {
 	static Library getMostDewey(int deweyIn) {
 		int highestAmount = 0;
 		int currentAmount = 0;
-		Library highestLibrary = new Library("None", "None", -1, -1);
+		Library highestLibrary = new Library("None", "None", -1, -1, -1);
 		for (int i = 0; i < libraries.size(); i++) {
 			for (int j = 0; j < libraries.get(i).getAllBooks().size(); j++) {
 				if (libraries.get(i).getAllBooks().get(j).getDewey() == deweyIn) {

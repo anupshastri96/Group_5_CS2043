@@ -23,10 +23,18 @@ public class GUIAnalyticsShow extends JFrame implements ActionListener {
 
     GUIAnalyticsShow(int deweyIn) {
 
-        commonlyFoundIn = new JLabel("Name: " + LibraryManagementSystem.getMostDewey(deweyIn).getName() +
+        if (LibraryManagementSystem.getMostDewey(deweyIn).getName().equals("None") && LibraryManagementSystem.getMostDewey(deweyIn).getAddress().equals("None")) {
+            commonlyFoundIn = new JLabel("Not available in any library at the moment");
+        } else {
+            commonlyFoundIn = new JLabel("Name: " + LibraryManagementSystem.getMostDewey(deweyIn).getName() +
                                 "Address : " + LibraryManagementSystem.getMostDewey(deweyIn).getAddress());
-        // Add check for age group to make sure it doesnt display the 0
-        ageGroup = new JLabel("Average age group: " + LibraryManagementSystem.getAveAge(deweyIn));
+        }
+        
+        if (LibraryManagementSystem.getAveAge(deweyIn) != 0) {
+            ageGroup = new JLabel("Average age group: " + LibraryManagementSystem.getAveAge(deweyIn));
+        } else {
+            ageGroup = new JLabel("Not enough data to determine the age group");
+        }
 
         commonGender = new JLabel("Popular with: " + LibraryManagementSystem.getTopGender(deweyIn));
 

@@ -21,6 +21,7 @@ public class Library implements Serializable{
     private static int nextId = 1;
     private int libId;
     private int numBooks;
+    private int numBooksBorrowed;
     private ArrayList<Book> books;
     private ArrayList<BorrowedBook> borrowedHere;
     private Scanner bookScan;
@@ -39,15 +40,17 @@ public class Library implements Serializable{
         nextId++;
 
         numBooks = 0;
+        numBooksBorrowed = 0;
 
         books = new ArrayList<Book>();
         borrowedHere = new ArrayList<BorrowedBook>();
 
         bookReadFile();
+        borrowedBookReadFile();
     
     }
 
-    public Library(String name, String address, int numBooks, int libId) {
+    public Library(String name, String address, int numBooks, int numBooksBorrowed, int libId) {
         this.name = name;
         this.address = address;
         this.numBooks = numBooks;
@@ -194,6 +197,36 @@ public class Library implements Serializable{
             borrowedHere.add(toAdd);
             
         }
+    }
+
+    public ArrayList<BorrowedBook> getAllBorrowedBooks() {
+        return borrowedHere;
+    }
+
+    public int getNumBorrowedBooks() {
+        return numBooksBorrowed;
+    }
+
+    private void borrowedBookReadFile() {
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream("borrowedBookStorage.bin"));
+            for(int i=0; i< numBooksBorrowed; i++) {
+                
+				BorrowedBook bookRead = (BorrowedBook) ois.readObject();
+                System.out.println(bookRead.toString());
+                if (bookRead.checkLibrary(this)) {
+                    borrowedHere.add(bookRead);
+                    System.out.println("Book read from file.");
+                } else {
+                    i--;
+                }
+			}
+            ois.close();
+        } catch (EOFException eof) {
+            
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } 
     }
 }
 
