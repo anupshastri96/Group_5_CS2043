@@ -107,6 +107,7 @@ public class LibraryManagementSystem {
 
 				} else {
 					libraries.add(libraryIn);
+					changeConfigInts(1);
 					libraryWriteFile();
 				}
 			}
@@ -401,6 +402,8 @@ public class LibraryManagementSystem {
             e.printStackTrace();
         } 
 	}
+
+	
 
 	static Book checkAllBooks(Book bookIn) {
 		for (int i = 0; i < libraries.size(); i++) {

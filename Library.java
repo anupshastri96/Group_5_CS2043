@@ -121,6 +121,7 @@ public class Library implements Serializable{
                 compareBook.incAmount();
                 if (!compareBook.checkLibrary(this)) {
                     compareBook.addLibrary(this.getID());
+                    numBooks++;
                 }
                 bookIn.setNextID(bookIn.getId() - (bookIn.getDewey() * 1000000));
                 this.bookWriteFile();
@@ -131,6 +132,7 @@ public class Library implements Serializable{
                 numBooks++;
 			    this.bookWriteFile();
                 LibraryManagementSystem.libraryWriteFile();
+                LibraryManagementSystem.changeConfigInts(2);
             }
         }
     }
@@ -170,6 +172,7 @@ public class Library implements Serializable{
             for(int i=0; i< numBooks; i++) {
                 
 				Book bookRead = (Book) ois.readObject();
+                System.out.println(bookRead.toString());
                 if (bookRead.checkLibrary(this)) {
                     books.add(bookRead);
                     System.out.println("Book read from file.");
