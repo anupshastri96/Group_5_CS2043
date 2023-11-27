@@ -8,12 +8,11 @@ import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.EOFException;
 import java.util.Scanner;
+
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
-
-
 
 public class Library implements Serializable{
 
@@ -55,23 +54,7 @@ public class Library implements Serializable{
         this.libId = libId;
 
         books = new ArrayList<>();
-        bookReadFile();
-    }
-
-       
-    public String toString() {
-		String s =	"Library: " + getName() + "\n" +
-				"Address: " + getAddress() + "\n" +
-				"LibID: " + getID() + "\n" +
-				"# Books: " + books.size() + "\n";
-				
-    	s += "======================\n";
-    	
-    	for(int i=0; i<books.size(); i++) {
-    		s += books.get(i).toString() + "======================\n";
-    	}
-    	
-    	return s;
+        this.bookReadFile();
     }
 
     /*
@@ -141,8 +124,7 @@ public class Library implements Serializable{
         boolean isReal = false;
     	books.remove(b);
     }
-	
-	public Book getBook(int n) {
+    public Book getBook(int n) {
 		if (n >= 0 && n < books.size()) {
 			return books.get(n);
 		} else {
@@ -166,6 +148,16 @@ public class Library implements Serializable{
     public int getNumBooks() {
 		return numBooks;
 	}
+    public String toString() {
+    	String s = "======================\n";
+    	
+    	for(int i=0; i<books.size(); i++) {
+    		s += books.get(i).toString() + "======================\n";
+    	}
+    	
+    	return s;
+    }
+ 
     private void bookReadFile() {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bookStorage.bin"));
