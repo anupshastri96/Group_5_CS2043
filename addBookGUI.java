@@ -69,20 +69,23 @@ public class addBookGUI {
 
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            
-                String title = titleText.getText();
-                String author = authorText.getText();
-                String deweydecimal = (String) cb.getSelectedItem();
-                String sub = deweydecimal.substring(0,3);
-                int deweyIn = Integer.parseInt(sub);
-            
-                // Create a new book and add it to the library (assuming library is already created)
-                Book newBook = new Book(title, author, deweyIn, true);
-                // Library.addBook(newBook); fix this static method issue
+                Library currentLibrary = LibraryManagementSystem.getCurrentLibrary();
 
-                // Clear the text fields after adding the book
-                titleText.setText("");
-                authorText.setText("");
+                if(currentLibrary !=null){
+                    String title = titleText.getText();
+                    String author = authorText.getText();
+                    String deweydecimal = (String) cb.getSelectedItem();
+                    String sub = deweydecimal.substring(0,3);
+                    int deweyIn = Integer.parseInt(sub);
+
+                    Book newBook = new Book(title, author, deweyIn, true);
+                    currentLibrary.addBook(newBook); 
+
+                    titleText.setText("");
+                    authorText.setText("");
+                } else{
+                    System.out.println("Error: Current library is null.");
+                }
             }
         });
     }
