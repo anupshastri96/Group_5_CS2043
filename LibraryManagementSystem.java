@@ -258,7 +258,6 @@ public class LibraryManagementSystem {
 		return false;
 	}
 
-
 	// Member methods
 
 	static void addMember(Member memberIn) {
@@ -304,9 +303,7 @@ public class LibraryManagementSystem {
 		return members;
 	}
 	
-
 	static void memberReadFile() {
-		
 		try {
 			members = new ArrayList<Member>();
 			BufferedReader reader = new BufferedReader(new FileReader("memberStorage.txt"));
@@ -404,7 +401,7 @@ public class LibraryManagementSystem {
         } 
 	}
 
-		static void borrowedBookWriteFile() {
+	static void borrowedBookWriteFile() {
 		try {
         	FileOutputStream fos = new FileOutputStream("borrowedBookStorage.bin");
         	ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -421,8 +418,6 @@ public class LibraryManagementSystem {
             e.printStackTrace();
         } 
 	}
-
-	
 
 	static Book checkAllBooks(Book bookIn) {
 		for (int i = 0; i < libraries.size(); i++) {
@@ -493,7 +488,7 @@ public class LibraryManagementSystem {
 					}
 				}
 			}
-		} // Temporary checks
+		}
 		if (maleTotal == 0 && femaleTotal == 0 && otherTotal == 0) {
 			return ("no one");
 	 	} else if (maleTotal > femaleTotal && maleTotal > otherTotal) {
@@ -513,5 +508,4 @@ public class LibraryManagementSystem {
 		}
 	}
 
-	
 }
