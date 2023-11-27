@@ -21,20 +21,12 @@ public class GUILibraryStart extends JFrame implements ActionListener {
     GUILibraryStart() {
 
         librarianButton = new JButton("Librarian");
-<<<<<<< HEAD
-		librarianButton.setBounds(168, 78, 89, 23);
-=======
-		librarianButton.setBounds(100,10,100,25);
->>>>>>> 2f31382e0d86d666782d44aaa9c858e0c0b2602e
+	   librarianButton.setBounds(100,10,100,25);
         librarianButton.setFocusable(false);
         librarianButton.addActionListener(this);
 
         adminButton = new JButton("Admin");
-<<<<<<< HEAD
-        adminButton.setBounds(168, 148, 89, 23);
-=======
         adminButton.setBounds(100,120,100,25);
->>>>>>> 2f31382e0d86d666782d44aaa9c858e0c0b2602e
         adminButton.setFocusable(false);
         adminButton.addActionListener(this);
 
@@ -46,11 +38,7 @@ public class GUILibraryStart extends JFrame implements ActionListener {
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-<<<<<<< HEAD
-        this.setBounds(100, 100, 450, 300);
-=======
         this.setSize(300, 350);
->>>>>>> 2f31382e0d86d666782d44aaa9c858e0c0b2602e
         this.setResizable(false);
 
 		contentPane = new JPanel();
@@ -72,12 +60,10 @@ public class GUILibraryStart extends JFrame implements ActionListener {
         } else if (e.getSource() == librarianButton) {
             this.dispose();
             GUILibrarianChoice choice = new GUILibrarianChoice();
-<<<<<<< HEAD
+
         } else if (e.getSource() == analyticsButton) {
             this.dispose();
             GUIAnalyticsSearch search = new GUIAnalyticsSearch();
-=======
->>>>>>> 2f31382e0d86d666782d44aaa9c858e0c0b2602e
         }
 	}
 	
