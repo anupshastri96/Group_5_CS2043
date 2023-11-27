@@ -38,9 +38,12 @@ public class Book implements Serializable {
         amount = 1;
         amountBorrowed = 0;
 
+
         belongsToLibraries = new ArrayList<Library>();
         belongsToLibraries.add(LibraryManagementSystem.getCurrentLibrary());
         currentlyBorrowing = new ArrayList<Member>();
+
+        this.getSubjectInfo();
 
     }
 
@@ -53,6 +56,8 @@ public class Book implements Serializable {
         bookId = bookIdIn;
         amount = amountIn;
 
+        this.getSubjectInfo();
+
         amountBorrowed = 0; // This will be done when borrowed book is finished.
 
         belongsToLibraries = LibraryManagementSystem.findLibrary(libraryId);
@@ -64,7 +69,7 @@ public class Book implements Serializable {
 	public String toString() {
 		String toReturn =	"Title: " + this.name + "\n" +
 			"Author: " + this.author + "\n" +
-			"Dewey: " + this.dewey + "\n" +
+			"Subject: " + this.subject + "\n" +
 			"Book ID: " + this.bookId + "\n" +
 			"Amount: " + this.amount + "\n" +
 			"Amount Borrowed: " + amountBorrowed + "\n" +
@@ -128,24 +133,18 @@ public class Book implements Serializable {
     public int getDewey() {
         return dewey;
     }
-    /* 
-    private void getDeweyInfo() {
+    
+    private void getSubjectInfo() {
         try {
             BufferedReader reader = new BufferedReader(new FileReader("DeweyDecimalData.txt"));
 			String line = reader.readLine();
             
             while (line != null) {
-                if (Integer.parseInt(line.subString(0,3)) == bookId) {
-
+                if (Integer.parseInt(line.substring(0,3)) == dewey) {
+                    subject = line.substring(4,line.length());
                 }
-                holder.add(line);
                 line = reader.readLine();
             }
-            String[] toReturn = new String[holder.size()];
-            for (int i = 0; i < holder.size(); i++) {
-                toReturn[i] = holder.get(i);
-            }
-            return toReturn;
         } catch(FileNotFoundException fnf) {
             System.out.println("Dewey info is not there!");
             System.exit(1);
@@ -153,8 +152,7 @@ public class Book implements Serializable {
 			System.out.print("Hi");
 			System.exit(1);
 		}
-        return null;
-    } */
+    } 
 
     /* 
      * AMOUNT METHODS 

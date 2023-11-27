@@ -461,14 +461,16 @@ public class LibraryManagementSystem {
 		int femaleTotal = 0;
 		int otherTotal = 0;
 		for (int i = 0; i < members.size(); i++) {
-			for (int j = 0; j < members.get(i).getBorrowed().size(); j++) {
-				if (members.get(i).getBorrowed().get(j).getDewey() == deweyIn) {
-					if (members.get(i).getGender().equals("Male")) {
-						maleTotal++;
-					} else if (members.get(i).getGender().equals("Female")) {
-						femaleTotal++;
-					} else if (members.get(i).getGender().equals("Other")) {
-						otherTotal++;
+			if (members.get(i).getBorrowed() != null) {
+				for (int j = 0; j < members.get(i).getBorrowed().size(); j++) {
+					if (members.get(i).getBorrowed().get(j).getDewey() == deweyIn) {
+						if (members.get(i).getGender().equals("Male")) {
+							maleTotal++;
+						} else if (members.get(i).getGender().equals("Female")) {
+							femaleTotal++;
+						} else if (members.get(i).getGender().equals("Other")) {
+							otherTotal++;
+						}
 					}
 				}
 			}

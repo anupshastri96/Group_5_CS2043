@@ -26,9 +26,9 @@ public class GUIAnalyticsShow extends JFrame implements ActionListener {
         commonlyFoundIn = new JLabel("Name: " + LibraryManagementSystem.getMostDewey(deweyIn).getName() +
                                 "Address : " + LibraryManagementSystem.getMostDewey(deweyIn).getAddress());
 
-        //ageGroup = new JLabel("Average age group: " + LibraryManagementSystem.getAveAge(deweyIn));
+        ageGroup = new JLabel("Average age group: " + LibraryManagementSystem.getAveAge(deweyIn));
 
-        //commonGender = new JLabel("Popular with: " + LibraryManagementSystem.getTopGender(deweyIn));
+        commonGender = new JLabel("Popular with: " + LibraryManagementSystem.getTopGender(deweyIn));
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
