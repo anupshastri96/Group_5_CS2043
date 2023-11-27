@@ -18,19 +18,19 @@ public class GUILibraryStart extends JFrame implements ActionListener {
     GUILibraryStart() {
 
         librarianButton = new JButton("Librarian");
-		librarianButton.setBounds(100,100,100,40);
+		librarianButton.setBounds(100,10,100,25);
         librarianButton.setFocusable(false);
         librarianButton.addActionListener(this);
 
         adminButton = new JButton("Admin");
-        adminButton.setBounds(100,200,100,40);
+        adminButton.setBounds(100,120,100,25);
         adminButton.setFocusable(false);
         adminButton.addActionListener(this);
         
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 350);
+        this.setSize(300, 350);
         this.setResizable(false);
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
 
