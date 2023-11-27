@@ -14,7 +14,7 @@ import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
-public class Library implements Serializable{
+public class Library implements Serializable {
 
     private String name;
     private String address;
@@ -72,7 +72,6 @@ public class Library implements Serializable{
         LibraryManagementSystem.libraryWriteFile();
     } 
 
-
     /*
      * ADDRESS METHODS
      */
@@ -95,7 +94,6 @@ public class Library implements Serializable{
     public void setNextID(int nextId) {
         this.nextId = nextId;
     }
-
 
     /*
      * BOOKS METHODS
@@ -127,6 +125,7 @@ public class Library implements Serializable{
         boolean isReal = false;
     	books.remove(b);
     }
+	
     public Book getBook(int n) {
 		if (n >= 0 && n < books.size()) {
 			return books.get(n);
@@ -151,6 +150,7 @@ public class Library implements Serializable{
     public int getNumBooks() {
 		return numBooks;
 	}
+	
     public String toString() {
     	String s = "======================\n";
     	
@@ -190,7 +190,6 @@ public class Library implements Serializable{
     /*
      * BORROWEDBOOK METHODS
      */
-
     public void borrowBook(Member borrower, Book borrowed) {
         if (borrowed.getAmount() > 0) {
             BorrowedBook toAdd = new BorrowedBook(borrower, borrowed, libId);
@@ -200,16 +199,11 @@ public class Library implements Serializable{
     }
 
 	public void returnBook(BorrowedBook brwd) {
-		// check if book is in this library
 		for(int i=0; i<books.size(); i++) {
 			if(brwd.getBook().getId() == books.get(i).getId()) {
-				// remove book from borrowed list (??)
-				
-				// remove member from the book's own members list
 				boolean done = false;
 				for(int j=0; j<brwd.getBook().getMemberIDs().size() && (done == false); j++) {
 					if(brwd.getMember().getID() == brwd.getBook().getMemberIDs().get(j)) {
-						// remove from that list
 						brwd.getBook().returnBook(brwd.getMember());
 						
 						brwd.returnBook();
@@ -220,7 +214,6 @@ public class Library implements Serializable{
 				}
 			}
 		}
-		
 	}
 
     public ArrayList<BorrowedBook> getAllBorrowedBooks() {
