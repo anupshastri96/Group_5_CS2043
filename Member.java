@@ -1,11 +1,15 @@
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+
+import javax.swing.JOptionPane;
 
 public class Member {
 	private int birthyear;
 	private String firstName;
 	private String lastName;
 	private String gender;
+	private Date expiration;
 	private String address;
 	private static int nextID = 1;
     private int memID;
@@ -44,15 +48,14 @@ public class Member {
 	public void setNextID(int nextID) {
 		this.nextID = nextID;
 	}
-	
-	public String getFirstname() {
+		public String getFirstname() 
+	{
 		return firstName;
 	}
-	
-	public String getLastname() {
+		public String getLastname() 
+	{
 		return lastName;
 	}
-	
 	public int getAge() {
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
@@ -63,11 +66,13 @@ public class Member {
 	public int getBirthyear() {
 		return birthyear;
 	}
-	
 	public String getGender() {
-		if(!gender.isEmpty()) {
+		if(!gender.isEmpty()) 
+		{
 			return gender;
-		} else {
+		}
+		else 
+		{
 			return null;
 		}
 	}
@@ -75,7 +80,6 @@ public class Member {
 	public String getAddress() {
 		return address;
 	}
-	
 	public int getID() {
 		return memID;
 	}
@@ -88,6 +92,30 @@ public class Member {
 		}
 	}
 
+	private void extendMembership(int daysToAdd) 
+	{
+		
+			 Calendar calendar = Calendar.getInstance();
+			 calendar.setTime(expiration);  
+			   
+		     calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
+		     Date newDate = calendar.getTime();
+		     expiration = newDate;
+			
+		
+	}
 	
+	private bool memexpired() {
+		 Calendar calendar = Calendar.getInstance();
+		 Date newDate = calendar.getTime();
+		if(newDate.before(expiration)) 
+		{
+			
+			return false;
+		}
+		
+		return true;
+		
+	}
 
 }
