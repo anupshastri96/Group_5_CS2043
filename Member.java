@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class Member {
 	private int birthyear;
@@ -10,6 +11,7 @@ public class Member {
 	private static int nextID = 1;
     private int memID;
 	private ArrayList<Book> hasBorrowed;
+	private Date expirationDate = new Date();
 
 	public Member(int ID) {
 		nextID = ID;	
@@ -26,7 +28,10 @@ public class Member {
         nextID++;
 		hasBorrowed = new ArrayList<>();
 		
+		dateExpired();
+		
 	}
+	
 	public Member(int birthyear, String frstNm, String lstNm, String gender, String address, int id, ArrayList<Integer> hasBorrowedID)  {
 		this.birthyear = birthyear;
 		this.firstName = frstNm;
@@ -39,6 +44,16 @@ public class Member {
 		} else {
 			this.hasBorrowed = hasBorrowed;
 		}
+		
+		dateExpired();
+	}
+	
+	private void dateExpired() {
+		Calendar cal = Calendar.getInstance();
+		Date curDate = new Date();
+        cal.setTime(curDate);
+        cal.add(Calendar.YEAR, 1);
+        Date expirationDate = cal.getTime();
 	}
 
 	public void setNextID(int nextID) {
@@ -88,6 +103,8 @@ public class Member {
 		}
 	}
 
-	
+	public void renewMembership() {
+		dateExpired();
+	}
 
 }
