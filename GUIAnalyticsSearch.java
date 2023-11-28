@@ -32,7 +32,7 @@ public class GUIAnalyticsSearch extends JFrame implements ActionListener {
         this.setResizable(false);
 
         backButton = new JButton("Back");
-	    backButton.setBounds(10,15,340,50);
+	    backButton.setBounds(10,15,68,50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
