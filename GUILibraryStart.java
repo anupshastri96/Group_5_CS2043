@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
 public class GUILibraryStart extends JFrame implements ActionListener {
 
     private JButton adminButton;
@@ -19,6 +18,11 @@ public class GUILibraryStart extends JFrame implements ActionListener {
     private JPanel contentPane;
 
     GUILibraryStart() {
+
+        analyticsButton = new JButton("View Analytics");
+        analyticsButton.setBounds(10, 15, 340, 50);
+        analyticsButton.setFocusable(false);
+        analyticsButton.addActionListener(this);
 
         librarianButton = new JButton("Librarian");
 	    librarianButton.setBounds(10,75,340,100);
@@ -30,11 +34,6 @@ public class GUILibraryStart extends JFrame implements ActionListener {
         adminButton.setFocusable(false);
         adminButton.addActionListener(this);
 
-        analyticsButton = new JButton("View Analytics");
-        analyticsButton.setBounds(10, 15, 340, 50);
-        analyticsButton.setFocusable(false);
-        analyticsButton.addActionListener(this);
-
         Font buttonFont = new Font("Arial", Font.PLAIN, 16); // Change the font, size, and style here
 
         librarianButton.setFont(buttonFont);
@@ -43,7 +42,6 @@ public class GUILibraryStart extends JFrame implements ActionListener {
 
         Font titleFont = new Font("Arial", Font.BOLD, 18);
         
-
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(375, 340);
@@ -74,5 +72,4 @@ public class GUILibraryStart extends JFrame implements ActionListener {
             GUIAnalyticsSearch search = new GUIAnalyticsSearch();
         }
 	}
-	
 }

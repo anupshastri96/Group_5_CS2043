@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
 public class GUIAnalyticsSearch extends JFrame implements ActionListener {
 
     private JButton backButton;
@@ -25,25 +24,29 @@ public class GUIAnalyticsSearch extends JFrame implements ActionListener {
     private JComboBox<String> subjectBox;
 
     GUIAnalyticsSearch() {
-
-        subjectBox = new JComboBox<String>(this.getDeweyInfo());
-        subjectBox.setBounds(100, 80, 120, 25);
-
-        backButton = new JButton("Back");
-		backButton.setBounds(498, 19, 89, 23);
-        backButton.setFocusable(false);
-        backButton.addActionListener(this);
-
-        resultsButton = new JButton("Results");
-        resultsButton.setBounds(168, 148, 89, 23);
-        resultsButton.setFocusable(false);
-        resultsButton.addActionListener(this);
-        
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16); // Change the font, size, and style here
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBounds(100, 100, 600, 400);
+        this.setSize(375, 340);
         this.setResizable(false);
+
+        backButton = new JButton("Back");
+	    backButton.setBounds(10,15,340,50);
+        backButton.setFocusable(false);
+        backButton.addActionListener(this);
+
+        subjectBox = new JComboBox<String>(this.getDeweyInfo());
+        subjectBox.setBounds(10, 80, 340, 50);
+
+        resultsButton = new JButton("Results");
+        resultsButton.setBounds(10,185,340,100);
+        resultsButton.setFocusable(false);
+        resultsButton.addActionListener(this);
+
+        backButton.setFont(buttonFont);
+        subjectBox.setFont(buttonFont);
+        resultsButton.setFont(buttonFont);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -91,5 +94,4 @@ public class GUIAnalyticsSearch extends JFrame implements ActionListener {
             GUILibraryStart start = new GUILibraryStart();
         }
 	}
-	
 }
