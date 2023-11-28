@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Member {
+public class Member implements Serializable{
 	private int birthyear;
 	private String firstName;
 	private String lastName;
@@ -8,7 +9,7 @@ public class Member {
 	private String address;
 	private static int nextID = 1;
     private int memID;
-	private ArrayList<Book> hasBorrowed;
+	private ArrayList<BorrowedBook> hasBorrowed;
 
 	public Member(int ID) {
 		nextID = ID;	
@@ -33,10 +34,13 @@ public class Member {
 		this.address = address;
 		this.gender = gender;
 		memID = id;
+		hasBorrowed = new ArrayList<>();
 		if (hasBorrowedID.get(0) == -1) {
-			hasBorrowed = new ArrayList<>();
+			
 		} else {
-			this.hasBorrowed = hasBorrowed;
+			for (int i = 0; i < hasBorrowedID.size(); i++) {
+				hasBorrowed.add(LibraryManagementSystem.findBorrowedBook(hasBorrowedID.get(i)));
+			}
 		}
 	}
 
@@ -79,8 +83,12 @@ public class Member {
 		return memID;
 	}
 
-	public ArrayList<Book> getBorrowed() {
-		if (!hasBorrowed.isEmpty()) {
+	public void addBook (BorrowedBook bookIn) {
+		hasBorrowed.add(bookIn);
+	}
+
+	public ArrayList<BorrowedBook> getBorrowed() {
+		if (!hasBorrowed.isEmpty() && hasBorrowed != null) {
 			return hasBorrowed;
 		} else {
 			return null;

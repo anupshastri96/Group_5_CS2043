@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -28,6 +29,7 @@ public class GUIBookAdd extends JFrame implements ActionListener{
     JComboBox<String> cb;
     JButton addButton;
     JButton backButton;
+    JCheckBox adultCheck;
     JTextField titleText;
     JTextField authorText;
 
@@ -62,6 +64,11 @@ public class GUIBookAdd extends JFrame implements ActionListener{
         cb = new JComboBox<>(deweySubjects);
         cb.setBounds(100, 80, 120, 25);
         panel.add(cb);
+
+        adultCheck = new JCheckBox("Adult");
+        adultCheck.setBounds(100,100,100,40);
+        adultCheck.setFocusable(false);
+        panel.add(adultCheck);
 
         addButton = new JButton("Add Book");
         addButton.setBounds(10, 130, 150, 25);
@@ -117,6 +124,7 @@ public class GUIBookAdd extends JFrame implements ActionListener{
                     String title = titleText.getText();
                     String author = authorText.getText();
                     String deweydecimal = (String) cb.getSelectedItem();
+                    boolean adult = adultCheck.isSelected();
                     String sub = deweydecimal.substring(0,3);
                     int deweyIn = Integer.parseInt(sub);
             

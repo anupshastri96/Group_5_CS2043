@@ -16,7 +16,8 @@ public class GUIMemberShow extends JFrame implements ActionListener {
     JLabel test;
     JButton editButton;
     JButton backButton;
-    JButton currentButton;
+    JButton viewBorrowedButton;
+    JButton borrowButton;
     Member storeMember;
 
     GUIMemberShow(Member memberIn) {
@@ -36,11 +37,15 @@ public class GUIMemberShow extends JFrame implements ActionListener {
         editButton.setFocusable(false);
         editButton.addActionListener(this);
 
-        currentButton = new JButton("Set as Current");
-		currentButton.setBounds(100,100,100,40);
-        currentButton.setFocusable(false);
-        currentButton.addActionListener(this);
+        viewBorrowedButton = new JButton("View Borrowed Log");
+		viewBorrowedButton.setBounds(100,100,100,40);
+        viewBorrowedButton.setFocusable(false);
+        viewBorrowedButton.addActionListener(this);
 
+        borrowButton = new JButton("Borrow Book");
+		borrowButton.setBounds(100,100,100,40);
+        borrowButton.setFocusable(false);
+        borrowButton.addActionListener(this);
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,11 +62,12 @@ public class GUIMemberShow extends JFrame implements ActionListener {
         panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         topPanel.add(editButton);
+        topPanel.add(viewBorrowedButton);
+        topPanel.add(borrowButton);
         topPanel.add(backButton);
         this.add(topPanel);
 
         panel2.add(test);
-        panel2.add(currentButton);
         this.add(panel2);
 
         this.setVisible(true);
@@ -71,10 +77,16 @@ public class GUIMemberShow extends JFrame implements ActionListener {
         if (e.getSource() == editButton) {
             this.dispose();
             GUIMemberEdit edit = new GUIMemberEdit(storeMember);
+        } else if (e.getSource() == borrowButton) {
+            // Add check if membership is expired or not
+            this.dispose();
+            GUIBookSearch search = new GUIBookSearch(true, storeMember.getID());
+        } else if (e.getSource() == viewBorrowedButton) {
+            this.dispose();
+            GUIBorrowedView search = new GUIBorrowedView(false, storeMember.getID());
         } else if (e.getSource() == backButton) {
             this.dispose();
             GUIMemberSearch search = new GUIMemberSearch();
-
         }
 	}
 	

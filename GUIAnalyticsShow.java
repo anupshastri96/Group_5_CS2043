@@ -36,7 +36,7 @@ public class GUIAnalyticsShow extends JFrame implements ActionListener {
             ageGroup = new JLabel("Not enough data to determine the age group");
         }
 
-        commonGender = new JLabel("Popular with: " + LibraryManagementSystem.getTopGender(deweyIn));
+        commonGender = new JLabel("Popular with " + LibraryManagementSystem.getTopGender(deweyIn));
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);

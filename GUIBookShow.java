@@ -16,8 +16,10 @@ public class GUIBookShow extends JFrame implements ActionListener {
     JLabel title;
     JLabel author;
     JLabel subject;
-    JButton editButton;
+    JButton removeLibraryButton;
     JButton backButton;
+    JButton viewBorrowedButton;
+    JButton borrowButton;
     Book storeBook;
 
     GUIBookShow(Book bookIn) {
@@ -26,17 +28,27 @@ public class GUIBookShow extends JFrame implements ActionListener {
         
         title = new JLabel(bookIn.getName());
         author = new JLabel(bookIn.getAuthor());
-        //subject = new JLabel(bookIn.getSubject());
+        subject = new JLabel(bookIn.getSubject());
 
         backButton = new JButton("Back");
 		backButton.setBounds(100,100,100,40);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        editButton = new JButton("Edit");
-        editButton.setBounds(100,100,100,40);
-        editButton.setFocusable(false);
-        editButton.addActionListener(this);
+        removeLibraryButton = new JButton("Remove from library");
+        removeLibraryButton.setBounds(100,100,100,40);
+        removeLibraryButton.setFocusable(false);
+        removeLibraryButton.addActionListener(this);
+
+        viewBorrowedButton = new JButton("View Borrowed Log");
+		viewBorrowedButton.setBounds(100,100,100,40);
+        viewBorrowedButton.setFocusable(false);
+        viewBorrowedButton.addActionListener(this);
+
+        borrowButton = new JButton("Borrow Book");
+		borrowButton.setBounds(100,100,100,40);
+        borrowButton.setFocusable(false);
+        borrowButton.addActionListener(this);
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +64,9 @@ public class GUIBookShow extends JFrame implements ActionListener {
         panel2.setPreferredSize(new Dimension(300,300));
         panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        topPanel.add(editButton);
+        topPanel.add(removeLibraryButton);
+        topPanel.add(viewBorrowedButton);
+        topPanel.add(borrowButton);
         topPanel.add(backButton);
         this.add(topPanel);
 
@@ -65,9 +79,16 @@ public class GUIBookShow extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == editButton) {
+        if (e.getSource() == removeLibraryButton) {
             //this.dispose();
            // GUIBookEdit edit = new GUIBookEdit(storeBook);
+        } else if (e.getSource() == borrowButton) {
+            // add check if can be borrowed
+            this.dispose();
+            GUIMemberSearch search = new GUIMemberSearch(true, storeBook.getId());
+        } else if (e.getSource() == viewBorrowedButton) {
+            this.dispose();
+            GUIBorrowedView search = new GUIBorrowedView(true, storeBook.getId());
         } else if (e.getSource() == backButton) {
             this.dispose();
             GUIBookSearch search = new GUIBookSearch();

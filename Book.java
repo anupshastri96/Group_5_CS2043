@@ -133,6 +133,10 @@ public class Book implements Serializable {
     public int getDewey() {
         return dewey;
     }
+
+    public String getSubject() {
+        return subject;
+    }
     
     private void getSubjectInfo() {
         try {
@@ -161,8 +165,18 @@ public class Book implements Serializable {
         return amount;
     }
 
+    public int getAmountBorrowed() {
+        return amountBorrowed;
+    }
+
     public void incAmount() {
         amount++;
+    }
+
+    public void decAmount() {
+        if (amount >= 1) {
+            amount--; 
+        }
     }
 
     public void borrow(Member borrowedBy) {

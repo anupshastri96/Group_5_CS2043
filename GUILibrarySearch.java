@@ -22,6 +22,8 @@ public class GUILibrarySearch extends JFrame implements ActionListener {
     JButton backButton;
     JButton addButton;
 
+    
+
     GUILibrarySearch() {
 
         searchButton = new JButton("Search");

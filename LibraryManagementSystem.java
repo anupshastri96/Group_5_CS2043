@@ -175,6 +175,7 @@ public class LibraryManagementSystem {
 						currentNumBorrowedBooks = Integer.parseInt(line.substring(buffer + 1,line.length()));
                 	}
             	}
+				
 				Library addLibrary = new Library(currentName, currentAddress, currentNumBooks, currentNumBorrowedBooks, currentID);
 				libraries.add(addLibrary);
 				buffer = -1;
@@ -371,7 +372,7 @@ public class LibraryManagementSystem {
 				toPrint = (members.get(i).getID() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getAddress() + "," + members.get(i).getBirthyear());
 				if (members.get(i).getBorrowed() != null && !members.get(i).getBorrowed().isEmpty()) {
 					for (int j = 0; j < members.get(i).getBorrowed().size(); j++) {
-						toPrint += ("," + members.get(i).getBorrowed().get(j).getId());
+						toPrint += ("," + members.get(i).getBorrowed().get(j).getID());
 					}
 				} else {
 					toPrint += (",-1");
@@ -404,13 +405,13 @@ public class LibraryManagementSystem {
         } 
 	}
 
-		static void borrowedBookWriteFile() {
+	static void borrowedBookWriteFile() {
 		try {
         	FileOutputStream fos = new FileOutputStream("borrowedBookStorage.bin");
         	ObjectOutputStream oos = new ObjectOutputStream(fos);
-            for(int i=0; i<libraries.size(); i++) {
-				ArrayList<BorrowedBook> borrowedBooks = libraries.get(i).getAllBorrowedBooks();
-				if (!borrowedBooks.isEmpty() && borrowedBooks.size() > 0) {
+            for(int i=0; i<members.size(); i++) {
+				ArrayList<BorrowedBook> borrowedBooks = members.get(i).getBorrowed();
+				if (!borrowedBooks.isEmpty() && borrowedBooks.size() > 0 && borrowedBooks != null) {
 					for (int j = 0; j < borrowedBooks.size(); j++) {
 						oos.writeObject(borrowedBooks.get(j));
 					}
@@ -420,8 +421,47 @@ public class LibraryManagementSystem {
         } catch (IOException e) {
             e.printStackTrace();
         } 
-	}
+	} 
 
+	static BorrowedBook findBorrowedBook(Book bookIn, Member memberIn) {
+		for (int i = 0; i < libraries.size(); i++) {
+			if (!libraries.get(i).getAllBorrowedBooks().isEmpty() && libraries.get(i).getAllBorrowedBooks() != null) {
+				for (int j = 0; j < libraries.get(i).getAllBorrowedBooks().size(); i++) {
+            		if (libraries.get(i).getAllBorrowedBooks().get(j).getBook().getId() == bookIn.getId() && libraries.get(i).getAllBorrowedBooks().get(j).getMember().getID() == memberIn.getID()) {
+                		return libraries.get(i).getAllBorrowedBooks().get(j);
+            		}
+        		}
+			}
+		}
+        return null;
+    }
+
+	static BorrowedBook findBorrowedBook(int IDin) {
+		for (int i = 0; i < libraries.size(); i++) {
+			if (!libraries.get(i).getAllBorrowedBooks().isEmpty() && libraries.get(i).getAllBorrowedBooks() != null) {
+				for (int j = 0; j < libraries.get(i).getAllBorrowedBooks().size(); i++) {
+            		if (libraries.get(i).getAllBorrowedBooks().get(j).getID() == IDin) {
+                		return libraries.get(i).getAllBorrowedBooks().get(j);
+            		}
+        		}
+			}
+		}
+        return null;
+
+    }
+/*
+	static ArrayList<Integer> findBook(int bookID) {
+		for (int i = 0; i < libraries.size(); i++) {
+			for (int j = 0; j < libraries.get(i).getNumBooks(); j++) {
+				if (libraries.get(i).getBook(j).getId() == bookID) {
+					ArrayList<Integer> toReturn = new ArrayList<>();
+					toReturn.add(libraries.get(i).getID());
+					toReturn.add(libraries.get(i).getBook(j).getId());
+					return toReturn;
+				}
+			}
+		}
+	} */
 	
 
 	static Book checkAllBooks(Book bookIn) {
@@ -461,7 +501,7 @@ public class LibraryManagementSystem {
 		for (int i = 0; i < members.size(); i++) {
 			if (members.get(i).getBorrowed() != null) {
 				for (int j = 0; j < members.get(i).getBorrowed().size(); j++) {
-					if (members.get(i).getBorrowed().get(j).getDewey() == deweyIn) {
+					if (members.get(i).getBorrowed().get(j).getBook().getDewey() == deweyIn) {
 						ageTotal += members.get(i).getAge();
 						count++;
 					}
@@ -482,7 +522,7 @@ public class LibraryManagementSystem {
 		for (int i = 0; i < members.size(); i++) {
 			if (members.get(i).getBorrowed() != null) {
 				for (int j = 0; j < members.get(i).getBorrowed().size(); j++) {
-					if (members.get(i).getBorrowed().get(j).getDewey() == deweyIn) {
+					if (members.get(i).getBorrowed().get(j).getBook().getDewey() == deweyIn) {
 						if (members.get(i).getGender().equals("Male")) {
 							maleTotal++;
 						} else if (members.get(i).getGender().equals("Female")) {
@@ -493,7 +533,7 @@ public class LibraryManagementSystem {
 					}
 				}
 			}
-		} // Temporary checks
+		} 
 		if (maleTotal == 0 && femaleTotal == 0 && otherTotal == 0) {
 			return ("no one");
 	 	} else if (maleTotal > femaleTotal && maleTotal > otherTotal) {

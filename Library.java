@@ -14,6 +14,8 @@ import java.io.ObjectOutputStream;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
 
+import java.util.Date;
+
 public class Library implements Serializable{
 
     private String name;
@@ -46,7 +48,7 @@ public class Library implements Serializable{
         borrowedHere = new ArrayList<BorrowedBook>();
 
         bookReadFile();
-        borrowedBookReadFile();
+        this.borrowedBookReadFile();
     
     }
 
@@ -55,9 +57,12 @@ public class Library implements Serializable{
         this.address = address;
         this.numBooks = numBooks;
         this.libId = libId;
+        this.numBooksBorrowed = numBooksBorrowed;
 
         books = new ArrayList<>();
-        this.bookReadFile();
+        bookReadFile();
+        borrowedHere = new ArrayList<>();
+        this.borrowedBookReadFile();
     }
 
     /*
@@ -165,7 +170,6 @@ public class Library implements Serializable{
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bookStorage.bin"));
             for(int i=0; i< numBooks; i++) {
-                
 				Book bookRead = (Book) ois.readObject();
                 System.out.println(bookRead.toString());
                 if (bookRead.checkLibrary(this)) {
@@ -191,17 +195,24 @@ public class Library implements Serializable{
      * BORROWEDBOOK METHODS
      */
 
-    public void borrowBook(Member borrower, Book borrowed) {
+    public void borrowBook(Member borrower, Book borrowed, Date currentDate) {
         if (borrowed.getAmount() > 0) {
-            BorrowedBook toAdd = new BorrowedBook(borrower, borrowed, libId);
+            BorrowedBook toAdd = new BorrowedBook(borrower, borrowed, libId, currentDate);
+            borrowed.borrow(borrower);
+            borrower.addBook(toAdd);
             borrowedHere.add(toAdd);
-            
+            numBooksBorrowed++;
+            LibraryManagementSystem.borrowedBookWriteFile();
+            LibraryManagementSystem.libraryWriteFile();
+            LibraryManagementSystem.bookWriteFile();
+            LibraryManagementSystem.memberWriteFile();
         }
     }
 
     public ArrayList<BorrowedBook> getAllBorrowedBooks() {
         return borrowedHere;
     }
+
 
     public int getNumBorrowedBooks() {
         return numBooksBorrowed;
@@ -213,10 +224,9 @@ public class Library implements Serializable{
             for(int i=0; i< numBooksBorrowed; i++) {
                 
 				BorrowedBook bookRead = (BorrowedBook) ois.readObject();
-                System.out.println(bookRead.toString());
                 if (bookRead.checkLibrary(this)) {
                     borrowedHere.add(bookRead);
-                    System.out.println("Book read from file.");
+                    
                 } else {
                     i--;
                 }
