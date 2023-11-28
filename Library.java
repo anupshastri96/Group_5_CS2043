@@ -16,7 +16,7 @@ import java.io.ObjectInputStream;
 
 import java.util.Date;
 
-public class Library implements Serializable{
+public class Library implements Serializable {
 
     private String name;
     private String address;
@@ -77,7 +77,6 @@ public class Library implements Serializable{
         LibraryManagementSystem.libraryWriteFile();
     } 
 
-
     /*
      * ADDRESS METHODS
      */
@@ -100,7 +99,6 @@ public class Library implements Serializable{
     public void setNextID(int nextId) {
         this.nextId = nextId;
     }
-
 
     /*
      * BOOKS METHODS
@@ -132,6 +130,7 @@ public class Library implements Serializable{
         boolean isReal = false;
     	books.remove(b);
     }
+	
     public Book getBook(int n) {
 		if (n >= 0 && n < books.size()) {
 			return books.get(n);
@@ -156,6 +155,7 @@ public class Library implements Serializable{
     public int getNumBooks() {
 		return numBooks;
 	}
+	
     public String toString() {
     	String s = "======================\n";
     	
@@ -237,6 +237,31 @@ public class Library implements Serializable{
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } 
-    }
+    } /* 
+	 private boolean bookavailability(Book bookborrowed) { //the parameter is the name of the book object borrowed
+		
+		for(int i = 0; i< borrowedHere.size(); i++) {
+			if(bookborrowed == borrowedHere.get(i).borrowed) 
+			{
+				return false;
+			}
+			
+		}
+		return true;
+	} */
+    /* 
+    private Member signedOut(Book bookborrowed) {
+    	
+    	for(int i = 0; i< borrowedHere.size(); i++) {
+			if(bookborrowed == borrowedHere.get(i).borrowed) 
+			{
+				return borrowedHere.get(i).borrower;
+			}
+			
+		}
+		return null;
+	} */
+    	
 }
+    
 

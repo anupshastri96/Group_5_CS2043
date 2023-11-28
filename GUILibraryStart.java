@@ -21,24 +21,32 @@ public class GUILibraryStart extends JFrame implements ActionListener {
     GUILibraryStart() {
 
         librarianButton = new JButton("Librarian");
-	    librarianButton.setBounds(100,10,100,25);
+	    librarianButton.setBounds(10,75,340,100);
         librarianButton.setFocusable(false);
         librarianButton.addActionListener(this);
 
         adminButton = new JButton("Admin");
-        adminButton.setBounds(100,120,100,25);
+        adminButton.setBounds(10,185,340,100);
         adminButton.setFocusable(false);
         adminButton.addActionListener(this);
 
         analyticsButton = new JButton("View Analytics");
-        analyticsButton.setBounds(0, 0, 89, 23);
+        analyticsButton.setBounds(10, 15, 340, 50);
         analyticsButton.setFocusable(false);
         analyticsButton.addActionListener(this);
+
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16); // Change the font, size, and style here
+
+        librarianButton.setFont(buttonFont);
+        adminButton.setFont(buttonFont);
+        analyticsButton.setFont(buttonFont);
+
+        Font titleFont = new Font("Arial", Font.BOLD, 18);
         
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
+        this.setSize(375, 340);
         this.setResizable(false);
 
 		contentPane = new JPanel();

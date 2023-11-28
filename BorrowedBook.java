@@ -10,7 +10,7 @@ import java.util.Date;
 
 import javax.swing.JOptionPane;
 
-public class BorrowedBook implements Serializable{
+public class BorrowedBook implements Serializable {
 	private int id;
 	private int associatedMemberID;
 	private Date expectedReturnDate;
@@ -23,7 +23,6 @@ public class BorrowedBook implements Serializable{
 	private Library borrowedFrom;
 	private Book borrowed;
 	private int daysExtended;
-	//private Date returnDate;
 	
 	public BorrowedBook(int ID) {
 		nextID = ID;
@@ -44,7 +43,9 @@ public class BorrowedBook implements Serializable{
 		active = true;
 	}
 	
+
 	public BorrowedBook(int ID, Member borrower, Book borrowed, int libraryID, Date borrowDate, Date expectedReturnDate, boolean active) {
+
 		id = ID;
 
 		borrowedFrom = LibraryManagementSystem.findLibrary(libraryID);
@@ -56,6 +57,7 @@ public class BorrowedBook implements Serializable{
 		this.active = active;
 
 	}
+
 	public double checkedOutLength(){
 		Calendar calendar = Calendar.getInstance();
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -64,8 +66,9 @@ public class BorrowedBook implements Serializable{
 	     long differenceInDays = differenceInMilliseconds / (24 * 60 * 60 * 1000);
 		double daysChecked = (double) differenceInDays;
 		return daysChecked;
-		
 	}
+
+	
 	private void extendReturnDate(int daysToAdd) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(expectedReturnDate);  
@@ -75,7 +78,9 @@ public class BorrowedBook implements Serializable{
 		expectedReturnDate = newDate;
 
 		daysExtended += daysToAdd;
+
 	}
+	
 
 	public double getLateFees() {
 		
@@ -112,6 +117,7 @@ public class BorrowedBook implements Serializable{
 	 */
 	public Book getBook() {
 		return borrowed;
+
 	}
 	
 	public Member getMember() {
@@ -137,4 +143,5 @@ public class BorrowedBook implements Serializable{
 	public Date getBorrowDate() {
 		return borrowDate;
 	}
+
 }

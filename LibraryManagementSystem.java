@@ -259,7 +259,6 @@ public class LibraryManagementSystem {
 		return false;
 	}
 
-
 	// Member methods
 
 	static void addMember(Member memberIn) {
@@ -305,9 +304,7 @@ public class LibraryManagementSystem {
 		return members;
 	}
 	
-
 	static void memberReadFile() {
-		
 		try {
 			members = new ArrayList<Member>();
 			BufferedReader reader = new BufferedReader(new FileReader("memberStorage.txt"));
@@ -421,8 +418,7 @@ public class LibraryManagementSystem {
         } catch (IOException e) {
             e.printStackTrace();
         } 
-	} 
-
+	}
 	static BorrowedBook findBorrowedBook(Book bookIn, Member memberIn) {
 		for (int i = 0; i < libraries.size(); i++) {
 			if (!libraries.get(i).getAllBorrowedBooks().isEmpty() && libraries.get(i).getAllBorrowedBooks() != null) {
@@ -447,21 +443,8 @@ public class LibraryManagementSystem {
 			}
 		}
         return null;
-
     }
-/*
-	static ArrayList<Integer> findBook(int bookID) {
-		for (int i = 0; i < libraries.size(); i++) {
-			for (int j = 0; j < libraries.get(i).getNumBooks(); j++) {
-				if (libraries.get(i).getBook(j).getId() == bookID) {
-					ArrayList<Integer> toReturn = new ArrayList<>();
-					toReturn.add(libraries.get(i).getID());
-					toReturn.add(libraries.get(i).getBook(j).getId());
-					return toReturn;
-				}
-			}
-		}
-	} */
+
 	
 
 	static Book checkAllBooks(Book bookIn) {
@@ -553,5 +536,4 @@ public class LibraryManagementSystem {
 		}
 	}
 
-	
 }
