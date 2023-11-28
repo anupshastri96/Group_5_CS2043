@@ -245,5 +245,31 @@ public class Library implements Serializable {
             e.printStackTrace();
         } 
     }
+	 private bool bookavailability(Book bookborrowed) { //the parameter is the name of the book object borrowed
+		
+		for(int i = 0; i< borrowedHere.size(); i++) {
+			if(bookborrowed == borrowedHere.get(i).borrowed) 
+			{
+				return false;
+			}
+			
+		}
+		return true;
+	}
+    
+    private Member signedOut(Book bookborrowed) {
+    	
+    	for(int i = 0; i< borrowedHere.size(); i++) {
+			if(bookborrowed == borrowedHere.get(i).borrowed) 
+			{
+				return borrowedHere.get(i).borrower;
+			}
+			
+		}
+		return null;
+	}
+    	
+    }
+    
 }
 
