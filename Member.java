@@ -75,7 +75,7 @@ public class Member implements Serializable{
 	public int getAge() {
 		Calendar calendar = Calendar.getInstance();
 		int year = calendar.get(Calendar.YEAR);
-		int age = birthyear - year;
+		int age = year - birthyear;
 		return age;
 	}
 

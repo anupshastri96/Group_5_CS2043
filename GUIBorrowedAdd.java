@@ -91,7 +91,6 @@ public class GUIBorrowedAdd extends JFrame implements ActionListener {
             // Display an error message using JOptionPane
             JOptionPane.showMessageDialog(null, "Error: Unable to parse the string as a date. Please Retry",
                     "Error", JOptionPane.ERROR_MESSAGE);
-            datetxt.setText("");
             retdatetxt.setText("");
             pe.printStackTrace();
         }

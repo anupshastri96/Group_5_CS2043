@@ -202,11 +202,22 @@ public class Library implements Serializable {
             borrower.addBook(toAdd);
             borrowedHere.add(toAdd);
             numBooksBorrowed++;
+            LibraryManagementSystem.changeConfigInts(4);
             LibraryManagementSystem.borrowedBookWriteFile();
             LibraryManagementSystem.libraryWriteFile();
             LibraryManagementSystem.bookWriteFile();
             LibraryManagementSystem.memberWriteFile();
         }
+    }
+
+    public void returnBook(BorrowedBook borrowedBookIn) {
+        borrowedBookIn.getBook().returnBook(borrowedBookIn.getMember());
+        borrowedBookIn.returnBook();
+        LibraryManagementSystem.borrowedBookWriteFile();
+        LibraryManagementSystem.libraryWriteFile();
+        LibraryManagementSystem.bookWriteFile();
+        LibraryManagementSystem.memberWriteFile();
+
     }
 
     public ArrayList<BorrowedBook> getAllBorrowedBooks() {

@@ -35,40 +35,42 @@ public class GUIBorrowedShow extends JFrame implements ActionListener{
         JLabel memberNameLabel = new JLabel("Member first/last name: " + bookIn.getMember().getFirstname() + " " + bookIn.getMember().getLastname());
         memberNameLabel.setBounds(10, 50, 350, 25);
         
-        // Check if active or not before displaying these
-        returnButton = new JButton("Return Book");
-        returnButton.setBounds(10, 90, 120, 25);
-        returnButton.addActionListener(this);
-
-        extendButton = new JButton("Extend");
-        extendButton.setBounds(160,90,120,25);
-        extendButton.addActionListener(this);
-    
-        
-        JLabel lateChargesLabel = new JLabel("Late Charges: ");
-        lateChargesLabel.setBounds(10, 120, 80, 25);
-
         mainPanel.add(bookTitleLabel);
         mainPanel.add(memberNameLabel);
-        mainPanel.add(returnButton);
-        mainPanel.add(extendButton);
-        mainPanel.add(lateChargesLabel);
 
+        if (bookIn.getActive()) {
+            returnButton = new JButton("Return Book");
+            returnButton.setBounds(10, 90, 120, 25);
+            returnButton.addActionListener(this);
+
+            extendButton = new JButton("Extend");
+            extendButton.setBounds(160,90,120,25);
+            extendButton.addActionListener(this);
+
+            mainPanel.add(returnButton);
+            mainPanel.add(extendButton);
+        } else {
+            JLabel lateChargesLabel = new JLabel("Late Charges: " + bookIn.getLateFees());
+            lateChargesLabel.setBounds(10, 120, 80, 25);
+
+            mainPanel.add(lateChargesLabel);
+        }
         this.add(mainPanel);
         this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnButton) {
-            //this.dispose();
-            //GUIAdminLogin login = new GUIAdminLogin();
+            LibraryManagementSystem.getCurrentLibrary().returnBook(bookIn);
+            this.repaint();
+            this.revalidate();
         } else if (e.getSource() == backButton) {
             if (bookStart) {
-                //this.dispose();
-                //GUIBorrowedView view = new GUIBorrowedView(bookStart, bookIn.getId());
+                this.dispose();
+                GUIBorrowedView view = new GUIBorrowedView(bookStart, bookIn.getBook().getId());
             } else {
-                //this.dispose();
-                //GUIBorrowedView view = new GUIBorrowedView(bookStart, memberIn.getID());
+                this.dispose();
+                GUIBorrowedView view = new GUIBorrowedView(bookStart, bookIn.getMember().getID());
 
             }
         } 
