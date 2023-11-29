@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 
 
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
@@ -24,20 +25,34 @@ public class GUILibraryResults extends JFrame implements ActionListener {
     JButton backButton;
     JComboBox<String> options;
     ArrayList<Integer> libraryIDs;
+    JPanel contentPane;
 
     GUILibraryResults(ArrayList<Integer> libraryIDs) {
 
-        confirmButton = new JButton("Confirm");
-        confirmButton.setBounds(100,100,100,40);
-        confirmButton.setFocusable(false);
-        confirmButton.addActionListener(this);
+        this.libraryIDs = libraryIDs;
+
+        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(375, 340);
+        this.setResizable(false);
+
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
         backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
+		backButton.setBounds(10, 15, 68, 50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        this.libraryIDs = libraryIDs;
+        confirmButton = new JButton("Confirm");
+        confirmButton.setBounds(130,240,110,50);
+        confirmButton.setFocusable(false);
+        confirmButton.addActionListener(this);
+
+        JLabel resultLabel = new JLabel("Results:");
+        resultLabel.setBounds(35, 120, 200, 35);
 
         String[] libraryNames = new String[libraryIDs.size()];
         for (int i = 0; i < libraryIDs.size(); i++) {
@@ -46,29 +61,23 @@ public class GUILibraryResults extends JFrame implements ActionListener {
         }
         
         options = new JComboBox<>(libraryNames);
+        options.setBounds(100, 120, 230, 35);
+        options.setFocusable(false);
         options.addActionListener(this);
 
-        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
-        this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+        Font titleFont = new Font("Arial", Font.BOLD, 18);
 
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        backButton.setFont(buttonFont);
+        options.setFont(buttonFont);
+        resultLabel.setFont(buttonFont);
+        confirmButton.setFont(buttonFont);
 
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        topPanel.add(backButton);
-        this.add(topPanel);
-
-        panel2.add(options);
-        panel2.add(confirmButton);
-        this.add(panel2);
-
+        contentPane.add(resultLabel);
+        contentPane.add(options);
+        contentPane.add(confirmButton);
+        contentPane.add(backButton);
+        
         this.setVisible(true);
     }
 
@@ -77,7 +86,6 @@ public class GUILibraryResults extends JFrame implements ActionListener {
             this.dispose();
             GUILibraryShow show = new GUILibraryShow(LibraryManagementSystem.findLibrary(libraryIDs.get(options.getSelectedIndex())));
         } else if (e.getSource() == backButton) {
-            
             this.dispose();
             GUILibrarySearch search = new GUILibrarySearch();
         }
