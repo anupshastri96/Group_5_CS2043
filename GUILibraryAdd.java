@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -79,8 +80,15 @@ public class GUILibraryAdd extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == addButton) {
             if (nameTextField.getText() != "" && addressTextField.getText() != "") {
-                Library toAdd = new Library(nameTextField.getText(), addressTextField.getText());
-                LibraryManagementSystem.addLibrary(toAdd, false);
+                String toCheck = (nameTextField.getText() + addressTextField.getText());
+                if (toCheck.indexOf(",") == -1) {
+                    Library toAdd = new Library(nameTextField.getText(), addressTextField.getText());
+                    LibraryManagementSystem.addLibrary(toAdd, false);
+                    nameTextField.setText("");
+                    addressTextField.setText("");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Cannot contain character ','");
+                }
             }
         }  else if (e.getSource() == backButton) {
             this.dispose();
