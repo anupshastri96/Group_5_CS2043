@@ -5,9 +5,11 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -15,7 +17,8 @@ import java.util.ArrayList;
 
 
 public class GUIBookSearch extends JFrame implements ActionListener {
-    // Fix this up later
+    
+    JPanel contentPane;
     JTextField nameTextField;
     JTextField authorTextField;
     JTextField IDTextField;
@@ -31,53 +34,77 @@ public class GUIBookSearch extends JFrame implements ActionListener {
     attemptBorrow = borrow;
     storeMemberID = memberId;
 
-    searchButton = new JButton("Search");
-        searchButton.setBounds(100,100,100,40);
+    JLabel nameText = new JLabel("Name:");
+        nameText.setBounds(65, 75, 200, 35);
+        JLabel authorText = new JLabel("Author:");
+        authorText.setBounds(65, 115, 200, 35);
+        JLabel adultText = new JLabel("Adult:");
+        adultText.setBounds(65, 155, 200, 35);
+        JLabel IDText = new JLabel("ID:");
+        IDText.setBounds(65, 195, 200, 35);
+        JLabel titleText = new JLabel("Book Search");
+        titleText.setBounds(135, 15, 200, 50);
+
+        searchButton = new JButton("Search");
+        searchButton.setBounds(140,240,85,50);
         searchButton.setFocusable(false);
         searchButton.addActionListener(this);
 
         backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
+		backButton.setBounds(10, 15, 68, 50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        adultCheck = new JCheckBox("Adult");
-        adultCheck.setBounds(100,100,100,40);
-        adultCheck.setFocusable(false);
-
         nameTextField = new JTextField();
-        nameTextField.setPreferredSize(new Dimension(250,40));
+        nameTextField.setBounds(130, 75, 200, 35);
 
         authorTextField = new JTextField();
-        authorTextField.setPreferredSize(new Dimension(250,40));
+        authorTextField.setBounds(130, 115, 200, 35);
+
+        adultCheck = new JCheckBox();
+        adultCheck.setBounds(130, 155, 200, 35);
+        adultCheck.setFocusable(false);;
 
         IDTextField = new JTextField();
         IDTextField.setPreferredSize(new Dimension(250,40));
+        IDTextField.setBounds(130, 195, 200, 35);
+
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+        Font titleFont = new Font("Arial", Font.BOLD, 18);
+
+        searchButton.setFont(buttonFont);
+        backButton.setFont(buttonFont);
+        nameText.setFont(buttonFont);
+        authorText.setFont(buttonFont);
+        adultText.setFont(buttonFont);
+        IDText.setFont(buttonFont);
+        nameTextField.setFont(buttonFont);
+        authorTextField.setFont(buttonFont);
+        IDTextField.setFont(buttonFont);
+        titleText.setFont(titleFont);
 
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
+        this.setSize(375, 340);
         this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        topPanel.add(backButton);
-        this.add(topPanel);
-
-        panel2.add(nameTextField);
-        panel2.add(authorTextField);
-        panel2.add(adultCheck);
-        panel2.add(IDTextField);
-        panel2.add(searchButton);
-        this.add(panel2);
+        contentPane.add(titleText);
+        contentPane.add(nameText);
+        contentPane.add(authorText);
+        contentPane.add(adultText);
+        contentPane.add(IDText);
+        contentPane.add(backButton);
+        contentPane.add(nameTextField);
+        contentPane.add(authorTextField);
+        contentPane.add(adultCheck);
+        contentPane.add(IDTextField);
+        contentPane.add(searchButton);
 
         this.setVisible(true);
 
@@ -85,59 +112,84 @@ public class GUIBookSearch extends JFrame implements ActionListener {
 
     GUIBookSearch() {
 
+        JLabel nameText = new JLabel("Name:");
+        nameText.setBounds(65, 75, 200, 35);
+        JLabel authorText = new JLabel("Author:");
+        authorText.setBounds(65, 115, 200, 35);
+        JLabel adultText = new JLabel("Adult:");
+        adultText.setBounds(65, 155, 200, 35);
+        JLabel IDText = new JLabel("ID:");
+        IDText.setBounds(65, 195, 200, 35);
+        JLabel titleText = new JLabel("Book Search");
+        titleText.setBounds(135, 15, 200, 50);
+
         searchButton = new JButton("Search");
-        searchButton.setBounds(100,100,100,40);
+        searchButton.setBounds(140,240,85,50);
         searchButton.setFocusable(false);
         searchButton.addActionListener(this);
 
         backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
+		backButton.setBounds(10, 15, 68, 50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
         addButton = new JButton("Add");
-        addButton.setBounds(100,100,100,40);
+        addButton.setBounds(290, 15, 68, 50);
         addButton.setFocusable(false);
         addButton.addActionListener(this);
 
-        adultCheck = new JCheckBox("Adult");
-        adultCheck.setBounds(100,100,100,40);
-        adultCheck.setFocusable(false);
-
         nameTextField = new JTextField();
-        nameTextField.setPreferredSize(new Dimension(250,40));
+        nameTextField.setBounds(130, 75, 200, 35);
 
         authorTextField = new JTextField();
-        authorTextField.setPreferredSize(new Dimension(250,40));
+        authorTextField.setBounds(130, 115, 200, 35);
+
+        adultCheck = new JCheckBox();
+        adultCheck.setBounds(130, 155, 200, 35);
+        adultCheck.setFocusable(false);;
 
         IDTextField = new JTextField();
         IDTextField.setPreferredSize(new Dimension(250,40));
+        IDTextField.setBounds(130, 195, 200, 35);
+
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+        Font titleFont = new Font("Arial", Font.BOLD, 18);
+
+        searchButton.setFont(buttonFont);
+        backButton.setFont(buttonFont);
+        addButton.setFont(buttonFont);
+        nameText.setFont(buttonFont);
+        authorText.setFont(buttonFont);
+        adultText.setFont(buttonFont);
+        IDText.setFont(buttonFont);
+        nameTextField.setFont(buttonFont);
+        authorTextField.setFont(buttonFont);
+        IDTextField.setFont(buttonFont);
+        titleText.setFont(titleFont);
 
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
+        this.setSize(375, 340);
         this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        topPanel.add(addButton);
-        topPanel.add(backButton);
-        this.add(topPanel);
-
-        panel2.add(nameTextField);
-        panel2.add(authorTextField);
-        panel2.add(adultCheck);
-        panel2.add(IDTextField);
-        panel2.add(searchButton);
-        this.add(panel2);
+        contentPane.add(titleText);
+        contentPane.add(nameText);
+        contentPane.add(authorText);
+        contentPane.add(adultText);
+        contentPane.add(IDText);
+        contentPane.add(backButton);
+        contentPane.add(addButton);
+        contentPane.add(nameTextField);
+        contentPane.add(authorTextField);
+        contentPane.add(adultCheck);
+        contentPane.add(IDTextField);
+        contentPane.add(searchButton);
 
         this.setVisible(true);
     }

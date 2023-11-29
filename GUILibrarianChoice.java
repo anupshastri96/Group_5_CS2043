@@ -46,7 +46,6 @@ public class GUILibrarianChoice extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(375, 340);
         this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
