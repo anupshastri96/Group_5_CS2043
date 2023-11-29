@@ -1,1 +1,5 @@
-
+-1,,,-1,-1
+6,Fredericton Public Library,12 Rue Carleton St,0,0
+7,Science & Forestry Library,4 Bailey Dr,0,0
+8,Harriet Irving Library,5 Macaulay Ln,2,0
+9,Minto Public Library,420 Pleasant Drive,0,0

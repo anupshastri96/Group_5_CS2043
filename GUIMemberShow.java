@@ -125,8 +125,13 @@ public class GUIMemberShow extends JFrame implements ActionListener {
                 GUIMemberShow show = new GUIMemberShow(storeMember);
             }
         } else if (e.getSource() == viewBorrowedButton) {
-            this.dispose();
-            GUIBorrowedView search = new GUIBorrowedView(false, storeMember.getID());
+            if (!storeMember.getBorrowed().isEmpty() && storeMember.getBorrowed() != null) {
+                this.dispose();
+                GUIBorrowedView search = new GUIBorrowedView(false, storeMember.getID());
+            } else {
+                JOptionPane.showMessageDialog(null, "Member has no borrowing history");
+            }
+            
         } else if (e.getSource() == backButton) {
             this.dispose();
             GUIMemberSearch search = new GUIMemberSearch();

@@ -68,6 +68,7 @@ public class GUIBookAdd extends JFrame implements ActionListener{
 
         titleText = new JTextField(20);
         titleText.setBounds(75, 75, 275, 25);
+        titleText.setFont(font);
         contentPane.add(titleText);
 
         JLabel authorLabel = new JLabel("Author:");

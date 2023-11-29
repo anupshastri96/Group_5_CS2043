@@ -174,10 +174,10 @@ public class Library implements Serializable {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream("bookStorage.bin"));
             for(int i=0; i< numBooks; i++) {
 				Book bookRead = (Book) ois.readObject();
-                System.out.println(bookRead.toString());
+                
                 if (bookRead.checkLibrary(this)) {
                     books.add(bookRead);
-                    System.out.println("Book read from file.");
+                    
                 } else {
                     i--;
                 }

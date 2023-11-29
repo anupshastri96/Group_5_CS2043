@@ -22,7 +22,10 @@ public class SearchAlgorithm {
         for (int i = 0; i < libraries.size(); i++) {
             
             if (name.length() < 1 && address.length() < 1 && ID.length() < 1) {
-                toReturn.add(libraries.get(i).getID());
+                if (libraries.get(i).getID() != -1) {
+                    toReturn.add(libraries.get(i).getID());
+                }
+                
             } else {
                 // First check
                 if (ID.length() > 0) {
