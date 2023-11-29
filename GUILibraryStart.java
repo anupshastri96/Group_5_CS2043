@@ -7,6 +7,7 @@ import java.awt.BorderLayout;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -64,12 +65,20 @@ public class GUILibraryStart extends JFrame implements ActionListener {
             this.dispose();
             GUIAdminLogin login = new GUIAdminLogin();
         } else if (e.getSource() == librarianButton) {
-            this.dispose();
-            GUILibrarianChoice choice = new GUILibrarianChoice();
+            if (LibraryManagementSystem.getCurrentLibrary().getID() == -1) {
+                JOptionPane.showMessageDialog(null, "Failsafe was activated, cannot access library, get admin to change the current library");
+            } else {
+                this.dispose();
+                GUILibrarianChoice choice = new GUILibrarianChoice();
+            }
 
         } else if (e.getSource() == analyticsButton) {
-            this.dispose();
-            GUIAnalyticsSearch search = new GUIAnalyticsSearch();
+            if (LibraryManagementSystem.getCurrentLibrary().getID() == -1) {
+                JOptionPane.showMessageDialog(null, "Failsafe was activated, cannot access analytics, get admin to change the current library");
+            } else {
+                this.dispose();
+                GUIAnalyticsSearch search = new GUIAnalyticsSearch();
+            }
         }
 	}
 }

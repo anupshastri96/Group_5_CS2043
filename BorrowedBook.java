@@ -1,5 +1,6 @@
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -22,7 +23,7 @@ public class BorrowedBook implements Serializable {
 	private Member borrower;
 	private Library borrowedFrom;
 	private Book borrowed;
-	private int daysExtended;
+	
 	
 	public BorrowedBook(int ID) {
 		nextID = ID;
@@ -39,7 +40,6 @@ public class BorrowedBook implements Serializable {
   
    		borrowDate = new Date();
 		this.expectedReturnDate = expectedReturnDate;
-		daysExtended = 0;
 		active = true;
 	}
 	
@@ -69,15 +69,15 @@ public class BorrowedBook implements Serializable {
 	}
 
 	
-	private void extendReturnDate(int daysToAdd) {
+	public void extendReturnDate(int daysToAdd) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(expectedReturnDate);  
 
 		calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
 		Date newDate = calendar.getTime();
 		expectedReturnDate = newDate;
+		LibraryManagementSystem.borrowedBookWriteFile();
 
-		daysExtended += daysToAdd;
 
 	}
 	
@@ -128,6 +128,13 @@ public class BorrowedBook implements Serializable {
 	/*
 	 * GET METHODS
 	 */
+
+	public String getDueDate() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String toReturn = dateFormat.format(expectedReturnDate);
+        return toReturn;
+	}
+
 	public Book getBook() {
 		return borrowed;
 

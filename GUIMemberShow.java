@@ -17,7 +17,6 @@ public class GUIMemberShow extends JFrame implements ActionListener {
 
     JLabel lateFeesText;
     JLabel membershipText;
-    JButton editButton;
     JButton backButton;
     JButton viewBorrowedButton;
     JButton borrowButton;
@@ -111,10 +110,7 @@ public class GUIMemberShow extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == editButton) {
-            this.dispose();
-            GUIMemberEdit edit = new GUIMemberEdit(storeMember);
-        } else if (e.getSource() == borrowButton) {
+        if (e.getSource() == borrowButton) {
             if (!storeMember.memexpired()) {
                 this.dispose();
                 GUIBookSearch search = new GUIBookSearch(true, storeMember.getID());
