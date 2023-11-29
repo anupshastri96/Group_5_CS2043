@@ -22,7 +22,6 @@ public class GUIAnalyticsShow extends JFrame implements ActionListener {
     JButton backButton;
 
     GUIAnalyticsShow(int deweyIn) {
-
         if (LibraryManagementSystem.getMostDewey(deweyIn).getName().equals("None") && LibraryManagementSystem.getMostDewey(deweyIn).getAddress().equals("None")) {
             commonlyFoundIn = new JLabel("Not available in any library at the moment");
         } else {
@@ -39,10 +38,13 @@ public class GUIAnalyticsShow extends JFrame implements ActionListener {
         commonGender = new JLabel("Popular with " + LibraryManagementSystem.getTopGender(deweyIn));
 
         backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
+	    backButton.setBounds(10,15,68,50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+
+        backButton.setFont(buttonFont);
        
 
 
@@ -51,10 +53,13 @@ public class GUIAnalyticsShow extends JFrame implements ActionListener {
         this.setSize(300, 350);
         this.setResizable(false);
         this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+   
+
 
         JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        topPanel.setPreferredSize(new Dimension(300,70));
+  
+        topPanel.setLayout(null);
 
         JPanel panel2 = new JPanel();
         panel2.setPreferredSize(new Dimension(300,300));
