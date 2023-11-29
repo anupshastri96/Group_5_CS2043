@@ -149,8 +149,6 @@ public class GUIBookResults extends JFrame implements ActionListener {
                 this.dispose();
                 GUIBookShow show = new GUIBookShow(LibraryManagementSystem.getCurrentLibrary().findBook(bookIDs.get(options.getSelectedIndex())));
             }
-            this.dispose();
-            GUIBookShow show = new GUIBookShow(LibraryManagementSystem.getCurrentLibrary().findBook(bookIDs.get(options.getSelectedIndex())));
         } else if (e.getSource() == backButton) {
             if (borrow) {
                 this.dispose();

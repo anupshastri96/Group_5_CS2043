@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -14,10 +15,10 @@ import javax.swing.JPanel;
 
 public class GUIBorrowedView extends JFrame implements ActionListener {
 
-    JLabel test;
     JButton selectButton;
     JButton backButton;
     JComboBox<String> optionBox;
+    JPanel contentPane;
 
     boolean isBook;
     Book storeBook;
@@ -29,19 +30,21 @@ public class GUIBorrowedView extends JFrame implements ActionListener {
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
+        this.setSize(375, 340);
         this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 
         backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
+		backButton.setBounds(10, 15, 68, 50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
         selectButton = new JButton("Select");
-		selectButton.setBounds(100,100,100,40);
+		selectButton.setBounds(130,240,110,50);
         selectButton.setFocusable(false);
         selectButton.addActionListener(this);
+
+        JLabel resultLabel = new JLabel("Results:");
+        resultLabel.setBounds(35, 120, 200, 35);
 
         if (isBookIn) {
             storeBook = LibraryManagementSystem.getCurrentLibrary().findBook(ID);
@@ -50,9 +53,9 @@ public class GUIBorrowedView extends JFrame implements ActionListener {
                 for (int i = 0; i < storeBook.getMemberIDs().size(); i++) {
                     storeString[i] = (LibraryManagementSystem.findMember(storeBook.getMemberIDs().get(i)).getFirstname() + " " + LibraryManagementSystem.findMember(storeBook.getMemberIDs().get(i)).getFirstname());
                     if (LibraryManagementSystem.findBorrowedBook(storeBook, LibraryManagementSystem.findMember(storeBook.getMemberIDs().get(i))).getActive()) {
-                        storeString[i] += ("\nStatus: Active");
+                        storeString[i] += (" Status: Active");
                     } else {
-                        storeString[i] += ("\nStatus: Inactive");
+                        storeString[i] += (" Status: Inactive");
                     }
                     
                 }
@@ -66,32 +69,39 @@ public class GUIBorrowedView extends JFrame implements ActionListener {
                 for (int i = 0; i < storeMember.getBorrowed().size(); i++) {
                     storeString[i] = (storeMember.getBorrowed().get(i).getBook().getName() + "," + storeMember.getBorrowed().get(i).getBook().getAuthor());
                     if (storeMember.getBorrowed().get(i).getActive()) {
-                        storeString[i] += ("\nStatus: Active");
+                        storeString[i] += (" Status: Active");
                     } else {
-                        storeString[i] += ("\nStatus: Inactive");
+                        storeString[i] += (" Status: Inactive");
                     }
                 }
             }
         }
 
         optionBox = new JComboBox<>(storeString);
+        optionBox.setBounds(100, 120, 230, 35);
+        optionBox.setFocusable(false);
+        optionBox.addActionListener(this);
 
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+        Font titleFont = new Font("Arial", Font.BOLD, 18);
 
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
+        backButton.setFont(buttonFont);
+        optionBox.setFont(buttonFont);
+        resultLabel.setFont(buttonFont);
+        selectButton.setFont(buttonFont);
 
-        topPanel.add(backButton);
-        this.add(topPanel);
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
-        panel2.add(optionBox);
-        panel2.add(selectButton);
-        this.add(panel2);
-
+        contentPane.add(resultLabel);
+        contentPane.add(optionBox);
+        contentPane.add(selectButton);
+        contentPane.add(backButton);
+        
         this.setVisible(true);
+
     }
 
     public void actionPerformed(ActionEvent e) {
