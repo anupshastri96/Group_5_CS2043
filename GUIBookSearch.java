@@ -201,12 +201,15 @@ public class GUIBookSearch extends JFrame implements ActionListener {
             if (attemptBorrow) {
                 SearchAlgorithm.bookSearch(nameTextField.getText(),authorTextField.getText(),adultCheck.isSelected(),IDTextField.getText());
                 ArrayList<Integer> holder = SearchAlgorithm.getResults();
-                /*
+                ArrayList<Integer> toKeep = new ArrayList<>(); 
                 for (int i = 0; i < holder.size(); i++) {
                     if (LibraryManagementSystem.findMember(storeMemberID).getBorrowed() != null && !LibraryManagementSystem.findMember(storeMemberID).getBorrowed().isEmpty()) {
                         for (int j = 0; j < LibraryManagementSystem.findMember(storeMemberID).getBorrowed().size(); j++) {
                             if (LibraryManagementSystem.findMember(storeMemberID).getBorrowed().get(j).getID() == holder.get(i)) {
-                                holder.remove(i);
+                                if (!toKeep.contains(i)) {
+                                    toKeep.add(holder.get(i));
+                                }
+                                
                             }
                         }
                     }
@@ -215,19 +218,21 @@ public class GUIBookSearch extends JFrame implements ActionListener {
                     for (int j = 0; j < LibraryManagementSystem.getCurrentLibrary().getAllBooks().size(); j++) {
                         if (LibraryManagementSystem.getCurrentLibrary().getBook(j).getId() == holder.get(i)) {
                             if (LibraryManagementSystem.getCurrentLibrary().getBook(j).getAmount() - LibraryManagementSystem.getCurrentLibrary().getBook(j).getAmountBorrowed() >= 1) {
-                                holder.remove(i);
+                                if (!toKeep.contains(i)) {
+                                    toKeep.add(holder.get(i));
+                                }
                             }
                         }
                     }
-                } */
-                if (holder.size() == 1) {
+                }
+                if (toKeep.size() == 1) {
                     this.dispose();
-                    GUIBorrowedAdd add = new GUIBorrowedAdd(true, LibraryManagementSystem.getCurrentLibrary().findBook(holder.get(0)), LibraryManagementSystem.findMember(storeMemberID));
-                } else if (holder.isEmpty() || holder.size() == 0 || holder == null) {
+                    GUIBorrowedAdd add = new GUIBorrowedAdd(true, LibraryManagementSystem.getCurrentLibrary().findBook(toKeep.get(0)), LibraryManagementSystem.findMember(storeMemberID));
+                } else if (toKeep.isEmpty() || toKeep.size() == 0 || toKeep == null) {
                     JOptionPane.showMessageDialog(null, "No results");
                 } else {
                     this.dispose();
-                    GUIBookResults results = new GUIBookResults(attemptBorrow, storeMemberID, holder);
+                    GUIBookResults results = new GUIBookResults(attemptBorrow, storeMemberID, toKeep);
                 }
             } else {
                 SearchAlgorithm.bookSearch(nameTextField.getText(),authorTextField.getText(),adultCheck.isSelected(),IDTextField.getText());

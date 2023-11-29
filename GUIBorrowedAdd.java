@@ -116,10 +116,10 @@ public class GUIBorrowedAdd extends JFrame implements ActionListener {
         } else if (e.getSource() == backButton) {
 			if (bookStart) {
 				this.dispose();
-				GUIMemberSearch search = new GUIMemberSearch(bookStart, bookIn.getId());
+				GUIBookSearch search = new GUIBookSearch(bookStart, memberIn.getID());
 			} else {
 				this.dispose();
-				GUIBookSearch search = new GUIBookSearch(bookStart, memberIn.getID());
+				GUIMemberSearch search = new GUIMemberSearch(bookStart, bookIn.getId());
 			}
 		}
 	}

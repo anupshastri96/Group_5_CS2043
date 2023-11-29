@@ -207,7 +207,15 @@ public class GUIMemberSearch extends JFrame implements ActionListener {
                 SearchAlgorithm.memberSearch(firstNameTextField.getText(),lastNameTextField.getText(),genderField.getSelectedIndex(),IDTextField.getText());
                 ArrayList<Integer> holder = SearchAlgorithm.getResults();
 
-                // Add checks to make sure holder cant contain memberIDs that have an active borrowing on that book
+                for (int i = 0; i < holder.size(); i++) {
+                    if (!LibraryManagementSystem.getCurrentLibrary().findBook(storeBookID).getMemberIDs().isEmpty() && LibraryManagementSystem.getCurrentLibrary().findBook(storeBookID).getMemberIDs() != null) {
+                        for (int j = 0; j < LibraryManagementSystem.getCurrentLibrary().findBook(storeBookID).getMemberIDs().size(); j++) {
+                            if (LibraryManagementSystem.getCurrentLibrary().findBook(storeBookID).getMemberIDs().get(j) == holder.get(i)) {
+                                holder.remove(i);
+                            }
+                        }
+                    }    
+                }
 
                 if (holder.size() == 1) {
                     this.dispose();
