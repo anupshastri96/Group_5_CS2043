@@ -11,7 +11,6 @@ import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
 public class GUIAdminLogin extends JFrame implements ActionListener {
 
     private JTextField usernameField;
@@ -22,42 +21,53 @@ public class GUIAdminLogin extends JFrame implements ActionListener {
 
     GUIAdminLogin() {
 
-        backButton = new JButton("BACK");
-		backButton.setBounds(498, 19, 89, 23);
+        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(375, 340);
+        this.setResizable(false);
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        Font font = new Font("Arial", Font.PLAIN, 16); // Change the font, size, and style here
+
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        backButton = new JButton("Back");
+        backButton.setBounds(10, 15, 68, 50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
+        backButton.setFont(font);
+
+        JLabel user = new JLabel("Username:");
+        user.setFont(font);
+        user.setBounds(10, 80, 100, 25);
 
         usernameField = new JTextField();
         usernameField.setColumns(10);
-		usernameField.setBounds(305, 81, 146, 20);
+        usernameField.setBounds(125, 80, 225, 25);
+        usernameField.setFont(font);
+
+        JLabel pass = new JLabel("Password:");
+        pass.setFont(font);
+        pass.setBounds(10, 120, 100, 25);
 
         passwordField = new JTextField();
         passwordField.setColumns(10);
-		passwordField.setBounds(305, 120, 146, 20);
+        passwordField.setBounds(125, 120, 225, 25);
+        passwordField.setFont(font);
 
-
-        submitButton = new JButton("LOGIN");
-		submitButton.setBounds(261, 191, 89, 23);
+        submitButton = new JButton("Login");
+        submitButton.setBounds(130, 165, 125, 25);
         submitButton.setFocusable(false);
         submitButton.addActionListener(this);
+        submitButton.setFont(font);
 
-        JLabel user = new JLabel("USERNAME:");
-		user.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		user.setBounds(154, 84, 81, 14);
-		
-		JLabel pass = new JLabel("PASSWORD:");
-		pass.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		pass.setBounds(154, 123, 81, 14);
-
-        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setBounds(100, 100, 613, 411);
-        this.setResizable(false);
-    
         contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setContentPane(contentPane);
-		contentPane.setLayout(null);
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
 
         contentPane.add(backButton);
         contentPane.add(usernameField);
@@ -66,7 +76,6 @@ public class GUIAdminLogin extends JFrame implements ActionListener {
         contentPane.add(user);
         contentPane.add(pass);
     
-
         this.setVisible(true);
     }
 
@@ -80,6 +89,6 @@ public class GUIAdminLogin extends JFrame implements ActionListener {
             this.dispose();
             GUILibraryStart start = new GUILibraryStart();
         }
-	}
-	
+    }
+    
 }
