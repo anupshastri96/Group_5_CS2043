@@ -107,10 +107,10 @@ public class GUIBorrowedAdd extends JFrame implements ActionListener {
 			LibraryManagementSystem.getCurrentLibrary().borrowBook(memberIn, bookIn, convertedReturnDate);
 			if (bookStart) {
 				this.dispose();
-				GUIBookShow show = new GUIBookShow(bookIn);
+				GUIMemberShow show = new GUIMemberShow(memberIn);
 			} else {
 				this.dispose();
-				GUIMemberShow show = new GUIMemberShow(memberIn);
+				GUIBookShow show = new GUIBookShow(bookIn);
 			}
 		}
         } else if (e.getSource() == backButton) {

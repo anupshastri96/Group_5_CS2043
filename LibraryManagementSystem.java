@@ -348,8 +348,13 @@ public class LibraryManagementSystem {
 						borrowedID.add(Integer.parseInt(line.substring(buffer + 1,line.length())));
         	        }
         	    }
-				Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentAddress, currentExpDate, currentID, borrowedID);
-				members.add(addMember);
+				if (currentBirthdate == -1 || currentFirstname.equals("") || currentLastname.equals("") || currentGender.equals("") || currentAddress.equals("") || currentID == -1) {
+
+				} else {
+					Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentAddress, currentExpDate, currentID, borrowedID);
+					members.add(addMember);
+				}
+				
 				buffer = -1;
 				count = 1;
         	    line = reader.readLine();

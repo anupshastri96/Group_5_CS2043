@@ -58,6 +58,7 @@ public class GUIMemberAdd extends JFrame implements ActionListener{
 
         fnText = new JTextField(20);
         fnText.setBounds(115, 75, 220, 25);
+		fnText.setFont(font);
         contentPane.add(fnText);
 
         JLabel lastLabel = new JLabel("Lastname:");
@@ -128,6 +129,10 @@ public class GUIMemberAdd extends JFrame implements ActionListener{
                 if (toCheck.indexOf(",") == -1) {
 					Member membernew = new Member(Integer.parseInt(YOB),Fname,Lname,gender,address);
 					LibraryManagementSystem.addMember(membernew);
+					addressText.setText("");
+					YOBText.setText("");
+					fnText.setText("");
+					lnText.setText("");
 				} else {
 					JOptionPane.showMessageDialog(null, "Cannot contain character ','");
 				}
@@ -136,7 +141,7 @@ public class GUIMemberAdd extends JFrame implements ActionListener{
 			}
         }  else if (e.getSource() == backButton) {
             this.dispose();
-            GUIMemberAdd add = new GUIMemberAdd();
+            GUIMemberSearch search = new GUIMemberSearch();
         } 
 	}
 }
