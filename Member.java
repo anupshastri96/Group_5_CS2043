@@ -1,4 +1,6 @@
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -9,7 +11,7 @@ public class Member implements Serializable{
 	private String firstName;
 	private String lastName;
 	private String gender;
-	private Date expiration;
+	private Date expirationDate;
 	private String address;
 	private static int nextID = 1;
     private int memID;
@@ -34,12 +36,13 @@ public class Member implements Serializable{
 		
 	}
 	
-	public Member(int birthyear, String frstNm, String lstNm, String gender, String address, int id, ArrayList<Integer> hasBorrowedID)  {
+	public Member(int birthyear, String frstNm, String lstNm, String gender, String address, Date expDate, int id, ArrayList<Integer> hasBorrowedID)  {
 		this.birthyear = birthyear;
 		this.firstName = frstNm;
 		this.lastName = lstNm;
 		this.address = address;
 		this.gender = gender;
+        expirationDate = expDate;
 		memID = id;
 		hasBorrowed = new ArrayList<>();
 		if (hasBorrowedID.get(0) == -1) {
@@ -58,7 +61,7 @@ public class Member implements Serializable{
 		Date curDate = new Date();
         cal.setTime(curDate);
         cal.add(Calendar.YEAR, 1);
-        Date expirationDate = cal.getTime();
+        expirationDate = cal.getTime();
 	}
 
 	public void setNextID(int nextID) {
@@ -93,6 +96,12 @@ public class Member implements Serializable{
 		}
 	}
 
+    public String getExpDate() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String toReturn = dateFormat.format(expirationDate);
+        return toReturn;
+    }
+
 	public String getAddress() {
 		return address;
 	}
@@ -112,23 +121,33 @@ public class Member implements Serializable{
 		}
 	}
 
+    public double getTotalLateFees() {
+        double toReturn = 0;
+        if (!hasBorrowed.isEmpty() && hasBorrowed != null) {
+            for (int i = 0; i < hasBorrowed.size(); i++) {
+                toReturn += hasBorrowed.get(i).getLateFees();
+            }
+        }
+        return toReturn;
+    }
+
 	public void renewMembership() {
 		dateExpired();
 	}
 
 	private void extendMembership(int daysToAdd) {
 		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(expiration);  
+		calendar.setTime(expirationDate);  
 
 		calendar.add(Calendar.DAY_OF_MONTH, daysToAdd);
 		Date newDate = calendar.getTime();
-		expiration = newDate;
+		expirationDate = newDate;
 	}
 	
-	private boolean memexpired() {
+	public boolean memexpired() {
 		Calendar calendar = Calendar.getInstance();
 		Date newDate = calendar.getTime();
-		if(newDate.before(expiration)) {
+		if(newDate.before(expirationDate)) {
 			return false;
 		}
 		return true;

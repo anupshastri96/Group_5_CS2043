@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -211,6 +212,8 @@ public class GUIMemberSearch extends JFrame implements ActionListener {
                 if (holder.size() == 1) {
                     this.dispose();
                     GUIBorrowedAdd add = new GUIBorrowedAdd(LibraryManagementSystem.getCurrentLibrary().findBook(storeBookID),LibraryManagementSystem.findMember(holder.get(0)));
+                } else if (holder.isEmpty() || holder.size() == 0 || holder == null) {
+                    JOptionPane.showMessageDialog(null, "No results");
                 } else {
                     this.dispose();
                     GUIMemberResults results = new GUIMemberResults(holder);
@@ -223,6 +226,8 @@ public class GUIMemberSearch extends JFrame implements ActionListener {
                 if (holder.size() == 1) {
                     this.dispose();
                     GUIMemberShow show = new GUIMemberShow(LibraryManagementSystem.findMember(holder.get(0)));
+                } else if (holder.isEmpty() || holder.size() == 0 || holder == null) {
+                    JOptionPane.showMessageDialog(null, "No results");
                 } else {
                     this.dispose();
                     GUIMemberResults results = new GUIMemberResults(holder);

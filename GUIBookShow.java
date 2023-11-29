@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -73,7 +74,7 @@ public class GUIBookShow extends JFrame implements ActionListener {
         removeLibraryButton.addActionListener(this);
 
         removeSingleAmountButton = new JButton("Remove One");
-		removeSingleAmountButton.setBounds(230, 190, 130, 50);
+		removeSingleAmountButton.setBounds(230, 200, 130, 50);
         removeSingleAmountButton.setFocusable(false);
         removeSingleAmountButton.addActionListener(this);
 
@@ -123,7 +124,6 @@ public class GUIBookShow extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == removeLibraryButton) {
-
             if (!storeBook.getLibraryIDs().isEmpty() && storeBook.getLibraryIDs() != null) {
                 if (storeBook.getLibraryIDs().size() > 1) {
                     storeBook.removeLibrary(LibraryManagementSystem.getCurrentLibrary());
@@ -134,19 +134,25 @@ public class GUIBookShow extends JFrame implements ActionListener {
                     GUIBookSearch search = new GUIBookSearch();
                 }
             }
-            //error message
+            JOptionPane.showMessageDialog(null, "Could not remove from library");
         } else if (e.getSource() == removeSingleAmountButton) {
+            boolean toRefresh = false;
+            if (storeBook.getAmount() - storeBook.getAmountBorrowed() == 1) {
+                toRefresh = true;
+            }
             storeBook.decAmount();
             LibraryManagementSystem.bookWriteFile();
             LibraryManagementSystem.libraryWriteFile();
-            this.dispose();
-            GUIBookShow show = new GUIBookShow(storeBook);
+            if (toRefresh) {
+                this.dispose();
+                GUIBookShow show = new GUIBookShow(storeBook);
+            }
         } else if (e.getSource() == borrowButton) {
             if ((storeBook.getAmount() - storeBook.getAmountBorrowed()) >= 1) {
                 this.dispose();
                 GUIMemberSearch search = new GUIMemberSearch(true, storeBook.getId());
             } else {
-                //error message
+                JOptionPane.showMessageDialog(null, "Book is not able to be borrowed");
             }
             
         } else if (e.getSource() == viewBorrowedButton) {
@@ -154,7 +160,7 @@ public class GUIBookShow extends JFrame implements ActionListener {
                 this.dispose();
                 GUIBorrowedView search = new GUIBorrowedView(true, storeBook.getId());
             } else {
-                //error message
+                JOptionPane.showMessageDialog(null, "Book has no borrowing history");
             }
             
         } else if (e.getSource() == backButton) {

@@ -6,10 +6,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.io.FileWriter;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.util.Scanner;
+import java.util.Date;
+import java.text.ParseException;
 
 public class LibraryManagementSystem {
 // This could end up just being added to the main class instead.
@@ -305,6 +308,7 @@ public class LibraryManagementSystem {
 	}
 	
 	static void memberReadFile() {
+		
 		try {
 			members = new ArrayList<Member>();
 			BufferedReader reader = new BufferedReader(new FileReader("memberStorage.txt"));
@@ -316,8 +320,10 @@ public class LibraryManagementSystem {
 			String currentLastname = "";
 			String currentGender = "";
 			String currentAddress = "";
+			Date currentExpDate = new Date();
 			ArrayList<Integer> borrowedID = new ArrayList<>();
 			int currentID = -1;
+			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
 			while (line != null) {
         	    for (int i = 0; i < line.length(); i++) {
@@ -334,6 +340,12 @@ public class LibraryManagementSystem {
 							currentAddress = line.substring(buffer + 1,i);
 						} else if (count == 6) {
 							currentBirthdate = Integer.parseInt(line.substring(buffer + 1,i));
+						} else if (count == 7){
+							try {
+								currentExpDate = dateFormat.parse(line.substring(buffer + 1,i));
+							} catch (ParseException pe) {
+								System.out.println("Issue while parsing");
+							}
 						} else {
 							borrowedID.add(Integer.parseInt(line.substring(buffer + 1,i)));
 						}
@@ -343,7 +355,7 @@ public class LibraryManagementSystem {
 						borrowedID.add(Integer.parseInt(line.substring(buffer + 1,line.length())));
         	        }
         	    }
-				Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentAddress, currentID, borrowedID);
+				Member addMember = new Member(currentBirthdate, currentFirstname, currentLastname, currentGender, currentAddress, currentExpDate, currentID, borrowedID);
 				members.add(addMember);
 				buffer = -1;
 				count = 1;
@@ -361,12 +373,13 @@ public class LibraryManagementSystem {
 	}
 
 	static void memberWriteFile() {
+		
 		try {
 			FileWriter writer = new FileWriter("memberStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
 			String toPrint = "";
 			for (int i = 0; i < members.size(); i++) {
-				toPrint = (members.get(i).getID() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getAddress() + "," + members.get(i).getBirthyear());
+				toPrint = (members.get(i).getID() + "," + members.get(i).getFirstname() + "," + members.get(i).getLastname() + "," + members.get(i).getGender() + "," + members.get(i).getAddress() + "," + members.get(i).getBirthyear() + "," + members.get(i).getExpDate());
 				if (members.get(i).getBorrowed() != null && !members.get(i).getBorrowed().isEmpty()) {
 					for (int j = 0; j < members.get(i).getBorrowed().size(); j++) {
 						toPrint += ("," + members.get(i).getBorrowed().get(j).getID());
@@ -382,7 +395,7 @@ public class LibraryManagementSystem {
 		} catch (IOException io) {
 			System.out.print("Hi");
 			System.exit(1);
-		}
+		} 
 	}
 
 	// Book methods

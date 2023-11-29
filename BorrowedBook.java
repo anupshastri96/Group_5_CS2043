@@ -84,17 +84,29 @@ public class BorrowedBook implements Serializable {
 
 	public double getLateFees() {
 
-		
-		if(expectedReturnDate.before(returnDate)) {
-			JOptionPane.showMessageDialog(null, "RETURNED ON TIME");
-			return 0;
+		if (!active) {
+			if(expectedReturnDate.before(returnDate)) {
+				return 0;
+			} else {
+				//to be determined
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				long differenceInMilliseconds = returnDate.getTime() - expectedReturnDate.getTime();
+				long differenceInDays = differenceInMilliseconds / (24 * 60 * 60 * 1000);
+				double fee = (double) (differenceInDays*10);
+				return fee;
+			}
 		} else {
-			//to be determined
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			long differenceInMilliseconds = returnDate.getTime() - borrowDate.getTime();
-		    long differenceInDays = differenceInMilliseconds / (24 * 60 * 60 * 1000);
-			double fee = (double) (differenceInDays*10);
-			return fee;
+			Calendar calendar = Calendar.getInstance();
+			Date currentDate = calendar.getTime();
+			if(expectedReturnDate.before(currentDate)) {
+				return 0;
+			} else {
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+				long differenceInMilliseconds = currentDate.getTime() - expectedReturnDate.getTime();
+				long differenceInDays = differenceInMilliseconds / (24 * 60 * 60 * 1000);
+				double fee = (double) (differenceInDays*10);
+				return fee;
+			}
 		}
 		
 	}
