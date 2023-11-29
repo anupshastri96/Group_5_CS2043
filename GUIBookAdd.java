@@ -1,4 +1,5 @@
 import javax.swing.SwingUtilities;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -6,7 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-
+import java.awt.Font;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -24,7 +25,6 @@ import java.util.Scanner;
 
 public class GUIBookAdd extends JFrame implements ActionListener{
 
-
     String[] deweySubjects;
     JComboBox<String> cb;
     JButton addButton;
@@ -32,62 +32,79 @@ public class GUIBookAdd extends JFrame implements ActionListener{
     JCheckBox adultCheck;
     JTextField titleText;
     JTextField authorText;
+    JPanel contentPane;
 
     public GUIBookAdd() {
 
         deweySubjects = this.getDeweyInfo();
 
-        JPanel panel = new JPanel();
-        panel.setPreferredSize(new Dimension(300,250));
-
-        JLabel titleLabel = new JLabel("Title:");
-        titleLabel.setBounds(10, 20, 80, 25);
-        panel.add(titleLabel);
-
-        titleText = new JTextField(20);
-        titleText.setBounds(100, 20, 165, 25);
-        panel.add(titleText);
-
-        JLabel authorLabel = new JLabel("Author:");
-        authorLabel.setBounds(10, 50, 80, 25);
-        panel.add(authorLabel);
-
-        authorText = new JTextField(20);
-        authorText.setBounds(100, 50, 165, 25);
-        panel.add(authorText);
-
-        JLabel deweyLabel = new JLabel("Select Subject");
-        deweyLabel.setBounds(10,80,120,25);
-        deweyLabel.setVisible(true);
-        panel.add(deweyLabel);
-
-        cb = new JComboBox<>(deweySubjects);
-        cb.setBounds(100, 80, 120, 25);
-        panel.add(cb);
-
-        adultCheck = new JCheckBox("Adult");
-        adultCheck.setBounds(100,100,100,40);
-        adultCheck.setFocusable(false);
-        panel.add(adultCheck);
-
-        addButton = new JButton("Add Book");
-        addButton.setBounds(10, 130, 150, 25);
-        panel.add(addButton);
-        addButton.addActionListener(this);
-
-        backButton = new JButton("Back");
-        backButton.setBounds(10, 160, 150, 25);
-        panel.add(backButton);
-        backButton.addActionListener(this);
-
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 250);
+        this.setSize(375, 340);
         this.setResizable(false);
         this.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+        Font font = new Font("Arial", Font.PLAIN, 16); // Change the font, size, and style here
 
-        this.add(panel);
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+        backButton = new JButton("Back");
+		backButton.setBounds(10, 15, 68, 50);
+        backButton.setFocusable(false);
+        backButton.addActionListener(this);
+        backButton.setFont(font);
+
+        contentPane.add(backButton);
+
+        contentPane.setPreferredSize(new Dimension(375,340));
+
+        JLabel titleLabel = new JLabel("Title:");
+        titleLabel.setBounds(10, 75, 80, 25);
+        titleLabel.setFont(font);
+        contentPane.add(titleLabel);
+
+        titleText = new JTextField(20);
+        titleText.setBounds(75, 75, 275, 25);
+        contentPane.add(titleText);
+
+        JLabel authorLabel = new JLabel("Author:");
+        authorLabel.setBounds(10, 125, 80, 25);
+        authorLabel.setFont(font);
+
+        contentPane.add(authorLabel);
+
+        authorText = new JTextField(20);
+        authorText.setBounds(75, 125, 275, 25);
+        authorText.setFont(font);
+        contentPane.add(authorText);
+
+        JLabel deweyLabel = new JLabel("Select Subject:");
+        deweyLabel.setBounds(10, 175, 110, 25);
+        deweyLabel.setVisible(true);
+        deweyLabel.setFont(font);
+        contentPane.add(deweyLabel);
+
+        cb = new JComboBox<>(deweySubjects);
+        cb.setBounds(135, 175, 215, 25);
+        cb.setFont(font);
+        contentPane.add(cb);
+
+        adultCheck = new JCheckBox("Adult");
+        adultCheck.setBounds(50,225,75,25);
+        adultCheck.setFocusable(false);
+        adultCheck.setFont(font);
+
+        contentPane.add(adultCheck);
+
+        addButton = new JButton("Add Book");
+        addButton.setBounds(200, 215, 150, 50);
+        contentPane.add(addButton);
+        addButton.setFont(font);
+
+        addButton.addActionListener(this);
 
         this.setVisible(true);
     }
