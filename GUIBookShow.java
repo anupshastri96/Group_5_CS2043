@@ -47,7 +47,7 @@ public class GUIBookShow extends JFrame implements ActionListener {
             adultText = new JLabel("Meant for adults");
             adultText.setBounds(10, 235, 200, 35);
         } else {
-            JLabel adultText = new JLabel("Not meant for adults");
+            adultText = new JLabel("Not meant for adults");
             adultText.setBounds(10, 235, 200, 35);
         }
         JLabel IDText = new JLabel("ID: " + bookIn.getId());
