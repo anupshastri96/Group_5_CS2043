@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -221,11 +222,9 @@ public class GUIBookSearch extends JFrame implements ActionListener {
                 } */
                 if (holder.size() == 1) {
                     this.dispose();
-                    GUIBorrowedAdd add = new GUIBorrowedAdd(LibraryManagementSystem.getCurrentLibrary().findBook(holder.get(0)), LibraryManagementSystem.findMember(storeMemberID));
+                    GUIBorrowedAdd add = new GUIBorrowedAdd(true, LibraryManagementSystem.getCurrentLibrary().findBook(holder.get(0)), LibraryManagementSystem.findMember(storeMemberID));
                 } else if (holder.isEmpty() || holder.size() == 0 || holder == null) {
-                    // Add error message
-                    //this.dispose();
-                    //GUIBookResults results = new GUIBookResults(holder);
+                    JOptionPane.showMessageDialog(null, "No results");
                 } else {
                     this.dispose();
                     GUIBookResults results = new GUIBookResults(attemptBorrow, storeMemberID, holder);
@@ -238,9 +237,7 @@ public class GUIBookSearch extends JFrame implements ActionListener {
                     this.dispose();
                     GUIBookShow show = new GUIBookShow(LibraryManagementSystem.getCurrentLibrary().findBook(holder.get(0)));
                 } else if (holder.isEmpty() || holder.size() == 0 || holder == null) {
-                    // Add error message
-                    //this.dispose();
-                    //GUIBookResults results = new GUIBookResults(holder);
+                   JOptionPane.showMessageDialog(null, "No results");
                 } else {
                     this.dispose();
                     GUIBookResults results = new GUIBookResults(holder);

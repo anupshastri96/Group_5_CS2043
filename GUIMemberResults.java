@@ -8,6 +8,7 @@ import java.awt.FlowLayout;
 
 
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
@@ -23,62 +24,141 @@ public class GUIMemberResults extends JFrame implements ActionListener {
     JButton confirmButton;
     JButton backButton;
     JComboBox<String> options;
+    JPanel contentPane;
     ArrayList<Integer> memberIDs;
+    int storeBookID;
+    boolean attemptBorrow;
 
-    GUIMemberResults(ArrayList<Integer> memberIDs) {
+    GUIMemberResults(boolean attemptBorrow, int storeBookID, ArrayList<Integer> memberIDs) {
+
+        this.memberIDs = memberIDs;
+        this.storeBookID = storeBookID;
+        this.attemptBorrow = attemptBorrow;
+
+        this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(375, 340);
+        this.setResizable(false);
+
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+
+        backButton = new JButton("Back");
+		backButton.setBounds(10, 15, 68, 50);
+        backButton.setFocusable(false);
+        backButton.addActionListener(this);
 
         confirmButton = new JButton("Confirm");
-        confirmButton.setBounds(100,100,100,40);
+        confirmButton.setBounds(130,240,110,50);
         confirmButton.setFocusable(false);
         confirmButton.addActionListener(this);
 
-        backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
-        backButton.setFocusable(false);
-        backButton.addActionListener(this);
+        JLabel resultLabel = new JLabel("Results:");
+        resultLabel.setBounds(35, 120, 200, 35);
 
         this.memberIDs = memberIDs;
 
         String[] memberNames = new String[memberIDs.size()];
         for (int i = 0; i < memberIDs.size(); i++) {
-            String toAdd = (LibraryManagementSystem.findMember(memberIDs.get(i)).getFirstname() + " " + LibraryManagementSystem.findMember(memberIDs.get(i)).getAddress());
+            String toAdd = (LibraryManagementSystem.findMember(memberIDs.get(i)).getFirstname() + " " + LibraryManagementSystem.findMember(memberIDs.get(i)).getLastname());
             memberNames[i] = (toAdd);
         }
         
         options = new JComboBox<>(memberNames);
+        options.setBounds(100, 120, 230, 35);
+        options.setFocusable(false);
         options.addActionListener(this);
+
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+        Font titleFont = new Font("Arial", Font.BOLD, 18);
+
+        backButton.setFont(buttonFont);
+        options.setFont(buttonFont);
+        resultLabel.setFont(buttonFont);
+        confirmButton.setFont(buttonFont);
+
+        contentPane.add(resultLabel);
+        contentPane.add(options);
+        contentPane.add(confirmButton);
+        contentPane.add(backButton);
+        
+        this.setVisible(true);
+    }
+
+    GUIMemberResults(ArrayList<Integer> memberIDs) {
+
+        this.memberIDs = memberIDs;
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
+        this.setSize(375, 340);
         this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
+        backButton = new JButton("Back");
+		backButton.setBounds(10, 15, 68, 50);
+        backButton.setFocusable(false);
+        backButton.addActionListener(this);
 
-        topPanel.add(backButton);
-        this.add(topPanel);
+        confirmButton = new JButton("Confirm");
+        confirmButton.setBounds(130,240,110,50);
+        confirmButton.setFocusable(false);
+        confirmButton.addActionListener(this);
 
-        panel2.add(options);
-        panel2.add(confirmButton);
-        this.add(panel2);
+        JLabel resultLabel = new JLabel("Results:");
+        resultLabel.setBounds(35, 120, 200, 35);
 
+        this.memberIDs = memberIDs;
+
+        String[] memberNames = new String[memberIDs.size()];
+        for (int i = 0; i < memberIDs.size(); i++) {
+            String toAdd = (LibraryManagementSystem.findMember(memberIDs.get(i)).getFirstname() + " " + LibraryManagementSystem.findMember(memberIDs.get(i)).getLastname());
+            memberNames[i] = (toAdd);
+        }
+        
+        options = new JComboBox<>(memberNames);
+        options.setBounds(100, 120, 230, 35);
+        options.setFocusable(false);
+        options.addActionListener(this);
+
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+        Font titleFont = new Font("Arial", Font.BOLD, 18);
+
+        backButton.setFont(buttonFont);
+        options.setFont(buttonFont);
+        resultLabel.setFont(buttonFont);
+        confirmButton.setFont(buttonFont);
+
+        contentPane.add(resultLabel);
+        contentPane.add(options);
+        contentPane.add(confirmButton);
+        contentPane.add(backButton);
+        
         this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == confirmButton) {
-            this.dispose();
-            GUIMemberShow show = new GUIMemberShow(LibraryManagementSystem.findMember(memberIDs.get(options.getSelectedIndex())));
+            if (attemptBorrow) {
+                this.dispose();
+                GUIBorrowedAdd add = new GUIBorrowedAdd(false, LibraryManagementSystem.getCurrentLibrary().findBook(storeBookID), LibraryManagementSystem.findMember(memberIDs.get(options.getSelectedIndex())));
+            } else {
+                this.dispose();
+                GUIMemberShow show = new GUIMemberShow(LibraryManagementSystem.findMember(memberIDs.get(options.getSelectedIndex())));
+            }
         } else if (e.getSource() == backButton) {
-            this.dispose();
-            GUIMemberSearch search = new GUIMemberSearch();
+            if (attemptBorrow) {
+                GUIMemberSearch search = new GUIMemberSearch(attemptBorrow, storeBookID);
+            } else {
+                this.dispose();
+                GUIMemberSearch search = new GUIMemberSearch();
+            }
         }
 	}
 	
