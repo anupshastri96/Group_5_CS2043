@@ -199,7 +199,7 @@ public class Book implements Serializable {
      * ADULT METHODS 
      */
     public String getAdult() {
-        if (adult == true) {
+        if (adult) {
             return "T";
         } else {
             return "F";

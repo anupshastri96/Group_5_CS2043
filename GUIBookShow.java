@@ -43,7 +43,7 @@ public class GUIBookShow extends JFrame implements ActionListener {
             amountText = new JLabel("None available");
             amountText.setBounds(10, 195, 200, 35);
         }
-        if (bookIn.getAdult().equals("T")) {
+        if (storeBook.getAdult().equals("T")) {
             adultText = new JLabel("Meant for adults");
             adultText.setBounds(10, 235, 200, 35);
         } else {

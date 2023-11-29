@@ -146,7 +146,7 @@ public class GUIBookAdd extends JFrame implements ActionListener{
                     String sub = deweydecimal.substring(0,3);
                     int deweyIn = Integer.parseInt(sub);
             
-                    Book newBook = new Book(title, author, deweyIn, true);
+                    Book newBook = new Book(title, author, deweyIn, adultCheck.isSelected());
                     LibraryManagementSystem.getCurrentLibrary().addBook(newBook);
                 }
                 // Clear the text fields after adding the book
