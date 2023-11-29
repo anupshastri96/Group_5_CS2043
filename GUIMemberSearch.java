@@ -211,12 +211,12 @@ public class GUIMemberSearch extends JFrame implements ActionListener {
 
                 if (holder.size() == 1) {
                     this.dispose();
-                    GUIBorrowedAdd add = new GUIBorrowedAdd(LibraryManagementSystem.getCurrentLibrary().findBook(storeBookID),LibraryManagementSystem.findMember(holder.get(0)));
+                    GUIBorrowedAdd add = new GUIBorrowedAdd(false, LibraryManagementSystem.getCurrentLibrary().findBook(storeBookID),LibraryManagementSystem.findMember(holder.get(0)));
                 } else if (holder.isEmpty() || holder.size() == 0 || holder == null) {
                     JOptionPane.showMessageDialog(null, "No results");
                 } else {
                     this.dispose();
-                    GUIMemberResults results = new GUIMemberResults(holder);
+                    GUIMemberResults results = new GUIMemberResults(attemptBorrow, storeBookID, holder);
                 }
 
             } else {

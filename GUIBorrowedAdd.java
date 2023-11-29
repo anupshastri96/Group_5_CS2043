@@ -33,7 +33,7 @@ public class GUIBorrowedAdd extends JFrame implements ActionListener {
 	private Member memberIn;
 
 
-	public GUIBorrowedAdd(Book bookIn, Member memberIn) {
+	public GUIBorrowedAdd(boolean bookStart, Book bookIn, Member memberIn) {
 		this.memberIn = memberIn;
 		this.bookIn = bookIn;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
