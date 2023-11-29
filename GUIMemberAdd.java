@@ -118,12 +118,19 @@ public class GUIMemberAdd extends JFrame implements ActionListener{
 				} else {
 					gender = (String) genderField.getSelectedItem();
 				}
+				
 				String address = addressText.getText();
 				String YOB = YOBText.getText();
 				String Fname = fnText.getText();
 				String Lname = lnText.getText();
-				Member membernew = new Member(Integer.parseInt(YOB),Fname,Lname,gender,address);
-				LibraryManagementSystem.addMember(membernew);
+
+				String toCheck = (address + YOB + Fname + Lname);
+                if (toCheck.indexOf(",") == -1) {
+					Member membernew = new Member(Integer.parseInt(YOB),Fname,Lname,gender,address);
+					LibraryManagementSystem.addMember(membernew);
+				} else {
+					JOptionPane.showMessageDialog(null, "Cannot contain character ','");
+				}
 			} catch (Exception ex) {
 				JOptionPane.showMessageDialog(null, "Error occured while parsing year of birth");
 			}
