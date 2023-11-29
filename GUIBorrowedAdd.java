@@ -24,55 +24,65 @@ import java.util.Date;
 public class GUIBorrowedAdd extends JFrame implements ActionListener {
 
 	private JPanel contentPane;
-	private JButton genmem;
-	private JTextField Bookid;
-	private JTextField memtxt;
-	private JTextField datetxt;
+	private JButton borrowButton;
+	private JButton backButton;
 	private JTextField retdatetxt;
 	private Book bookIn;
 	private Member memberIn;
+	private boolean bookStart;
 
 
 	public GUIBorrowedAdd(boolean bookStart, Book bookIn, Member memberIn) {
 		this.memberIn = memberIn;
 		this.bookIn = bookIn;
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 450);
-		contentPane = new JPanel();
+		this.bookStart = bookStart;
+
+		this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setSize(375, 340);
+        this.setResizable(false);
+
+        contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+
+		borrowButton = new JButton("Borrow");
+        borrowButton.setBounds(140,240,85,50);
+        borrowButton.setFocusable(false);
+		borrowButton.setFont(buttonFont);
+        borrowButton.addActionListener(this);
+		contentPane.add(borrowButton);
+
+		backButton = new JButton("Back");
+		backButton.setBounds(10, 15, 68, 50);
+        backButton.setFocusable(false);
+		backButton.setFont(buttonFont);
+        backButton.addActionListener(this);
+		contentPane.add(backButton);
 		
-		JLabel lblNewLabel = new JLabel("BORROW BOOK");
-		lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 16));
-		lblNewLabel.setBounds(274, 11, 130, 14);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("BOOK TITLE: " + bookIn.getName());
-		lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(176, 87, 270, 14);
+		JLabel lblNewLabel_1 = new JLabel("Book title: " + bookIn.getName());
+		lblNewLabel_1.setFont(buttonFont);
+		lblNewLabel_1.setBounds(10, 75, 340, 35);
 		contentPane.add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_1_1 = new JLabel("MEMBER FIRST/LAST NAME: " + memberIn.getFirstname() + " " + memberIn.getLastname());
-		lblNewLabel_1_1.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		lblNewLabel_1_1.setBounds(176, 126, 270, 14);
+		JLabel lblNewLabel_1_1 = new JLabel("Member name: " + memberIn.getFirstname() + " " + memberIn.getLastname());
+		lblNewLabel_1_1.setFont(buttonFont);
+		lblNewLabel_1_1.setBounds(10,115,340,35);
 		contentPane.add(lblNewLabel_1_1);
 		
-		JLabel lblNewLabel_1_3 = new JLabel("EXPECTED RETURN DATE:");
-		lblNewLabel_1_3.setFont(new Font("Times New Roman", Font.PLAIN, 12));
-		lblNewLabel_1_3.setBounds(176, 216, 103, 14);
+		JLabel lblNewLabel_1_3 = new JLabel("Return by:");
+		lblNewLabel_1_3.setFont(buttonFont);
+		lblNewLabel_1_3.setBounds(10,155,200,35);
 		contentPane.add(lblNewLabel_1_3);
 		
 		retdatetxt = new JTextField();
 		retdatetxt.setColumns(10);
-		retdatetxt.setBounds(327, 213, 146, 20);
+		retdatetxt.setFont(buttonFont);
+		retdatetxt.setBounds(100, 155, 200, 35);
 		contentPane.add(retdatetxt);
-		
-		genmem = new JButton("ID GENERERATE");
-		genmem.addActionListener(this);
-			
-		genmem.setBounds(356, 295, 111, 23);
-		contentPane.add(genmem);
 
 		this.setVisible(true);
 	}
@@ -80,14 +90,13 @@ public class GUIBorrowedAdd extends JFrame implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		boolean canBeCreated = true;
-        if (e.getSource() == genmem) {
+        if (e.getSource() == borrowButton) {
             Date convertedReturnDate = null;
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		try {
-            // Parse the string to obtain a Date object
              convertedReturnDate = dateFormat.parse(retdatetxt.getText());
         } catch (ParseException pe) {
-            // Display an error message using JOptionPane
+            
             JOptionPane.showMessageDialog(null, "Error: Unable to parse the string as a date. Please Retry",
                     "Error", JOptionPane.ERROR_MESSAGE);
 					canBeCreated = false;
@@ -96,8 +105,23 @@ public class GUIBorrowedAdd extends JFrame implements ActionListener {
         }
 		if (canBeCreated) {
 			LibraryManagementSystem.getCurrentLibrary().borrowBook(memberIn, bookIn, convertedReturnDate);
+			if (bookStart) {
+				this.dispose();
+				GUIBookShow show = new GUIBookShow(bookIn);
+			} else {
+				this.dispose();
+				GUIMemberShow show = new GUIMemberShow(memberIn);
+			}
 		}
-        } 
+        } else if (e.getSource() == backButton) {
+			if (bookStart) {
+				this.dispose();
+				GUIMemberSearch search = new GUIMemberSearch(bookStart, bookIn.getId());
+			} else {
+				this.dispose();
+				GUIBookSearch search = new GUIBookSearch(bookStart, memberIn.getID());
+			}
+		}
 	}
 
 }

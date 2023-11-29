@@ -114,7 +114,7 @@ public class GUIMemberAdd extends JFrame implements ActionListener{
 			try {
 				String gender = "";
 				if (((String) genderField.getSelectedItem()).equals("Prefer not to say")) {
-					gender = "None";
+					gender = "Not provided";
 				} else {
 					gender = (String) genderField.getSelectedItem();
 				}
