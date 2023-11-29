@@ -5,58 +5,73 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-
 public class GUILibraryAdd extends JFrame implements ActionListener {
 
+    JLabel nameLabel;
     JTextField nameTextField;
+    JLabel addressLabel;
     JTextField addressTextField;
     JButton addButton;
     JButton backButton;
+    JPanel contentPane;
 
     GUILibraryAdd() {
 
+        Font font = new Font("Arial", Font.PLAIN, 16); // Change the font, size, and style here
+
         backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
+        backButton.setBounds(10, 15, 68, 50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
+        backButton.setFont(font);
 
         addButton = new JButton("Add");
-        addButton.setBounds(100,100,100,40);
+        addButton.setBounds(200, 215, 150, 50);
         addButton.setFocusable(false);
         addButton.addActionListener(this);
+        addButton.setFont(font);
+
+        nameLabel = new JLabel("Name:");
+        nameLabel.setFont(font);
+        nameLabel.setBounds(10, 75, 80, 25);
 
         nameTextField = new JTextField();
-        nameTextField.setPreferredSize(new Dimension(250,40));
+        nameTextField.setColumns(10);
+        nameTextField.setBounds(75, 75, 275, 25);
+        nameTextField.setFont(font);
+
+        addressLabel = new JLabel("Address:");
+        addressLabel.setFont(font);
+        addressLabel.setBounds(10, 125, 80, 25);
 
         addressTextField = new JTextField();
-        addressTextField.setPreferredSize(new Dimension(250,40));
+        addressTextField.setColumns(10);
+        addressTextField.setBounds(75, 125, 275, 25);
+        addressTextField.setFont(font);
 
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
+        this.setSize(375, 340);
         this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
+        this.setLayout(new FlowLayout(FlowLayout.CENTER));
 
-        JPanel backPanel = new JPanel();
-        backPanel.setPreferredSize(new Dimension(300,40));
-        backPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
 
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        backPanel.add(backButton);
-        this.add(backPanel);
-
-        panel2.add(nameTextField);
-        panel2.add(addressTextField);
-        panel2.add(addButton);
-        this.add(panel2);
+        contentPane.add(backButton);
+        contentPane.add(nameLabel);
+        contentPane.add(nameTextField);
+        contentPane.add(addressLabel);
+        contentPane.add(addressTextField);
+        contentPane.add(addButton);
 
         this.setVisible(true);
     }
