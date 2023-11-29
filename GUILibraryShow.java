@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
@@ -13,56 +14,66 @@ import javax.swing.JPanel;
 
 public class GUILibraryShow extends JFrame implements ActionListener {
 
-    JLabel test;
     JButton editButton;
     JButton backButton;
     JButton currentButton;
     Library storeLibrary;
+    JPanel contentPane;
 
     GUILibraryShow(Library libraryIn) {
 
         storeLibrary = libraryIn;
 
-        // Add more labels that display the info
-        test = new JLabel(libraryIn.getName());
+
+        JLabel nameText = new JLabel("Name: " + libraryIn.getName());
+        nameText.setBounds(10, 75, 200, 35);
+        JLabel addressText = new JLabel("Address: " + libraryIn.getAddress());
+        addressText.setBounds(10, 115, 200, 35);
+        JLabel IDText = new JLabel("ID: " + libraryIn.getID());
+        IDText.setBounds(10, 155, 200, 35);
 
         backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
+		backButton.setBounds(10, 15, 68, 50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
         editButton = new JButton("Edit");
-        editButton.setBounds(100,100,100,40);
+		editButton.setBounds(260, 65, 100, 50);
         editButton.setFocusable(false);
         editButton.addActionListener(this);
 
-        currentButton = new JButton("Set as Current");
-		currentButton.setBounds(100,100,100,40);
+        currentButton = new JButton("Set as current");
+		currentButton.setBounds(220, 15, 140, 50);
         currentButton.setFocusable(false);
         currentButton.addActionListener(this);
 
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+        Font titleFont = new Font("Arial", Font.BOLD, 18);
 
+        backButton.setFont(buttonFont);
+        editButton.setFont(buttonFont);
+        currentButton.setFont(buttonFont);
+        nameText.setFont(buttonFont);
+        addressText.setFont(buttonFont);
+        IDText.setFont(buttonFont);
+        
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
+        this.setSize(375, 340);
         this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        topPanel.add(editButton);
-        topPanel.add(backButton);
-        this.add(topPanel);
-
-        panel2.add(test);
-        panel2.add(currentButton);
-        this.add(panel2);
+        contentPane.add(nameText);
+        contentPane.add(addressText);
+        contentPane.add(IDText);
+        contentPane.add(IDText);
+        contentPane.add(editButton);
+        contentPane.add(currentButton);
+        contentPane.add(backButton);
 
         this.setVisible(true);
     }
