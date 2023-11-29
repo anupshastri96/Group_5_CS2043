@@ -226,6 +226,13 @@ public class Book implements Serializable {
         return false;
     }
 
+    public void removeLibrary(Library libraryIn) {
+        for (int i = 0; i < belongsToLibraries.size(); i++) {
+            if (belongsToLibraries.get(i).getID() == libraryIn.getID()) {
+                belongsToLibraries.remove(i);
+            }
+        }
+    }
 
     public void addLibrary(int libraryID) {
         

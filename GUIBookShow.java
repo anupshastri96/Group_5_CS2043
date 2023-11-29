@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,82 +15,148 @@ import javax.swing.JPanel;
 
 public class GUIBookShow extends JFrame implements ActionListener {
 
-    JLabel title;
-    JLabel author;
-    JLabel subject;
+    JPanel contentPane;
+ 
     JButton removeLibraryButton;
+    JButton removeSingleAmountButton;
     JButton backButton;
     JButton viewBorrowedButton;
     JButton borrowButton;
+    JLabel amountText;
+    JLabel adultText;
     Book storeBook;
 
     GUIBookShow(Book bookIn) {
-
         storeBook = bookIn;
         
-        title = new JLabel(bookIn.getName());
-        author = new JLabel(bookIn.getAuthor());
-        subject = new JLabel(bookIn.getSubject());
+        JLabel nameText = new JLabel("Title: " + bookIn.getName());
+        nameText.setBounds(10, 75, 200, 35);
+        JLabel authorText = new JLabel("Author: " + bookIn.getAuthor());
+        authorText.setBounds(10, 115, 200, 35);
+        JLabel subjectText = new JLabel("Subject: " + bookIn.getSubject());
+        subjectText.setBounds(10, 155, 200, 35);
+        if ((bookIn.getAmount() - bookIn.getAmountBorrowed()) >= 1) {
+            amountText = new JLabel("Amount available: " + (bookIn.getAmount() - bookIn.getAmountBorrowed()));
+            amountText.setBounds(10, 195, 200, 35);
+        } else {
+            amountText = new JLabel("None available");
+            amountText.setBounds(10, 195, 200, 35);
+        }
+        if (bookIn.getAdult().equals("T")) {
+            adultText = new JLabel("Meant for adults");
+            adultText.setBounds(10, 235, 200, 35);
+        } else {
+            JLabel adultText = new JLabel("Not meant for adults");
+            adultText.setBounds(10, 235, 200, 35);
+        }
+        JLabel IDText = new JLabel("ID: " + bookIn.getId());
+        IDText.setBounds(10, 275, 200, 35);
 
         backButton = new JButton("Back");
-		backButton.setBounds(100,100,100,40);
+		backButton.setBounds(10, 15, 68, 50);
         backButton.setFocusable(false);
         backButton.addActionListener(this);
 
-        removeLibraryButton = new JButton("Remove from library");
-        removeLibraryButton.setBounds(100,100,100,40);
-        removeLibraryButton.setFocusable(false);
-        removeLibraryButton.addActionListener(this);
-
-        viewBorrowedButton = new JButton("View Borrowed Log");
-		viewBorrowedButton.setBounds(100,100,100,40);
-        viewBorrowedButton.setFocusable(false);
-        viewBorrowedButton.addActionListener(this);
-
-        borrowButton = new JButton("Borrow Book");
-		borrowButton.setBounds(100,100,100,40);
+        borrowButton = new JButton("Borrow");
+		borrowButton.setBounds(260, 65, 100, 50);
         borrowButton.setFocusable(false);
         borrowButton.addActionListener(this);
 
+        viewBorrowedButton = new JButton("Borrowed Log");
+		viewBorrowedButton.setBounds(220, 15, 140, 50);
+        viewBorrowedButton.setFocusable(false);
+        viewBorrowedButton.addActionListener(this);
+
+        removeLibraryButton = new JButton("Remove from Library");
+		removeLibraryButton.setBounds(170, 250, 190, 50);
+        removeLibraryButton.setFocusable(false);
+        removeLibraryButton.addActionListener(this);
+
+        removeSingleAmountButton = new JButton("Remove One");
+		removeSingleAmountButton.setBounds(230, 190, 130, 50);
+        removeSingleAmountButton.setFocusable(false);
+        removeSingleAmountButton.addActionListener(this);
+
+        
+
+        Font buttonFont = new Font("Arial", Font.PLAIN, 16);
+        Font titleFont = new Font("Arial", Font.BOLD, 18);
+
+        backButton.setFont(buttonFont);
+        borrowButton.setFont(buttonFont);
+        viewBorrowedButton.setFont(buttonFont);
+        removeLibraryButton.setFont(buttonFont);
+        removeSingleAmountButton.setFont(buttonFont);
+        nameText.setFont(buttonFont);
+        subjectText.setFont(buttonFont);
+        adultText.setFont(buttonFont);
+        authorText.setFont(buttonFont);
+        amountText.setFont(buttonFont);
+        IDText.setFont(buttonFont);
+        
+
+
         this.setTitle("Current Library: " + LibraryManagementSystem.getCurrentLibrary().getName());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(300, 350);
+        this.setSize(375, 340);
         this.setResizable(false);
-        this.setLayout(new FlowLayout(FlowLayout.CENTER,0,0));
 
-        JPanel topPanel = new JPanel();
-        topPanel.setPreferredSize(new Dimension(300,40));
-        topPanel.setLayout(new FlowLayout(FlowLayout.TRAILING));
+        contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
 
-        JPanel panel2 = new JPanel();
-        panel2.setPreferredSize(new Dimension(300,300));
-        panel2.setLayout(new FlowLayout(FlowLayout.CENTER));
-
-        topPanel.add(removeLibraryButton);
-        topPanel.add(viewBorrowedButton);
-        topPanel.add(borrowButton);
-        topPanel.add(backButton);
-        this.add(topPanel);
-
-        panel2.add(title);
-        panel2.add(author);
-        //panel2.add(title);
-        this.add(panel2);
+        contentPane.add(nameText);
+        contentPane.add(authorText);
+        contentPane.add(subjectText);
+        contentPane.add(amountText);
+        contentPane.add(adultText);
+        contentPane.add(IDText);
+        contentPane.add(backButton);
+        contentPane.add(borrowButton);
+        contentPane.add(viewBorrowedButton);
+        contentPane.add(removeLibraryButton);
+        contentPane.add(removeSingleAmountButton);
 
         this.setVisible(true);
     }
 
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == removeLibraryButton) {
-            //this.dispose();
-           // GUIBookEdit edit = new GUIBookEdit(storeBook);
+
+            if (!storeBook.getLibraryIDs().isEmpty() && storeBook.getLibraryIDs() != null) {
+                if (storeBook.getLibraryIDs().size() > 1) {
+                    storeBook.removeLibrary(LibraryManagementSystem.getCurrentLibrary());
+                    LibraryManagementSystem.getCurrentLibrary().removeBook(storeBook);
+                    LibraryManagementSystem.bookWriteFile();
+                    LibraryManagementSystem.libraryWriteFile();
+                    this.dispose();
+                    GUIBookSearch search = new GUIBookSearch();
+                }
+            }
+            //error message
+        } else if (e.getSource() == removeSingleAmountButton) {
+            storeBook.decAmount();
+            LibraryManagementSystem.bookWriteFile();
+            LibraryManagementSystem.libraryWriteFile();
+            this.dispose();
+            GUIBookShow show = new GUIBookShow(storeBook);
         } else if (e.getSource() == borrowButton) {
-            // add check if can be borrowed
-            this.dispose();
-            GUIMemberSearch search = new GUIMemberSearch(true, storeBook.getId());
+            if ((storeBook.getAmount() - storeBook.getAmountBorrowed()) >= 1) {
+                this.dispose();
+                GUIMemberSearch search = new GUIMemberSearch(true, storeBook.getId());
+            } else {
+                //error message
+            }
+            
         } else if (e.getSource() == viewBorrowedButton) {
-            this.dispose();
-            GUIBorrowedView search = new GUIBorrowedView(true, storeBook.getId());
+            if (!storeBook.getMemberIDs().isEmpty() && storeBook.getMemberIDs() != null) {
+                this.dispose();
+                GUIBorrowedView search = new GUIBorrowedView(true, storeBook.getId());
+            } else {
+                //error message
+            }
+            
         } else if (e.getSource() == backButton) {
             this.dispose();
             GUIBookSearch search = new GUIBookSearch();

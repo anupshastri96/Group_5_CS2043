@@ -102,7 +102,6 @@ public class GUIMemberSearch extends JFrame implements ActionListener {
         contentPane.add(genderText);
         contentPane.add(IDText);
         contentPane.add(backButton);
-        contentPane.add(addButton);
         contentPane.add(firstNameTextField);
         contentPane.add(lastNameTextField);
         contentPane.add(genderField);

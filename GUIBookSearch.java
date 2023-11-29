@@ -112,7 +112,7 @@ public class GUIBookSearch extends JFrame implements ActionListener {
 
     GUIBookSearch() {
 
-        JLabel nameText = new JLabel("Name:");
+        JLabel nameText = new JLabel("Title:");
         nameText.setBounds(65, 75, 200, 35);
         JLabel authorText = new JLabel("Author:");
         authorText.setBounds(65, 115, 200, 35);

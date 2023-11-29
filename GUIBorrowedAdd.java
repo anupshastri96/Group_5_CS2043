@@ -79,22 +79,24 @@ public class GUIBorrowedAdd extends JFrame implements ActionListener {
 	
 
 	public void actionPerformed(ActionEvent e) {
-		// Add checks for if it can be made or not
+		boolean canBeCreated = true;
         if (e.getSource() == genmem) {
             Date convertedReturnDate = null;
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		try {
             // Parse the string to obtain a Date object
              convertedReturnDate = dateFormat.parse(retdatetxt.getText());
-            //JOptionPane.showMessageDialog(null, "Converted Date: " + convertedDate);
         } catch (ParseException pe) {
             // Display an error message using JOptionPane
             JOptionPane.showMessageDialog(null, "Error: Unable to parse the string as a date. Please Retry",
                     "Error", JOptionPane.ERROR_MESSAGE);
+					canBeCreated = false;
             retdatetxt.setText("");
             pe.printStackTrace();
         }
-		LibraryManagementSystem.getCurrentLibrary().borrowBook(memberIn, bookIn, convertedReturnDate);
+		if (canBeCreated) {
+			LibraryManagementSystem.getCurrentLibrary().borrowBook(memberIn, bookIn, convertedReturnDate);
+		}
         } 
 	}
 

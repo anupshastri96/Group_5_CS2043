@@ -127,8 +127,11 @@ public class Library implements Serializable {
     }
     
     public void removeBook(Book b) {
-        boolean isReal = false;
-    	books.remove(b);
+        for (int i = 0; i < books.size(); i++) {
+            if (books.get(i).getId() == b.getId()) {
+                books.remove(i);
+            }
+        }
     }
 	
     public Book getBook(int n) {
