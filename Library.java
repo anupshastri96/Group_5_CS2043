@@ -251,7 +251,8 @@ public class Library implements Serializable {
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         } 
-    } /* 
+    }
+	/* 
 	 private boolean bookavailability(Book bookborrowed) { //the parameter is the name of the book object borrowed
 		
 		for(int i = 0; i< borrowedHere.size(); i++) {

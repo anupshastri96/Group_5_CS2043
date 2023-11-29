@@ -43,7 +43,6 @@ public class BorrowedBook implements Serializable {
 		active = true;
 	}
 	
-
 	public BorrowedBook(int ID, Member borrower, Book borrowed, int libraryID, Date borrowDate, Date expectedReturnDate, boolean active) {
 
 		id = ID;
@@ -55,7 +54,6 @@ public class BorrowedBook implements Serializable {
 		this.borrowDate = borrowDate;
 		this.expectedReturnDate = expectedReturnDate;
 		this.active = active;
-
 	}
 
 	public double checkedOutLength(){
@@ -68,7 +66,6 @@ public class BorrowedBook implements Serializable {
 		return daysChecked;
 	}
 
-	
 	public void extendReturnDate(int daysToAdd) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(expectedReturnDate);  
@@ -77,13 +74,9 @@ public class BorrowedBook implements Serializable {
 		Date newDate = calendar.getTime();
 		expectedReturnDate = newDate;
 		LibraryManagementSystem.borrowedBookWriteFile();
-
-
 	}
 	
-
 	public double getLateFees() {
-
 		if (!active) {
 			if(expectedReturnDate.before(returnDate)) {
 				return 0;
@@ -107,8 +100,7 @@ public class BorrowedBook implements Serializable {
 				double fee = (double) (differenceInDays*10);
 				return fee;
 			}
-		}
-		
+		}	
 	}
 
 	public boolean checkLibrary(Library libraryIn) {
@@ -128,7 +120,6 @@ public class BorrowedBook implements Serializable {
 	/*
 	 * GET METHODS
 	 */
-
 	public String getDueDate() {
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String toReturn = dateFormat.format(expectedReturnDate);
@@ -137,7 +128,6 @@ public class BorrowedBook implements Serializable {
 
 	public Book getBook() {
 		return borrowed;
-
 	}
 	
 	public Member getMember() {

@@ -120,10 +120,8 @@ public class LibraryManagementSystem {
 				}
 			}
 			if (!isSame) {
-				libraries.add(libraryIn);
-				
-			}
-			
+				libraries.add(libraryIn);	
+			}	
 		}
 	}
 	
@@ -178,15 +176,12 @@ public class LibraryManagementSystem {
 						currentNumBorrowedBooks = Integer.parseInt(line.substring(buffer + 1,line.length()));
                 	}
             	}
-				
 				Library addLibrary = new Library(currentName, currentAddress, currentNumBooks, currentNumBorrowedBooks, currentID);
 				libraries.add(addLibrary);
 				buffer = -1;
 				count = 1;
             	line = reader.readLine();
-			
         	}
-			
 		} catch(FileNotFoundException fnf) {
             System.out.println("Library storage file is not there!");
             System.exit(1);
@@ -204,7 +199,6 @@ public class LibraryManagementSystem {
 				printer.println(libraries.get(i).getID() + "," + libraries.get(i).getName() + "," + libraries.get(i).getAddress() + "," + libraries.get(i).getNumBooks() + "," + libraries.get(i).getNumBorrowedBooks());
 			}
 			printer.close();
-
 		} catch (IOException io) {
 			System.out.print("Hi");
 			System.exit(1);
@@ -308,7 +302,6 @@ public class LibraryManagementSystem {
 	}
 	
 	static void memberReadFile() {
-		
 		try {
 			members = new ArrayList<Member>();
 			BufferedReader reader = new BufferedReader(new FileReader("memberStorage.txt"));
@@ -366,19 +359,16 @@ public class LibraryManagementSystem {
 				count = 1;
         	    line = reader.readLine();
         	}
-
 		} catch(FileNotFoundException fnf) {
             System.out.println("Member storage file is not there!");
             System.exit(1);
         } catch (IOException io) {
 			System.out.print("Hi");
 			System.exit(1);
-		}
-		
+		}	
 	}
 
 	static void memberWriteFile() {
-		
 		try {
 			FileWriter writer = new FileWriter("memberStorage.txt");
         	PrintWriter printer = new PrintWriter(writer);
