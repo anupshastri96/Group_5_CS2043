@@ -5,7 +5,6 @@ public class SearchAlgorithm {
 
     private static ArrayList<Integer> toReturn;
     
-
     static ArrayList<Integer> getResults() {
         return toReturn;
     }
@@ -76,13 +75,11 @@ public class SearchAlgorithm {
                             added = true;
                         }
                     }
-
                 }
                 smallestName = -1;
                 smallestAddress = -1;
                 added = false;
                 canBeAdded = true;
-
             }
         }
 
@@ -176,16 +173,12 @@ public class SearchAlgorithm {
                             added = true;
                         }
                     }
-
-
-
                 }
                 smallestFirstname = -1;
                 smallestLastname = -1;
                 otherGender = -1;
                 added = false;
                 canBeAdded = true;
-
             }
         }
 
@@ -280,18 +273,13 @@ public class SearchAlgorithm {
                             added = true;
                         }
                     }
-
-
-
                 }
                 smallestName = -1;
                 smallestAuthor = -1;
                 currentAdult = false;
                 added = false;
                 canBeAdded = true;
-
             }
         }
-
     }
 }

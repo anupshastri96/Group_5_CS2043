@@ -92,8 +92,6 @@ public class Book implements Serializable {
 		return toReturn;
 	}
 
-
-
     /* 
      * NAME METHODS 
      */
@@ -235,26 +233,24 @@ public class Book implements Serializable {
     }
 
     public void addLibrary(int libraryID) {
-        
-        boolean canAdd = true;
-        if (belongsToLibraries.size() != 0) {
-            for (int i = 0; i < belongsToLibraries.size(); i++) {
-                if (belongsToLibraries.get(i).getID() == libraryID) {
-                    canAdd = false;
-                }
-            }
-        }
-        if (canAdd) {
-            
-            belongsToLibraries.add(LibraryManagementSystem.findLibrary(libraryID));
-        }
+		boolean canAdd = true;
+		if (belongsToLibraries.size() != 0) {
+			for (int i = 0; i < belongsToLibraries.size(); i++) {
+				if (belongsToLibraries.get(i).getID() == libraryID) {
+					canAdd = false;
+				}
+			}
+		}
+		if (canAdd) {
+			belongsToLibraries.add(LibraryManagementSystem.findLibrary(libraryID));
+		}
     }
 
     /* 
      * MEMBER METHODS 
      */
     public ArrayList<Integer> getMemberIDs() {
-       ArrayList<Integer> toReturn = new ArrayList<Integer>();
+        ArrayList<Integer> toReturn = new ArrayList<Integer>();
         for (int i = 0; i < currentlyBorrowing.size(); i++) {
             toReturn.add(currentlyBorrowing.get(i).getID());
         }
